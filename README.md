@@ -1,2 +1,2 @@
-#kidcoin
+kidcoin
 2019
