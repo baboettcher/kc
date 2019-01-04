@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { Link } from "react-router-dom";
-
-export default class TeacherDashboard extends Component {
+class TeacherDashboard extends Component {
   state = {
     teamNames: []
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className="container">
         <h3 className="header text-center">Teacher Dashboard</h3>
@@ -20,3 +20,15 @@ export default class TeacherDashboard extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    // reduce the amount of state used
+    auth: state.auth,
+    groups: state.groups,
+    students: state.students,
+    currentUser: state.currentUser
+  };
+};
+
+export default connect(mapStateToProps)(TeacherDashboard);

@@ -9,7 +9,8 @@ import thunk from "redux-thunk";
 
 // applyMiddleware is a store enhancer, and there could be many.
 // thunk allows the action creator to return function to get async data
-const store = createStore(rootReducer, applyMiddleware(thunk));
+// const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>
