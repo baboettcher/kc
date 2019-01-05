@@ -7,14 +7,27 @@ class TeacherDashboard extends Component {
   };
 
   render() {
-    console.log(this.props);
+    const { students } = this.props;
+
+    // currently add, but divide by class
+    const listOfStudents =
+      students.current &&
+      students.current.map(student => {
+        return (
+          <li key={student.id}>
+            {student.first} {student.last}
+          </li>
+        );
+      });
     return (
       <div className="container">
         <h3 className="header text-center">Teacher Dashboard</h3>
         <div>
           {" "}
-          <h3>Students</h3>
-          <h3>Groups</h3>
+          <ul>
+            Students
+            {listOfStudents}
+          </ul>
         </div>
       </div>
     );

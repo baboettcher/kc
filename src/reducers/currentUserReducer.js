@@ -1,6 +1,4 @@
-const initialState = {
-  userData: [{ id: "dkljaskdj" }, { first: "Bobby" }, { last: "Weir" }]
-};
+const initialState = {};
 
 const currentUserReducer = (state = initialState, action) => {
   return state;
