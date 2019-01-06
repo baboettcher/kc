@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SignedInLinksStudent from "./SignedInLinks_Student";
 import SignedInLinksTeacher from "./SignedInLinks_Teacher";
+import SignedInLinksSuper from "./SignedInLinks_Super";
 import SignedOutLinks from "./SignedOutLinks";
 
 const Navbar = props => {
@@ -13,6 +14,7 @@ const Navbar = props => {
         </Link>
         <SignedInLinksStudent />
         <SignedInLinksTeacher />
+        <SignedInLinksSuper />
         <SignedOutLinks />
       </div>
     </nav>

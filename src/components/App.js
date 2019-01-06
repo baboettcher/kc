@@ -13,6 +13,12 @@ import SignIn from "./auth/SignIn";
 import SignUp from "./auth/SignUp";
 
 import SuperDashboard from "./app_super/SuperDashboard";
+import SuperAddDistrict from "./app_super/DistrictAdd";
+import DistrictMasterList from "./app_super/DistrictMasterList";
+import SchoolMasterList from "./app_super/SchoolMasterList";
+import StudentMasterList from "./app_super/StudentMasterList";
+import TeacherMasterList from "./app_super/TeacherMasterList";
+
 import AdminDashboard from "./app_admin/AdminDashboard";
 
 import StudentDashboard from "./app_student/StudentDashboard";
@@ -44,10 +50,16 @@ class App extends Component {
             <Route path="/teams" component={Teams} />
             <Route path="/todolist" component={ToDo} />
             <Route path="/adminProtectedRoute" component={TopLevelAdmin} />
-            <Route path="/superAdmin" component={SuperDashboard} />
 
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
+
+            <Route path="/super" component={SuperDashboard} />
+            <Route path="/super_add_district" component={SuperAddDistrict} />
+            <Route path="/districtmasterlist" component={DistrictMasterList} />
+            <Route path="/schoolmasterlist" component={SchoolMasterList} />
+            <Route path="/teachermasterlist" component={TeacherMasterList} />
+            <Route path="/studentmasterlist" component={StudentMasterList} />
 
             <Route path="/teacher" component={TeacherDashboard} />
             <Route path="/scoreboard" component={Scoreboard} />

@@ -5,10 +5,6 @@ const SignedInLinks_Teacher = () => {
   return (
     <ul className="right">
       <li>
-        <NavLink to="/student">Student Dash</NavLink>
-      </li>
-
-      <li>
         {" "}
         <NavLink to="/myroom">My Room</NavLink>
       </li>

@@ -6,9 +6,6 @@ const SignedInLinks_Teacher = () => {
     <div>
       <ul className="right">
         <li>
-          <NavLink to="/teacher">Dash</NavLink>
-        </li>
-        <li>
           <NavLink to="/studentsall">Students</NavLink>
         </li>
         <li>
