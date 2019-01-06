@@ -4,13 +4,11 @@ import App from "./components/App";
 import "./index.css";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import rootReducer from "./reducers/rootReducer";
+import rootReducer from "./store/reducers/rootReducer";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
 
-// applyMiddleware is a store enhancer, and there could be many.
-// thunk allows the action creator to return function to get async data
-// const store = createStore(rootReducer, applyMiddleware(thunk));
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>

@@ -6,6 +6,10 @@ const initialState = {
   ]
 };
 const studentsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "ADD_STUDENT":
+      console.log("student added", action.studentInfo);
+  }
   return state;
 };
 
