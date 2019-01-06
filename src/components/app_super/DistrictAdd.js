@@ -17,7 +17,6 @@ class DistrictAdd extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-
     this.props.addDistrict(this.state);
   };
 

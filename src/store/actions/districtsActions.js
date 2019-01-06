@@ -8,11 +8,19 @@ export const addDistrict = districtInfo => {
   };
 };
 
-/* 
-export const addStudent = () => {
-  return {
-    type: "ADD_STUDENT",
-    studentInfo: "all the info"
+export const getAllDistricts = () => {
+  return (dispatch, getState) => {
+    // make async call
+    fetch("/users/all_districts")
+      .then(districts1 => districts1.json())
+      .then(districts => {
+        dispatch({
+          type: "GET_ALL_DISTRICTS",
+          districts
+        });
+      })
+      .catch(err => {
+        console.log("Error on initial load", err);
+      });
   };
 };
- */

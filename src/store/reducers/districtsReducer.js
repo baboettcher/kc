@@ -8,7 +8,11 @@ const initialState = {
 const districtsReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_DISTRICT":
-      console.log("district added", action.districtInfo);
+      console.log("ADD_DISTRICT REDUCER CALLED", action.districtInfo);
+
+    case "GET_ALL_DISTRICTS":
+      console.log("GET_ALL_DISTRICTS REDUCER CALLED");
+      return action.districts;
   }
   return state;
 };
