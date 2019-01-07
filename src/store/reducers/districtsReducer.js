@@ -8,7 +8,7 @@ const initialState = {
 const districtsReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_DISTRICT":
-      console.log("ADD_DISTRICT REDUCER CALLED", action.districtInfo);
+      return state.concat([action.payload]);
 
     case "GET_ALL_DISTRICTS":
       console.log("GET_ALL_DISTRICTS REDUCER CALLED");

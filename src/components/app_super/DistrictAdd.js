@@ -5,9 +5,10 @@ import { addDistrict } from "../../store/actions/districtsActions";
 
 class DistrictAdd extends Component {
   state = {
-    id: "",
-    name: "",
-    abbreviation: ""
+    name_full: "",
+    name_initials: "",
+    state: "",
+    school_mini_records: []
   };
 
   handleChange = e => {
@@ -28,22 +29,22 @@ class DistrictAdd extends Component {
             <h5 className="grey-text text-darken-3">Add District</h5>
 
             <div className="input-field">
-              <input type="text" id="name" onChange={this.handleChange} />
-              <label htmlFor="name">Name</label>
+              <input type="text" id="name_full" onChange={this.handleChange} />
+              <label htmlFor="name_full">Full Name</label>
             </div>
 
             <div className="input-field">
               <input
                 type="text"
-                id="abbreviation"
+                id="name_initials"
                 onChange={this.handleChange}
               />
-              <label htmlFor="abbreviation">Abbreviation</label>
+              <label htmlFor="name_initials">Initials</label>
             </div>
 
             <div className="input-field">
-              <input type="text" id="id" onChange={this.handleChange} />
-              <label htmlFor="id">ID</label>
+              <input type="text" id="state" onChange={this.handleChange} />
+              <label htmlFor="state">State</label>
             </div>
 
             <div className="input-field">

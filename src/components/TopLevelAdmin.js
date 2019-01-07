@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { createStore } from "redux";
 import AddDistrict from "./AddDistrict";
 import ListOfSchools from "./ListOfSchools";
 import ListOfTeachers from "./ListOfTeachers";
-//import ListOfStudents from "./ListOfStudents";
 
 const OptionItem = props => {
   return <option value={props.districtId}>{props.districtName}</option>;
