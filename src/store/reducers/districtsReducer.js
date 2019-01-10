@@ -5,10 +5,17 @@ const initialState = {
     { id: "d2412312e", name: "San Rafael", abbreviation: "SFRUSD" }
   ]
 };
+
 const districtsReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_DISTRICT":
       return state.concat([action.payload]);
+
+    case "DELETE_DISTRICT":
+      console.log("ACTION PAYLOAD--->", action.payload);
+      console.log("STATE--->", state);
+      // filter out district here
+      return state.filter(dist => dist._id !== action.payload);
 
     case "GET_ALL_DISTRICTS":
       console.log("GET_ALL_DISTRICTS REDUCER CALLED");

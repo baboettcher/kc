@@ -20,7 +20,31 @@ export const addDistrict = districtInfo => {
           payload: districtInfo
         })
       )
-      .catch(error => console.error("Error addinDistrict", error));
+      .catch(error => console.error("Error adding district", error));
+  };
+};
+
+export const deleteDistrict = districtId => {
+  return (dispatch, getState) => {
+    const url = "/users/district/" + districtId;
+
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(response =>
+        console.log("Success Deleting:", JSON.stringify(response))
+      )
+      .then(() =>
+        dispatch({
+          type: "DELETE_DISTRICT",
+          payload: districtId
+        })
+      )
+      .catch(error => console.error("Error deleting district", error));
   };
 };
 

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllDistricts } from "../../store/actions/districtsActions";
+import {
+  getAllDistricts,
+  deleteDistrict
+} from "../../store/actions/districtsActions";
 
 class DistrictMasterList extends Component {
   state = {};
@@ -10,10 +13,24 @@ class DistrictMasterList extends Component {
     this.props.getAllDistricts();
   }
 
+  handleDelete(id) {
+    console.log("DELETING11111: ", id);
+    this.props.deleteDistrict(id);
+    console.log("DELETING22222: ", id);
+  }
+
   render() {
     const listOfDistricts = this.props.districts.length
       ? this.props.districts.map(district => {
-          return <li key={district._id}>{district.name_full}</li>;
+          return (
+            <li key={district._id}>
+              {district.name_full}
+              <span onClick={this.handleDelete.bind(this, district._id)}>
+                {" "}
+                X
+              </span>
+            </li>
+          );
         })
       : null;
 
@@ -31,7 +48,8 @@ class DistrictMasterList extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllDistricts: info => dispatch(getAllDistricts(info))
+    getAllDistricts: info => dispatch(getAllDistricts(info)),
+    deleteDistrict: id => dispatch(deleteDistrict(id))
   };
 };
 
