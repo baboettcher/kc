@@ -16,12 +16,21 @@ class DistrictAdd extends Component {
       [e.target.id]: e.target.value
     });
   };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.addDistrict(this.state);
+    this.setState({
+      submitted: true,
+      message: "Sucessfully submitted"
+    });
   };
 
   render() {
+    console.log(this.state);
+    if (this.state.submitted) {
+      return <h1>{this.state.message}</h1>;
+    }
     return (
       <div>
         <div className="container">
@@ -50,6 +59,7 @@ class DistrictAdd extends Component {
             <div className="input-field">
               <button className="btn pink lighten-1">Create</button>
             </div>
+            <h6>status:</h6>
           </form>
         </div>
 

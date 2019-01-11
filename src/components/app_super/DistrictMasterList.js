@@ -7,16 +7,16 @@ import {
 } from "../../store/actions/districtsActions";
 
 class DistrictMasterList extends Component {
-  state = {};
+  state = {
+    statusMessage: ""
+  };
 
   componentDidMount() {
     this.props.getAllDistricts();
   }
 
   handleDelete(id) {
-    console.log("DELETING11111: ", id);
     this.props.deleteDistrict(id);
-    console.log("DELETING22222: ", id);
   }
 
   render() {
@@ -41,6 +41,9 @@ class DistrictMasterList extends Component {
         <h6>
           <NavLink to="/super_add_district">Add New District</NavLink>
         </h6>
+        <h5>
+          STATUS: {this.state.statusMessage ? this.state.statusMessage : null}
+        </h5>
       </div>
     );
   }
