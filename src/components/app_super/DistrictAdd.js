@@ -20,16 +20,32 @@ class DistrictAdd extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.addDistrict(this.state);
-    this.setState({
-      submitted: true,
-      message: "Sucessfully submitted"
-    });
+    this.props.history.replace("/districtmasterlist");
   };
+
+  repeatAddDistrict() {
+    this.setState({
+      name_full: "",
+      name_initials: "",
+      state: "",
+      school_mini_records: []
+    });
+  }
 
   render() {
     console.log(this.state);
     if (this.state.submitted) {
-      return <h1>{this.state.message}</h1>;
+      return (
+        <div>
+          <h3>{this.state.message}</h3>
+          <h4>
+            <NavLink to="/districtmasterlist">All Districts</NavLink>
+          </h4>
+          <button onClick={this.repeatAddDistrict.bind(this)}>
+            Add Another District
+          </button>
+        </div>
+      );
     }
     return (
       <div>
@@ -59,13 +75,8 @@ class DistrictAdd extends Component {
             <div className="input-field">
               <button className="btn pink lighten-1">Create</button>
             </div>
-            <h6>status:</h6>
           </form>
         </div>
-
-        <li>
-          <NavLink to="/districtmasterlist">All Districts</NavLink>
-        </li>
       </div>
     );
   }

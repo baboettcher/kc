@@ -9,7 +9,7 @@ import {
 class DistrictMasterList extends Component {
   state = {
     statusMessage: ""
-  };
+  }; // add this later from redux for general updates
 
   componentDidMount() {
     this.props.getAllDistricts();
@@ -38,12 +38,9 @@ class DistrictMasterList extends Component {
       <div>
         <h2>Districts</h2>
         <h6>{listOfDistricts}</h6>
-        <h6>
+        <button>
           <NavLink to="/super_add_district">Add New District</NavLink>
-        </h6>
-        <h5>
-          STATUS: {this.state.statusMessage ? this.state.statusMessage : null}
-        </h5>
+        </button>
       </div>
     );
   }
