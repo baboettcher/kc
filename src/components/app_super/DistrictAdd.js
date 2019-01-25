@@ -23,30 +23,7 @@ class DistrictAdd extends Component {
     this.props.history.replace("/districtmasterlist");
   };
 
-  repeatAddDistrict() {
-    this.setState({
-      name_full: "",
-      name_initials: "",
-      state: "",
-      school_mini_records: []
-    });
-  }
-
   render() {
-    console.log(this.state);
-    if (this.state.submitted) {
-      return (
-        <div>
-          <h3>{this.state.message}</h3>
-          <h4>
-            <NavLink to="/districtmasterlist">All Districts</NavLink>
-          </h4>
-          <button onClick={this.repeatAddDistrict.bind(this)}>
-            Add Another District
-          </button>
-        </div>
-      );
-    }
     return (
       <div>
         <div className="container">
