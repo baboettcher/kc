@@ -9,7 +9,7 @@ const SignedOutLinks = () => {
       </li>
       <li>
         {" "}
-        <NavLink to="/signin">Log In Teacher</NavLink>
+        <NavLink to="/signin">Log In ANYONE</NavLink>
       </li>
     </ul>
   );

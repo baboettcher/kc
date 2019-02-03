@@ -4,6 +4,7 @@ import SignedInLinksStudent from "./SignedInLinks_Student";
 import SignedInLinksTeacher from "./SignedInLinks_Teacher";
 import SignedInLinksSuper from "./SignedInLinks_Super";
 import SignedOutLinks from "./SignedOutLinks";
+import { connect } from "react-redux";
 
 const Navbar = props => {
   return (
@@ -21,4 +22,10 @@ const Navbar = props => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+  console.log(state);
+  // what we want attached to props
+  return {};
+};
+
+export default connect(mapStateToProps)(Navbar);
