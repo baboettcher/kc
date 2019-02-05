@@ -23,7 +23,7 @@ const Navbar = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
+  console.log("--->", state);
   // what we want attached to props
   return {};
 };
