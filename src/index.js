@@ -12,12 +12,13 @@ import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
 
+// logger not properly updating firebase auth
 const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(
-      thunk.withExtraArgument({ getFirebase, getFirestore }),
-      logger
+      thunk.withExtraArgument({ getFirebase, getFirestore }) //,
+      //logger
     ),
     reduxFirestore(fbConfig),
     reactReduxFirebase(fbConfig)

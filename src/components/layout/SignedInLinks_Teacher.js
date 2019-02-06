@@ -6,23 +6,23 @@ const SignedInLinks_Teacher = () => {
     <div>
       <ul className="right">
         <li>
-          <NavLink to="/studentsall">Students</NavLink>
+          <NavLink to="/studentsall">StudentsT</NavLink>
         </li>
         <li>
-          <NavLink to="/groupsall">Groups</NavLink>
+          <NavLink to="/groupsall">GroupsT</NavLink>
         </li>
         <li>
-          <NavLink to="/colleagues">Colleagues</NavLink>
+          <NavLink to="/colleagues">ColleaguesT</NavLink>
         </li>
         <li>
-          <NavLink to="/callonme">Call on Me</NavLink>
+          <NavLink to="/callonme">CallOnMeT</NavLink>
         </li>
         <li>
-          <NavLink to="/scoreboard">Scoreboard</NavLink>
+          <NavLink to="/scoreboard">ScoreboardT</NavLink>
         </li>
 
         <li>
-          <NavLink to="/">Log Out Teacher</NavLink>
+          <NavLink to="/">LogOutT</NavLink>
         </li>
         <li>
           <NavLink to="/teacher" className="btn btn-floating pink lighten-1">
