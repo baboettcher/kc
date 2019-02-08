@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   getAllDistricts,
@@ -20,6 +20,7 @@ class DistrictMasterList extends Component {
   }
 
   render() {
+    const { auth } = this.props;
     const listOfDistricts = this.props.districts.length
       ? this.props.districts.map(district => {
           return (
@@ -34,9 +35,11 @@ class DistrictMasterList extends Component {
         })
       : null;
 
+    if (!auth.uid) return <Redirect to="/signin" />;
+
     return (
       <div>
-        <h2>Districts</h2>
+        <h2>Districts - SUPER</h2>
         <h6>{listOfDistricts}</h6>
         <button>
           <NavLink to="/super_add_district">Add New District</NavLink>
@@ -55,7 +58,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    districts: state.districts
+    districts: state.districts,
+    auth: state.firebase.auth
   };
 };
 

@@ -8,7 +8,7 @@ export default class SuperDashboard extends Component {
   render() {
     return (
       <div className="container">
-        <h3 className="header text-center">Super Admin</h3>
+        <h3 className="header text-center">Super Admin Dashboard</h3>
       </div>
     );
   }

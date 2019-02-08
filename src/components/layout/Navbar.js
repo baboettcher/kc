@@ -17,6 +17,7 @@ const Navbar = props => {
         <Link to="/" className="brand-logo left">
           {props.name}
         </Link>
+
         {/* <SignedInLinksStudent />
         <SignedInLinksTeacher /> */}
         {links}
@@ -27,7 +28,6 @@ const Navbar = props => {
 
 const mapStateToProps = state => {
   console.log("====>>", state);
-  // what we want attached to props
   return {
     auth: state.firebase.auth
   };

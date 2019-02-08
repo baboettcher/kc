@@ -15,6 +15,8 @@ class SignIn extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.signIn(this.state);
+    // check auth stateus and redirect to dashboard
+    //
   };
   render() {
     const { authError } = this.props;
