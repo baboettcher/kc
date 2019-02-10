@@ -14,10 +14,11 @@ const Navbar = props => {
   return (
     <nav className="nav-wrapper grey darken-3">
       <div className="container">
-        <Link to="/" className="brand-logo left">
-          {props.name}
+        {/*         <Link to="/" className="brand-logo left">
+         */}{" "}
+        <Link to="/" className="left">
+          {"sp/a/t/s"}
         </Link>
-
         {/* <SignedInLinksStudent />
         <SignedInLinksTeacher /> */}
         {links}
@@ -27,7 +28,7 @@ const Navbar = props => {
 };
 
 const mapStateToProps = state => {
-  console.log("====>>", state);
+  console.log("UNTIL LOGGER IS FIXED===>>", state);
   return {
     auth: state.firebase.auth
   };

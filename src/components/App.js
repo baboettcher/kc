@@ -43,7 +43,7 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          <Navbar_new name="kiddies" />
+          <Navbar_new />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/players" component={Players} />

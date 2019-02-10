@@ -9,7 +9,7 @@ class SchoolMasterList extends Component {
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div>
-        <h2>Schools</h2>
+        <h2>Schools_SP</h2>
       </div>
     );
   }
