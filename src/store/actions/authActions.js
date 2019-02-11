@@ -52,6 +52,7 @@ export const signUp = credentials => {
         // ...
       })
       .then(firebaseResp => {
+        // create firebase superadmin object
         const {
           uid,
           providerData,
@@ -64,6 +65,25 @@ export const signUp = credentials => {
         console.log("emailVerified:", emailVerified);
         console.log("uid:", uid);
         console.log("providerData:", providerData);
+
+        // MONGO SUPER CREATE HERE -- WITH UID!
+        const url = "/users/super";
+        const data = {
+          first_name: "johnny",
+          last_name: "beGoode",
+          fb_uid: uid
+        };
+
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data), // data can be `string` or {object}!
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(response => console.log("Success:", JSON.stringify(response)))
+          .catch(error => console.error("Entry invalid"));
       });
   };
 };
