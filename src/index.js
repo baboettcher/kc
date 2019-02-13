@@ -18,16 +18,21 @@ const store = createStore(
   compose(
     applyMiddleware(
       thunk.withExtraArgument({ getFirebase, getFirestore }) //,
-      //logger
+      // logger (temp removed)
     ),
     reduxFirestore(fbConfig),
-    reactReduxFirebase(fbConfig)
+
+    reactReduxFirebase(fbConfig, { attachAuthIsReady: true })
+    // 2nd parameter above is config option waits for auth before rendering DOM
+    // allowes access to method on store firebaseAuthIsReady, line 31
   )
 );
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+store.firebaseAuthIsReady.then(() => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById("root")
+  );
+});

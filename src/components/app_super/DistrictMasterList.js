@@ -12,6 +12,7 @@ class DistrictMasterList extends Component {
   }; // add this later from redux for general updates
 
   componentDidMount() {
+    console.log("MASTER LIST RELOADED");
     this.props.getAllDistricts();
   }
 
@@ -42,7 +43,7 @@ class DistrictMasterList extends Component {
         <h2>Districts - SUPER</h2>
         <h6>{listOfDistricts}</h6>
         <button>
-          <NavLink to="/super">Add New District</NavLink>
+          <NavLink to="/super_add_district">Add New District</NavLink>
         </button>
       </div>
     );

@@ -37,22 +37,21 @@ export const signUp = credentials => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(credentials.email, credentials.password)
+      // should dispatch happen AFTER mongo?
       .then(firebaseResp => {
         dispatch({
           type: "SIGNUP_SUCCESS"
+          // add payload here to add to state
         });
-        console.log("this is here?");
         return firebaseResp;
       })
       .catch(function(error) {
-        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log(error.message, error.code);
         // ...
       })
       .then(firebaseResp => {
-        // create firebase superadmin object
         const {
           uid,
           providerData,
@@ -60,18 +59,25 @@ export const signUp = credentials => {
           displayName,
           emailVerified
         } = firebaseResp.user;
+
         console.log("displayName:", displayName);
         console.log("email:", email);
         console.log("emailVerified:", emailVerified);
         console.log("uid:", uid);
         console.log("providerData:", providerData);
 
-        // MONGO SUPER CREATE HERE -- WITH UID!
+        // MONGO
+        console.log("CREDENTIALS-->", credentials);
         const url = "/users/super";
         const data = {
-          first_name: "johnny",
-          last_name: "beGoode",
-          fb_uid: uid
+          first_name: credentials.firstName,
+          last_name: credentials.lastName,
+          fb_uid: uid,
+          initials: (
+            credentials.firstName[0] + credentials.lastName[0]
+          ).toUpperCase()
+          // initials, email, etc...
+          // how will auth level be recorded?
         };
 
         fetch(url, {
@@ -83,7 +89,7 @@ export const signUp = credentials => {
         })
           .then(res => res.json())
           .then(response => console.log("Success:", JSON.stringify(response)))
-          .catch(error => console.error("Entry invalid"));
+          .catch(err => console.error("Entry invalid", err));
       });
   };
 };
