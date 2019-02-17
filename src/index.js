@@ -10,7 +10,15 @@ import logger from "redux-logger";
 
 import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
+// trial
+import { functions } from "@firebase/functions";
+
 import fbConfig from "./config/fbConfig";
+
+//FIREBASE FUNCITONS
+// How do I make firebase functions available in my actions creattors?
+// getFirebase gives access to auth, but firebase functions are not there.
+// how can this be added?
 
 // logger not properly updating firebase auth
 const store = createStore(
@@ -24,7 +32,7 @@ const store = createStore(
 
     reactReduxFirebase(fbConfig, { attachAuthIsReady: true })
     // 2nd parameter above is config option waits for auth before rendering DOM
-    // allowes access to method on store firebaseAuthIsReady, line 31
+    // allowes access to method on store firebaseAuthIsReady
   )
 );
 

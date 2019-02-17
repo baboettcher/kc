@@ -30,9 +30,14 @@ export const signOut = () => {
   };
 };
 
+// signup as SUPER
+// add firebase cloud functions
 export const signUp = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+
+    const functions = firebase.functions();
+    console.log("FUNCTIONS?", functions);
 
     firebase
       .auth()
