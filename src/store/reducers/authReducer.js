@@ -4,8 +4,16 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "AUTH_CHECKED_LOGGED_IN":
+      console.log("====>>> auth check logged IN", action.payload);
+      return state; // change state next
+
+    case "AUTH_CHECKED_LOGGED_OUT":
+      console.log("====>>> auth check logged OUT", action.payload);
+      return state; // change state next
+
     case "LOGIN_ERROR":
-      console.log("login error");
+      console.log("login error", action.err);
       return { ...state, authError: "Auth failed" }; // another option: authError: action.err
 
     case "LOGIN_SUCCESS":
