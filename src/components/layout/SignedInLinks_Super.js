@@ -8,19 +8,19 @@ const SignedInLinks_Super = props => {
     <div>
       <ul className="right">
         <li>
-          <NavLink to="/districtmasterlist">DistrictsSP</NavLink>
+          <NavLink to="/districtmasterlist">DistrictsSUP</NavLink>
         </li>
         <li>
-          <NavLink to="/schoolmasterlist">SchoolsSP</NavLink>
+          <NavLink to="/schoolmasterlist">SchoolsSUP</NavLink>
         </li>
         <li>
-          <NavLink to="/teachermasterlist">TeachersSP</NavLink>
+          <NavLink to="/teachermasterlist">TeachersSUP</NavLink>
         </li>
         <li>
-          <NavLink to="/studentmasterlist">StudentsSP</NavLink>
+          <NavLink to="/studentmasterlist">StudentsSUP</NavLink>
         </li>
         <li>
-          <a onClick={props.signOut}>LogoutSP</a>
+          <a onClick={props.signOut}>LogoutSUP</a>
         </li>
         <li>
           <NavLink to="/super" className="btn btn-floating pink lighten-1">

@@ -24,11 +24,44 @@ const authReducer = (state = initialState, action) => {
       console.log("signout success");
       return state;
 
-    case "SIGNUP_SUCCESS":
-      console.log("signup success");
+    case "SIGNUP_SUPER_SUCCESS":
+      console.log("signup SUPER success");
       return {
         ...state,
+        authCustomClaim: "super",
         authError: null
+      };
+
+    case "SIGNUP_TEACHER_SUCCESS":
+      console.log("signup TEACHER success");
+      return {
+        ...state,
+        authCustomClaim: "teacher",
+        authError: null
+      };
+
+    case "SIGNUP_STUDENT_SUCCESS":
+      console.log("signup STUDENT success");
+      return {
+        ...state,
+        authCustomClaim: "student",
+        authError: null
+      };
+
+    case "SIGNUP_ADMINISTRATOR_SUCCESS":
+      console.log("signup ADMINISTRATOR success");
+      return {
+        ...state,
+        authCustomClaim: "administrator",
+        authError: null
+      };
+
+    case "SIGNUP_ERROR":
+      console.log("signup ERROR");
+      return {
+        ...state,
+        authCustomClaim: null,
+        authError: true
       };
 
     default:

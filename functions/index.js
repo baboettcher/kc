@@ -28,6 +28,63 @@ exports.addSuperRole = functions.https.onCall((data, context) => {
     });
 });
 
+exports.addTeacherRole = functions.https.onCall((data, context) => {
+  return admin
+    .auth()
+    .getUserByEmail(data.email)
+    .then(user => {
+      return admin.auth().setCustomUserClaims(user.uid, {
+        teacher: true
+      });
+    })
+    .then(() => {
+      return {
+        message: `Success ${data.email} has been made a Teacher`
+      };
+    })
+    .catch(err => {
+      return err;
+    });
+});
+
+exports.addAdministratorRole = functions.https.onCall((data, context) => {
+  return admin
+    .auth()
+    .getUserByEmail(data.email)
+    .then(user => {
+      return admin.auth().setCustomUserClaims(user.uid, {
+        administrator: true
+      });
+    })
+    .then(() => {
+      return {
+        message: `Success ${data.email} has been made an Administrator`
+      };
+    })
+    .catch(err => {
+      return err;
+    });
+});
+
+exports.addStudentRole = functions.https.onCall((data, context) => {
+  return admin
+    .auth()
+    .getUserByEmail(data.email)
+    .then(user => {
+      return admin.auth().setCustomUserClaims(user.uid, {
+        student: true
+      });
+    })
+    .then(() => {
+      return {
+        message: `Success ${data.email} has been made a Student`
+      };
+    })
+    .catch(err => {
+      return err;
+    });
+});
+
 // firebase deploy --only functions
 
 // // Create and Deploy Your First Cloud Functions

@@ -10,7 +10,8 @@ import Articles from "./Articles";
 import TopLevelAdmin from "./TopLevelAdmin";
 
 import SignIn from "./auth/SignIn";
-import SignUp from "./auth/SignUp";
+import SignUpSuper from "./auth/SignUpSuper";
+import SignUpTeacher from "./auth/SignUpTeacher";
 
 import SuperDashboard from "./app_super/SuperDashboard";
 import SuperAddDistrict from "./app_super/DistrictAdd";
@@ -52,7 +53,8 @@ class App extends Component {
             <Route path="/adminProtectedRoute" component={TopLevelAdmin} />
 
             <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <Route path="/signupsuper" component={SignUpSuper} />
+            <Route path="/signupteacher" component={SignUpTeacher} />
 
             <Route path="/super" component={SuperDashboard} />
             <Route path="/super_add_district" component={SuperAddDistrict} />

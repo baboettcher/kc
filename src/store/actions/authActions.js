@@ -1,34 +1,3 @@
-// custom claims attempt  -- can't access auth.onAuthStateChanged()
-
-//
-// Run in Navbar on mount
-// what method can I use to get auth status?
-// why not just ook up property on Mongo?
-
-export const authCheck = () => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .onAuthStateChanged(user => {
-        if (user) {
-          firebase
-            .auth()
-            .currentUser.getIdToken(true)
-
-            .then(idToken => {
-              dispatch({ type: "AUTH_CHECKED_LOGGED_IN", payload: idToken });
-            });
-        } else {
-          dispatch({ type: "AUTH_CHECKED_LOGGED_OUT", payload: null });
-        }
-      })
-      .catch(() => {
-        console.log("auth change error - TEMP");
-      });
-  };
-};
-
 export const signOut = () => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -52,16 +21,8 @@ export const signIn = credentials => {
     firebase
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(() => console.log("==> sign in "))
-      .then(() => {
-        dispatch({ type: "LOGIN_SUCCESS" });
-      })
-      .catch(err => {
-        dispatch({ type: "LOGIN_ERROR", err });
-      })
 
-      // ------- CHECK CUSTOMER CLAIM ------
-      // later: add to state and create autthClaimChecker  ------
+      // ------- CHECK CUSTOMER CLAIM ------ //
       .then(() => {
         const auth = firebase.auth();
         auth.onAuthStateChanged(user => {
@@ -69,66 +30,35 @@ export const signIn = credentials => {
             user.getIdTokenResult().then(idTokenResult => {
               console.log(idTokenResult.claims);
             });
-
-            // auth.currentUser.getIdToken(true).then(idToken => {
-            //   console.log(
-            //     "CLAIM ON SIGN-IN CHECKED: idToken CLAIMS",
-            //     idToken.claims
-            //   );
-            // });
           } else {
             console.log("CLAIM ON SIGN-IN CHECKED: Logged out");
           }
           return "DONE";
         });
-      });
-  };
-};
+      })
 
-/* 
-export const signIn = credentials => {
-  // third param is destructed to accesss firebase
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(() => console.log("==> sign in "))
       .then(() => {
         dispatch({ type: "LOGIN_SUCCESS" });
       })
+
       .catch(err => {
         dispatch({ type: "LOGIN_ERROR", err });
-      })
-
-      // ------- CHECK CUSTOMER CLAIM ------
-      // later: add to state and create autthClaimChecker  ------
-      .then(() => {
-        firebase.auth().onAuthStateChanged(user => {
-          if (user) {
-            firebase
-              .auth()
-              .currentUser.getIdToken(true)
-              .then(idToken => {
-                console.log(
-                  "CLAIM ON SIGN-IN CHECKED: idToken CLAIMS",
-                  idToken.claims
-                );
-              });
-          } else {
-            console.log("CLAIM ON SIGN-IN CHECKED: Logged out");
-          }
-          return "DONE";
-        });
       });
   };
 };
- */
-// signup as SUPER
-export const signUp = credentials => {
+
+// NEXT STEPS:
+// 1. cloud function to signUpAsTeacher, Student, Admin
+// 2. make signUpTeacher action (later student, and admin)
+// 3. fix actions:  - move state upate to the end END add specialAuth
+//                  - comment out temporary auth checker
+//                  - update Mongo
+
+export const signUpSuper = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    const { authLevel } = credentials;
+    console.log("authLevel-->", authLevel);
 
     firebase
       .auth()
@@ -138,7 +68,7 @@ export const signUp = credentials => {
         const { user } = firebaseResp.user;
         console.log("USER ====->", user);
         dispatch({
-          type: "SIGNUP_SUCCESS"
+          type: "SIGNUP_SUCCESS_SUPER"
           // MOVE DISPATCH TO END
           // add payload here to add to state
         });
@@ -155,11 +85,8 @@ export const signUp = credentials => {
 
         return firebaseResp; // what is returned her is irrelevant (?)
       })
-      .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error.message, error.code);
-        // ...
+      .catch(function(err) {
+        console.log("Error", err.message, err.code);
       })
 
       //------------------- TEMPORARY AUTH CHECKER------------------ //
@@ -190,7 +117,7 @@ export const signUp = credentials => {
           displayName,
           emailVerified
         } = firebaseResp.user;
-
+        
         const url = "/users/super";
         const data = {
           first_name: credentials.firstName,
@@ -198,28 +125,93 @@ export const signUp = credentials => {
           fb_uid: uid,
           initials: (
             credentials.firstName[0] + credentials.lastName[0]
-          ).toUpperCase(),
-          kc_auth: {
-            //TEMP
-            super: true,
-            admin: true,
-            student: true,
-            teacher: true
-          }
-        };
-
-        fetch(url, {
-          method: "POST",
-          body: JSON.stringify(data), // data can be `string` or {object}!
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
+            ).toUpperCase(),
+            kc_auth: {
+              //TEMP
+              super: true,
+              admin: true,
+              student: true,
+              teacher: true
+            }
+          };
+          
+          fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
           .then(res => res.json())
           .then(response => console.log("Success:", JSON.stringify(response)))
           .catch(err => console.error("Entry invalid", err));
-      });
-
-       */
+        });
+        
+        */
   };
 };
+
+export const authCheck = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    firebase
+      .auth()
+      .onAuthStateChanged(user => {
+        if (user) {
+          firebase
+            .auth()
+            .currentUser.getIdToken(true)
+
+            .then(idToken => {
+              dispatch({ type: "AUTH_CHECKED_LOGGED_IN", payload: idToken });
+            });
+        } else {
+          dispatch({ type: "AUTH_CHECKED_LOGGED_OUT", payload: null });
+        }
+      })
+      .catch(() => {
+        console.log("auth change error - TEMP");
+      });
+  };
+};
+
+/* 
+export const signIn = credentials => {
+  // third param is destructed to accesss firebase
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    
+    firebase
+    .auth()
+    .signInWithEmailAndPassword(credentials.email, credentials.password)
+    .then(() => console.log("==> sign in "))
+    .then(() => {
+      dispatch({ type: "LOGIN_SUCCESS" });
+    })
+    .catch(err => {
+      dispatch({ type: "LOGIN_ERROR", err });
+    })
+    
+    // ------- CHECK CUSTOMER CLAIM ------
+    // later: add to state and create autthClaimChecker  ------
+    .then(() => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          firebase
+          .auth()
+          .currentUser.getIdToken(true)
+          .then(idToken => {
+            console.log(
+              "CLAIM ON SIGN-IN CHECKED: idToken CLAIMS",
+              idToken.claims
+              );
+            });
+          } else {
+            console.log("CLAIM ON SIGN-IN CHECKED: Logged out");
+          }
+          return "DONE";
+        });
+      });
+    };
+  };
+  */

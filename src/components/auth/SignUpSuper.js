@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUp } from "../../store/actions/authActions";
+import { signUpSuper } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
-class SignUp extends Component {
+class SignUpSuper extends Component {
   state = {
     email: "",
     password: "",
     firstName: "",
-    lastName: ""
+    lastName: "",
+    authLevel: "super"
   };
   handleChange = e => {
     this.setState({
@@ -17,17 +18,17 @@ class SignUp extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.signUp(this.state);
+    this.props.signUpSuper(this.state);
   };
 
   render() {
-    const { auth } = this.props;
+    const { auth } = this.props; // later this must check state.auth for custom claim of super
     if (auth.uid) return <Redirect to="./super" />;
 
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Sign Up</h5>
+          <h5 className="grey-text text-darken-3">Sign Up Super</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" onChange={this.handleChange} />
@@ -55,7 +56,7 @@ class SignUp extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUp: creds => dispatch(signUp(creds))
+    signUpSuper: creds => dispatch(signUpSuper(creds))
   };
 };
 
@@ -69,4 +70,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUp);
+)(SignUpSuper);
