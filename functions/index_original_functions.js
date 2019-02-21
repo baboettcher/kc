@@ -15,7 +15,7 @@ exports.addSuperRole = functions.https.onCall((data, context) => {
       // arg 1 is user returned from fn
       // arg 2 is object containing the claim we want to create
       return admin.auth().setCustomUserClaims(user.uid, {
-        authCustomClaim: "super"
+        super: true
       });
     }) // return response to user
     .then(() => {
@@ -34,7 +34,7 @@ exports.addTeacherRole = functions.https.onCall((data, context) => {
     .getUserByEmail(data.email)
     .then(user => {
       return admin.auth().setCustomUserClaims(user.uid, {
-        authCustomClaim: "teacher"
+        teacher: true
       });
     })
     .then(() => {
@@ -53,7 +53,7 @@ exports.addAdministratorRole = functions.https.onCall((data, context) => {
     .getUserByEmail(data.email)
     .then(user => {
       return admin.auth().setCustomUserClaims(user.uid, {
-        authCustomClaim: "administrator"
+        administrator: true
       });
     })
     .then(() => {
@@ -72,7 +72,7 @@ exports.addStudentRole = functions.https.onCall((data, context) => {
     .getUserByEmail(data.email)
     .then(user => {
       return admin.auth().setCustomUserClaims(user.uid, {
-        authCustomClaim: "student"
+        student: true
       });
     })
     .then(() => {

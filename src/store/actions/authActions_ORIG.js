@@ -27,24 +27,18 @@ export const signIn = credentials => {
         const auth = firebase.auth(); // refactor out firebase.auth() - 2nd time
         auth.onAuthStateChanged(user => {
           if (user) {
-            user
-              .getIdTokenResult()
-              .then(idTokenResult => {
-                const { authCustomClaim } = idTokenResult.claims;
-                console.log("authCustomClaim ---->", authCustomClaim);
-                return authCustomClaim;
-              })
-
-              .then(authCustomClaim => {
-                console.log("AGAIN ACC-->", authCustomClaim);
-                dispatch({ type: "LOGIN_SUCCESS", authCustomClaim });
-              })
-              .catch(err => console.log("Error in custom claim", err));
+            user.getIdTokenResult().then(idTokenResult => {
+              console.log("CLAIMS -->", idTokenResult.claims);
+            });
           } else {
             console.log("CLAIM ON SIGN-IN CHECKED: Logged out");
-            return null;
           }
+          return "DONE";
         });
+      })
+
+      .then(() => {
+        dispatch({ type: "LOGIN_SUCCESS" });
       })
 
       .catch(err => {
@@ -148,7 +142,16 @@ export const signUpSuper = credentials => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(credentials.email, credentials.password)
-
+      // should dispatch happen AFTER mongo?
+      .then(firebaseResp => {
+        const { user } = firebaseResp;
+        dispatch({
+          type: "SIGNUP_SUPER_SUCCESS",
+          user
+          // MOVE DISPATCH TO END
+        });
+        return firebaseResp;
+      })
       // ------------------- FIREBASE CUSTOM CLAIM: SUPER ------------------ //
       .then(firebaseResp => {
         const { email } = firebaseResp.user;
@@ -162,16 +165,24 @@ export const signUpSuper = credentials => {
       })
       .catch(function(err) {
         console.log("Error", err.message, err.code);
-      })
-
-      .then(firebaseResp => {
-        const { user } = firebaseResp;
-        dispatch({
-          type: "SIGNUP_SUPER_SUCCESS",
-          user
-        });
-        return firebaseResp;
       });
+
+    //------------------- TEMPORARY AUTH CHECKER------------------ //
+    /*       .then(firebaseResp => {
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            firebase
+              .auth()
+              .currentUser.getIdToken(true)
+              .then(idToken => {
+                console.log("SUPER STATUS CONFIRMED? idToken", idToken.super);
+              });
+          } else {
+            console.log("STATUS CHECKED: Logged out");
+          }
+          return firebaseResp;
+        });
+      }); */
 
     // ------------------- MONGO ------------------ //
 

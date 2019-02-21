@@ -19,8 +19,9 @@ class SignIn extends Component {
   };
   render() {
     const { authError, auth } = this.props;
+    console.log("STATE-->PROPS:", this.props);
 
-    if (auth.uid) return <Redirect to="./super" />;
+    //if (auth.uid) return <Redirect to="./super" />;
 
     return (
       <div className="container">

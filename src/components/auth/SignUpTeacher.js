@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUpSuper } from "../../store/actions/authActions";
+import { signUpTeacher } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 class SignUpTeacher extends Component {
@@ -8,7 +8,8 @@ class SignUpTeacher extends Component {
     email: "",
     password: "",
     firstName: "",
-    lastName: ""
+    lastName: "",
+    authLevel: "teacher"
   };
   handleChange = e => {
     this.setState({
@@ -17,12 +18,12 @@ class SignUpTeacher extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.signUpSuper(this.state);
+    this.props.signUpTeacher(this.state);
   };
 
   render() {
     const { auth } = this.props; // later this must check state.auth for custom claim of teacher
-    if (auth.uid) return <Redirect to="./super" />;
+    if (auth.uid) return <Redirect to="./teacher" />;
 
     return (
       <div className="container">
@@ -55,7 +56,7 @@ class SignUpTeacher extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUpSuper: creds => dispatch(signUpSuper(creds))
+    signUpTeacher: creds => dispatch(signUpTeacher(creds))
   };
 };
 

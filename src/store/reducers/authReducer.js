@@ -18,18 +18,23 @@ const authReducer = (state = initialState, action) => {
 
     case "LOGIN_SUCCESS":
       console.log("login success");
-      return { ...state, authError: null };
+      return {
+        ...state,
+        authError: null,
+        authCustomClaim: action.authCustomClaim
+      };
 
     case "SIGNOUT_SUCCESS":
       console.log("signout success");
       return state;
 
     case "SIGNUP_SUPER_SUCCESS":
-      console.log("signup SUPER success");
+      console.log("signup SUPER success-- action", action);
       return {
         ...state,
         authCustomClaim: "super",
-        authError: null
+        authError: null,
+        user: action.user
       };
 
     case "SIGNUP_TEACHER_SUCCESS":
