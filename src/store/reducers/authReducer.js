@@ -1,23 +1,12 @@
 const initialState = {
-  authError: null
+  authError: null,
+  authCustomClaim: null
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "AUTH_CHECKED_LOGGED_IN":
-      console.log("====>>> auth check logged IN", action.payload);
-      return state; // change state next
-
-    case "AUTH_CHECKED_LOGGED_OUT":
-      console.log("====>>> auth check logged OUT", action.payload);
-      return state; // change state next
-
-    case "LOGIN_ERROR":
-      console.log("login error", action.err);
-      return { ...state, authError: "Auth failed" }; // another option: authError: action.err
-
     case "LOGIN_SUCCESS":
-      console.log("login success");
+      console.log("login success, acc: ", action.authCustomClaim);
       return {
         ...state,
         authError: null,
@@ -26,7 +15,11 @@ const authReducer = (state = initialState, action) => {
 
     case "SIGNOUT_SUCCESS":
       console.log("signout success");
-      return state;
+      return { ...state, authCustomClaim: null };
+
+    case "LOGIN_ERROR":
+      console.log("login error", action.err);
+      return { ...state, authError: "Auth failed" }; // another option: authError: action.err
 
     case "SIGNUP_SUPER_SUCCESS":
       console.log("signup SUPER success-- action", action);
@@ -35,6 +28,14 @@ const authReducer = (state = initialState, action) => {
         authCustomClaim: "super",
         authError: null,
         user: action.user
+      };
+
+    case "SIGNUP_SUPER_ERROR":
+      return {
+        ...state,
+        authCustomClaim: null,
+        authError: "Firebase error after custom claim success",
+        user: null
       };
 
     case "SIGNUP_TEACHER_SUCCESS":
@@ -68,6 +69,14 @@ const authReducer = (state = initialState, action) => {
         authCustomClaim: null,
         authError: true
       };
+
+    case "AUTH_CHECKED_LOGGED_IN":
+      console.log("====>>> auth check logged IN", action.payload);
+      return state; // change state next
+
+    case "AUTH_CHECKED_LOGGED_OUT":
+      console.log("====>>> auth check logged OUT", action.payload);
+      return state; // change state next
 
     default:
       return state;

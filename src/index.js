@@ -15,18 +15,13 @@ import { functions } from "@firebase/functions";
 
 import fbConfig from "./config/fbConfig";
 
-//FIREBASE FUNCITONS
-// How do I make firebase functions available in my actions creattors?
-// getFirebase gives access to auth, but firebase functions are not there.
-// how can this be added?
-
 // logger not properly updating firebase auth
 const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(
-      thunk.withExtraArgument({ getFirebase, getFirestore }) //,
-      // logger (temp removed)
+      thunk.withExtraArgument({ getFirebase, getFirestore }),
+      logger //(temp removed)
     ),
     reduxFirestore(fbConfig),
 

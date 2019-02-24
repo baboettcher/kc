@@ -9,12 +9,29 @@ import { authCheck } from "../../store/actions/authActions";
 
 class Navbar extends Component {
   state = {};
-  componentDidMount() {}
+
   render() {
-    const { auth } = this.props;
-    // console.log("AUTH", auth);
-    // conditionally render links based on auth status
-    const links = auth.uid ? <SignedInLinksSuper /> : <SignedOutLinks />;
+    const { auth, authCustomClaim } = this.props;
+
+    let links = <SignedOutLinks />;
+
+    if (auth.uid) {
+      if (authCustomClaim === "super") {
+        links = <SignedInLinksSuper />;
+      } else if (authCustomClaim === "teacher") {
+        links = <SignedInLinksTeacher />;
+      } else if (authCustomClaim === "student") {
+        links = <SignedInLinksStudent />;
+        // } else if (authCustomClaim === "administrator") {
+        //   links = <SignedInLinksAdministrator />;
+      }
+    }
+
+    console.log("auth.uid----->", auth.uid);
+    console.log("authCustomClaim", authCustomClaim);
+
+    //const links = auth.uid ? <SignedInLinksSuper /> : <SignedOutLinks />;
+
     return (
       <nav className="nav-wrapper grey darken-3">
         <div className="container">
@@ -23,8 +40,6 @@ class Navbar extends Component {
           <Link to="/" className="left">
             {"sp/a/t/s"}
           </Link>
-          {/* <SignedInLinksStudent />
-      <SignedInLinksTeacher /> */}
           {links}
         </div>
       </nav>
@@ -39,10 +54,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  console.log("STATE", state);
-  //console.log("STATE.FB in NAVBAR===>>", state.firebase);
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    authError: state.auth.authError,
+    authCustomClaim: state.auth.authCustomClaim
   };
 };
 

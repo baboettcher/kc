@@ -18,10 +18,21 @@ class SignIn extends Component {
     this.props.signIn(this.state);
   };
   render() {
-    const { authError, auth } = this.props;
-    console.log("STATE-->PROPS:", this.props);
+    const { authError, auth, authCustomClaim } = this.props;
 
-    //if (auth.uid) return <Redirect to="./super" />;
+    if (auth.uid) {
+      if (authCustomClaim === "super") {
+        return <Redirect to="./super" />;
+      } else if (authCustomClaim === "teacher") {
+        return <Redirect to="./teacher" />;
+      } else if (authCustomClaim === "student") {
+        return <Redirect to="./student" />;
+      } else if (authCustomClaim === "administrator") {
+        return <Redirect to="./administrator" />;
+      } else {
+        console.log("NO CUSTOM CLAIM FOUND");
+      }
+    }
 
     return (
       <div className="container">
@@ -56,9 +67,11 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     authError: state.auth.authError,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    authCustomClaim: state.auth.authCustomClaim
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 class TeacherDashboard extends Component {
@@ -7,7 +8,40 @@ class TeacherDashboard extends Component {
   };
 
   render() {
-    const { students } = this.props;
+    const { auth } = this.props;
+    if (!auth.uid) return <Redirect to="/signin" />;
+
+    return (
+      <div className="container">
+        <h3 className="header text-center">Teacher Dashboard</h3>
+        <h4>{auth.uid}</h4>
+        <h4>{auth.email}</h4>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
+export default connect(mapStateToProps)(TeacherDashboard);
+
+/* 
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+
+class TeacherDashboard extends Component {
+  state = {
+    teamNames: []
+  };
+
+  render() {
+    const { auth, students } = this.props;
+    if (!auth.uid) return <Redirect to="/signin" />;
 
     // currently add, but divide by class
     const listOfStudents =
@@ -45,3 +79,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(TeacherDashboard);
+ */

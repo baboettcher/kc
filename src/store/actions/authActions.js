@@ -22,31 +22,29 @@ export const signIn = credentials => {
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
 
-      // ------- CHECK CUSTOMER CLAIM ------ //
+      // ------- CHECK CUSTOM CLAIM ------ //
       .then(() => {
-        const auth = firebase.auth(); // refactor out firebase.auth() - 2nd time
+        const auth = firebase.auth(); // refactor out firebase.auth()
         auth.onAuthStateChanged(user => {
           if (user) {
             user
               .getIdTokenResult()
               .then(idTokenResult => {
                 const { authCustomClaim } = idTokenResult.claims;
-                console.log("authCustomClaim ---->", authCustomClaim);
                 return authCustomClaim;
               })
-
               .then(authCustomClaim => {
                 console.log("AGAIN ACC-->", authCustomClaim);
                 dispatch({ type: "LOGIN_SUCCESS", authCustomClaim });
               })
               .catch(err => console.log("Error in custom claim", err));
           } else {
+            // user no logged in. Next steps here?
             console.log("CLAIM ON SIGN-IN CHECKED: Logged out");
             return null;
           }
         });
       })
-
       .catch(err => {
         dispatch({ type: "LOGIN_ERROR", err });
       });
@@ -171,6 +169,15 @@ export const signUpSuper = credentials => {
           user
         });
         return firebaseResp;
+      })
+      .catch(err => {
+        console.log(
+          "error accessing firebase userID after custom lcaim success:",
+          err
+        );
+        dispatch({
+          type: "SIGNUP_SUPER_ERROR"
+        });
       });
 
     // ------------------- MONGO ------------------ //

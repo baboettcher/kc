@@ -20,7 +20,7 @@ const SignedInLinks_Super = props => {
           <NavLink to="/studentmasterlist">StudentsSUP</NavLink>
         </li>
         <li>
-          <a onClick={props.signOut}>LogoutSUP</a>
+          <a onClick={props.signOut}>LogoutSUPER</a>
         </li>
         <li>
           <NavLink to="/super" className="btn btn-floating pink lighten-1">
