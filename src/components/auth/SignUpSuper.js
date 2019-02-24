@@ -23,7 +23,7 @@ class SignUpSuper extends Component {
 
   render() {
     const { auth } = this.props; // later this must check state.auth for custom claim of super
-    if (auth.uid) return <Redirect to="./super" />;
+    if (auth.displayName) return <Redirect to="./super" />;
 
     return (
       <div className="container">

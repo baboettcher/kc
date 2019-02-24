@@ -14,8 +14,9 @@ class SuperDashboard extends Component {
     return (
       <div className="container">
         <h3 className="header text-center">Super Admin Dashboard</h3>
-        <h4>{auth.uid}</h4>
-        <h4>{auth.email}</h4>
+        <h4>{auth.displayName}</h4>
+        <h6>{auth.uid}</h6>
+        <h6>{auth.email}</h6>
       </div>
     );
   }

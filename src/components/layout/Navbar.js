@@ -5,7 +5,6 @@ import SignedInLinksTeacher from "./SignedInLinks_Teacher";
 import SignedInLinksSuper from "./SignedInLinks_Super";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
-import { authCheck } from "../../store/actions/authActions";
 
 class Navbar extends Component {
   state = {};
@@ -47,12 +46,6 @@ class Navbar extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    authCheck: user => dispatch(authCheck(user))
-  };
-};
-
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
@@ -61,7 +54,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navbar);
+export default connect(mapStateToProps)(Navbar);

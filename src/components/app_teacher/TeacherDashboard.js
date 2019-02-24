@@ -14,8 +14,9 @@ class TeacherDashboard extends Component {
     return (
       <div className="container">
         <h3 className="header text-center">Teacher Dashboard</h3>
-        <h4>{auth.uid}</h4>
-        <h4>{auth.email}</h4>
+        <h4>{auth.displayName}</h4>
+        <h5>{auth.uid}</h5>
+        <h5>{auth.email}</h5>
       </div>
     );
   }

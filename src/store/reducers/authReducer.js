@@ -13,28 +13,29 @@ const authReducer = (state = initialState, action) => {
         authCustomClaim: action.authCustomClaim
       };
 
-    case "SIGNOUT_SUCCESS":
-      console.log("signout success");
-      return { ...state, authCustomClaim: null };
-
     case "LOGIN_ERROR":
       console.log("login error", action.err);
       return { ...state, authError: "Auth failed" }; // another option: authError: action.err
 
+    case "SIGNOUT_SUCCESS":
+      console.log("signout success");
+      return { ...state, authCustomClaim: null };
+
     case "SIGNUP_SUPER_SUCCESS":
-      console.log("signup SUPER success-- action", action);
+      console.log("signup SUPER success-- action");
       return {
         ...state,
-        authCustomClaim: "super",
+        authCustomClaim: "super", // ISSUE: this clears on browser refresh
         authError: null,
         user: action.user
       };
 
     case "SIGNUP_SUPER_ERROR":
+      console.log("Auth error after SUPER customclaim success");
       return {
         ...state,
         authCustomClaim: null,
-        authError: "Firebase error after custom claim success",
+        authError: action.err,
         user: null
       };
 
@@ -42,8 +43,19 @@ const authReducer = (state = initialState, action) => {
       console.log("signup TEACHER success");
       return {
         ...state,
-        authCustomClaim: "teacher",
-        authError: null
+        authCustomClaim: "teacher", // ISSUE: this clears on browser refresh
+        authError: null,
+        user: action.user
+      };
+
+    case "SIGNUP_TEACHER_ERROR":
+      console.log("Auth error after TEACHER customclaim success");
+
+      return {
+        ...state,
+        authCustomClaim: null,
+        authError: action.err,
+        user: null
       };
 
     case "SIGNUP_STUDENT_SUCCESS":
@@ -52,6 +64,16 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authCustomClaim: "student",
         authError: null
+      };
+
+    case "SIGNUP_STUDENT_ERROR":
+      console.log("Auth error after STUDENT customclaim success");
+
+      return {
+        ...state,
+        authCustomClaim: null,
+        authError: action.err,
+        user: null
       };
 
     case "SIGNUP_ADMINISTRATOR_SUCCESS":
