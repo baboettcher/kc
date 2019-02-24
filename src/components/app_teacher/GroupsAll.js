@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+
 //import PropTypes from "prop-types";
 
 class GroupsAll extends Component {
@@ -10,7 +12,10 @@ class GroupsAll extends Component {
   }
 
   render() {
-    const { groups } = this.props;
+    const { auth, authCustomClaim, groups } = this.props;
+    // temp guard until local storage
+    if (!auth.uid) return <Redirect to="/signin" />;
+    if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     const listOfGroups =
       groups.current &&
@@ -40,8 +45,9 @@ class GroupsAll extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
-    groups: state.groups
+    groups: state.groups,
+    auth: state.firebase.auth,
+    authCustomClaim: state.auth.authCustomClaim
   };
 };
 

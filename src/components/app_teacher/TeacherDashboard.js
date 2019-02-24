@@ -8,7 +8,10 @@ class TeacherDashboard extends Component {
   };
 
   render() {
-    const { auth } = this.props;
+    const { auth, authCustomClaim } = this.props;
+    // temp guard until local storage
+    if (!auth.uid) return <Redirect to="/signin" />;
+    if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
     if (!auth.uid) return <Redirect to="/signin" />;
 
     return (
@@ -24,60 +27,9 @@ class TeacherDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    authCustomClaim: state.auth.authCustomClaim
   };
 };
 
 export default connect(mapStateToProps)(TeacherDashboard);
-
-/* 
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-
-class TeacherDashboard extends Component {
-  state = {
-    teamNames: []
-  };
-
-  render() {
-    const { auth, students } = this.props;
-    if (!auth.uid) return <Redirect to="/signin" />;
-
-    // currently add, but divide by class
-    const listOfStudents =
-      students.current &&
-      students.current.map(student => {
-        return (
-          <li key={student.id}>
-            {student.first} {student.last}
-          </li>
-        );
-      });
-    return (
-      <div className="container">
-        <h3 className="header text-center">Teacher Dashboard</h3>
-        <div>
-          {" "}
-          <ul>
-            Students
-            {listOfStudents}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    // reduce the amount of state used
-    auth: state.auth,
-    groups: state.groups,
-    students: state.students,
-    currentUser: state.currentUser
-  };
-};
-
-export default connect(mapStateToProps)(TeacherDashboard);
- */
