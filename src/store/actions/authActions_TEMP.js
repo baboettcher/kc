@@ -71,22 +71,6 @@ export const signUpStudent = credentials => {
 
         return firebaseResp;
       })
-
-      .then(() => {
-        const user = firebase.auth().currentUser;
-        user.updateProfile({
-          displayName: firstName + " " + lastName,
-          photoURL: "https://example.com/jane-q-user/profile.jpg"
-        });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
-      })
-
       .catch(function(err) {
         console.log("Error", err.message, err.code);
       })
@@ -105,6 +89,21 @@ export const signUpStudent = credentials => {
           type: "SIGNUP_STUDENT_ERROR",
           err
         });
+      })
+
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        user.updateProfile({
+          displayName: firstName + " " + lastName,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        });
+
+        // .then(() => {
+        //   console.log("inside update profile");
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
       })
 
       .catch(err => {
@@ -183,23 +182,6 @@ export const signUpSuper = credentials => {
       .auth()
       .createUserWithEmailAndPassword(credentials.email, credentials.password)
 
-      // ------------------- SET DISPLAY NAME / PIC ------------------ //
-      .then(firebaseResp => {
-        const user = firebase.auth().currentUser;
-        user.updateProfile({
-          displayName: firstName + " " + lastName,
-          photoURL: "https://example.com/jane-q-user/profile.jpg"
-        });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
-        return firebaseResp;
-      })
-
       // ------------------- FIREBASE CUSTOM CLAIM: SUPER ------------------ //
       .then(firebaseResp => {
         const { email } = firebaseResp.user;
@@ -210,9 +192,8 @@ export const signUpSuper = credentials => {
         });
         return firebaseResp;
       })
-
       .catch(function(err) {
-        console.log("Error", err);
+        console.log("Error", err.message, err.code);
       })
 
       .then(firebaseResp => {
@@ -229,6 +210,24 @@ export const signUpSuper = credentials => {
           type: "SIGNUP_SUPER_ERROR",
           err
         });
+      })
+
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        user.updateProfile({
+          displayName: firstName + " " + lastName,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        });
+
+        // .then(() => {
+        //   console.log("inside update profile");
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
+      })
+      .catch(err => {
+        console.log("Error Updating Profile");
       });
   };
 };

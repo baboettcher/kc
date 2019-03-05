@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUpTeacher } from "../../store/actions/authActions";
+import { signUpStudent } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 // later add GoogleClassroom, other options without email
@@ -105,7 +105,7 @@ class SignUpStudent extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUpTeacher: creds => dispatch(signUpTeacher(creds))
+    signUpStudent: creds => dispatch(signUpStudent(creds))
   };
 };
 

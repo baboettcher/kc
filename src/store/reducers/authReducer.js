@@ -63,7 +63,8 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         authCustomClaim: "student",
-        authError: null
+        authError: null,
+        user: action.user
       };
 
     case "SIGNUP_STUDENT_ERROR":

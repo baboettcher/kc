@@ -22,8 +22,10 @@ class SignUpSuper extends Component {
   };
 
   render() {
-    const { auth } = this.props; // later this must check state.auth for custom claim of super
-    if (auth.displayName) return <Redirect to="./super" />;
+    const { auth, authCustomClaim } = this.props; // later this must check state.auth for custom claim of super
+    //console.log("super auth---->>>>>", auth);
+
+    if (authCustomClaim === "super") return <Redirect to="./super" />;
 
     return (
       <div className="container">
@@ -71,7 +73,9 @@ class SignUpSuper extends Component {
           </div>
 
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+            <button className="btn pink lighten-1 z-depth-0">
+              Sign Up Super
+            </button>
           </div>
         </form>
       </div>
