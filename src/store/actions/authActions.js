@@ -211,20 +211,16 @@ export const signUpSuper = credentials => {
         return firebaseResp;
       })
 
-      .catch(function(err) {
-        console.log("Error", err);
-      })
-
       .then(firebaseResp => {
         const { user } = firebaseResp;
         dispatch({
-          type: "SIGNUP_SUPER_SUCCESS",
-          user
+          type: "SIGNUP_SUPER_SUCCESS"
         });
         return firebaseResp;
       })
 
       .catch(err => {
+        console.log("Error", err);
         dispatch({
           type: "SIGNUP_SUPER_ERROR",
           err

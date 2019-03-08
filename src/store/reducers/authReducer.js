@@ -26,8 +26,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         authCustomClaim: "super", // ISSUE: this clears on browser refresh
-        authError: null,
-        user: action.user
+        authError: null
       };
 
     case "SIGNUP_SUPER_ERROR":
@@ -63,8 +62,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         authCustomClaim: "student",
-        authError: null,
-        user: action.user
+        authError: null
       };
 
     case "SIGNUP_STUDENT_ERROR":
@@ -74,7 +72,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authCustomClaim: null,
         authError: action.err,
-        user: null
+        uid: null
       };
 
     case "SIGNUP_ADMINISTRATOR_SUCCESS":

@@ -12,19 +12,25 @@ class Navbar extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
 
-    let links = <SignedOutLinks />;
+    const displayName = auth.displayName ? auth.displayName : "no name";
 
-    if (auth.uid) {
-      if (authCustomClaim === "super") {
-        links = <SignedInLinksSuper />;
-      } else if (authCustomClaim === "teacher") {
-        links = <SignedInLinksTeacher />;
-      } else if (authCustomClaim === "student") {
-        links = <SignedInLinksStudent />;
-        // } else if (authCustomClaim === "administrator") {
-        //   links = <SignedInLinksAdministrator />;
-      }
+    let links = <SignedOutLinks />;
+    let userType = "";
+
+    // if (auth.uid) {
+    if (authCustomClaim === "super") {
+      userType = "SUPER: " + displayName;
+      links = <SignedInLinksSuper />;
+    } else if (authCustomClaim === "teacher") {
+      userType = "TEACHER: " + displayName;
+      links = <SignedInLinksTeacher />;
+    } else if (authCustomClaim === "student") {
+      userType = "STUDENT " + displayName;
+      links = <SignedInLinksStudent />;
+      // } else if (authCustomClaim === "administrator") {
+      //   links = <SignedInLinksAdministrator />;
     }
+    // }
 
     console.log("auth.uid----->", auth.uid);
     console.log("authCustomClaim", authCustomClaim);
@@ -37,7 +43,7 @@ class Navbar extends Component {
           {/*         <Link to="/" className="brand-logo left">
            */}{" "}
           <Link to="/" className="left">
-            {"sp/a/t/s"}
+            {userType}
           </Link>
           {links}
         </div>

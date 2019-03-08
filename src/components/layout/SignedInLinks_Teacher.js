@@ -8,23 +8,23 @@ const SignedInLinks_Teacher = props => {
     <div>
       <ul className="right">
         <li>
-          <NavLink to="/studentsall">StudentsT</NavLink>
+          <NavLink to="/studentsall">Students</NavLink>
         </li>
         <li>
-          <NavLink to="/groupsall">GroupsT</NavLink>
+          <NavLink to="/groupsall">Groups</NavLink>
         </li>
         <li>
-          <NavLink to="/colleagues">ColleaguesT</NavLink>
+          <NavLink to="/colleagues">Colleagues</NavLink>
         </li>
         <li>
-          <NavLink to="/callonme">CallOnMeT</NavLink>
+          <NavLink to="/callonme">CallOnMe</NavLink>
         </li>
         <li>
-          <NavLink to="/scoreboard">ScoreboardT</NavLink>
+          <NavLink to="/scoreboard">Scoreboard</NavLink>
         </li>
 
         <li>
-          <a onClick={props.signOut}>LogoutT</a>
+          <a onClick={props.signOut}>Logout</a>
         </li>
 
         <li>

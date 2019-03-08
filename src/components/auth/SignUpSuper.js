@@ -22,8 +22,7 @@ class SignUpSuper extends Component {
   };
 
   render() {
-    const { auth, authCustomClaim } = this.props; // later this must check state.auth for custom claim of super
-    //console.log("super auth---->>>>>", auth);
+    const { auth, authCustomClaim } = this.props;
 
     if (authCustomClaim === "super") return <Redirect to="./super" />;
 
