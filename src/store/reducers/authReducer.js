@@ -26,7 +26,8 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         authCustomClaim: "super", // ISSUE: this clears on browser refresh
-        authError: null
+        authError: null,
+        user: action.user
       };
 
     case "SIGNUP_SUPER_ERROR":

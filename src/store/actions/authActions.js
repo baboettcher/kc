@@ -60,19 +60,8 @@ export const signUpStudent = credentials => {
       .auth()
       .createUserWithEmailAndPassword(credentials.email, credentials.password)
 
-      // ------------------- FIREBASE CUSTOM CLAIM: STUDENT ------------------ //
+      // ------------------- SET DISPLAY NAME / PIC ------------------ //
       .then(firebaseResp => {
-        const { email } = firebaseResp.user;
-        const functions = firebase.functions();
-        const addStudentRole = functions.httpsCallable("addStudentRole");
-        addStudentRole({ email }).then(result => {
-          console.log("student firebase claim result:", result);
-        });
-
-        return firebaseResp;
-      })
-
-      .then(() => {
         const user = firebase.auth().currentUser;
         user.updateProfile({
           displayName: firstName + " " + lastName,
@@ -85,10 +74,18 @@ export const signUpStudent = credentials => {
         // .catch(err => {
         //   console.log(err);
         // });
+        return firebaseResp;
       })
 
-      .catch(function(err) {
-        console.log("Error", err.message, err.code);
+      // ------------------- FIREBASE CUSTOM CLAIM: STUDENT ------------------ //
+      .then(firebaseResp => {
+        const { email } = firebaseResp.user;
+        const functions = firebase.functions();
+        const addStudentRole = functions.httpsCallable("addStudentRole");
+        addStudentRole({ email }).then(result => {
+          console.log("STUDENT firebase claim result:", result);
+        });
+        return firebaseResp;
       })
 
       .then(firebaseResp => {
@@ -101,14 +98,11 @@ export const signUpStudent = credentials => {
       })
 
       .catch(err => {
+        console.log("Error", err);
         dispatch({
           type: "SIGNUP_STUDENT_ERROR",
           err
         });
-      })
-
-      .catch(err => {
-        console.log("Error Updating Profile");
       });
   };
 };
@@ -121,6 +115,23 @@ export const signUpTeacher = credentials => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(credentials.email, credentials.password)
+
+      // ------------------- SET DISPLAY NAME / PIC ------------------ //
+      .then(firebaseResp => {
+        const user = firebase.auth().currentUser;
+        user.updateProfile({
+          displayName: firstName + " " + lastName,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        });
+
+        // .then(() => {
+        //   console.log("inside update profile");
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
+        return firebaseResp;
+      })
 
       // ------------------- FIREBASE CUSTOM CLAIM: TEACHER ------------------ //
       .then(firebaseResp => {
@@ -206,7 +217,7 @@ export const signUpSuper = credentials => {
         const functions = firebase.functions();
         const addSuperRole = functions.httpsCallable("addSuperRole");
         addSuperRole({ email }).then(result => {
-          console.log("firebase claim result:", result);
+          console.log("SUPER firebase claim result:", result);
         });
         return firebaseResp;
       })
@@ -214,7 +225,8 @@ export const signUpSuper = credentials => {
       .then(firebaseResp => {
         const { user } = firebaseResp;
         dispatch({
-          type: "SIGNUP_SUPER_SUCCESS"
+          type: "SIGNUP_SUPER_SUCCESS",
+          user
         });
         return firebaseResp;
       })

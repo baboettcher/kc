@@ -20,7 +20,7 @@ class SignUpStudent extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.signUpTeacher(this.state);
+    this.props.signUpStudent(this.state);
     this.setState(() => {
       return {
         email: "",
@@ -34,8 +34,9 @@ class SignUpStudent extends Component {
   };
 
   render() {
-    const { auth } = this.props; // later this must check state.auth for custom claim of teacher
-    if (auth.uid) return <Redirect to="./teacher" />;
+    const { auth, authCustomClaim } = this.props;
+    if (authCustomClaim === "student") return <Redirect to="./student" />;
+    //if (auth.uid) return <Redirect to="./student" />;
 
     return (
       <div className="container">

@@ -32,8 +32,10 @@ class SignUpTeacher extends Component {
   };
 
   render() {
-    const { auth } = this.props; // later this must check state.auth for custom claim of teacher
-    if (auth.uid) return <Redirect to="./teacher" />;
+    const { auth, authCustomClaim } = this.props;
+
+    //if (auth.uid) return <Redirect to="./teacher" />;
+    if (authCustomClaim === "teacher") return <Redirect to="./teacher" />;
 
     return (
       <div className="container">
