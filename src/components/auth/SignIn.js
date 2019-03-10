@@ -27,8 +27,8 @@ class SignIn extends Component {
         return <Redirect to="./teacher" />;
       } else if (authCustomClaim === "student") {
         return <Redirect to="./student" />;
-      } else if (authCustomClaim === "administrator") {
-        return <Redirect to="./administrator" />;
+      } else if (authCustomClaim === "admin") {
+        return <Redirect to="./admin" />;
       } else {
         console.log("NO CUSTOM CLAIM FOUND");
       }

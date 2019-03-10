@@ -47,18 +47,18 @@ exports.addTeacherRole = functions.https.onCall((data, context) => {
     });
 });
 
-exports.addAdministratorRole = functions.https.onCall((data, context) => {
+exports.addAdminRole = functions.https.onCall((data, context) => {
   return admin
     .auth()
     .getUserByEmail(data.email)
     .then(user => {
       return admin.auth().setCustomUserClaims(user.uid, {
-        authCustomClaim: "administrator"
+        authCustomClaim: "admin"
       });
     })
     .then(() => {
       return {
-        message: `Success ${data.email} has been made an Administrator`
+        message: `Success ${data.email} has been made an Admin`
       };
     })
     .catch(err => {

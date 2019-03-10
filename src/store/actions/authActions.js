@@ -185,6 +185,91 @@ export const signUpTeacher = credentials => {
   };
 };
 
+export const signUpAdmin = credentials => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    const {
+      firstName,
+      lastName,
+      school,
+      district,
+      state,
+      authLevel
+    } = credentials;
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(credentials.email, credentials.password)
+
+      // ------------------- SET DISPLAY NAME / PIC ------------------ //
+      .then(firebaseResp => {
+        const user = firebase.auth().currentUser;
+        user.updateProfile({
+          displayName: firstName + " " + lastName,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        });
+
+        // .then(() => {
+        //   console.log("inside update profile");
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
+        return firebaseResp;
+      })
+
+      // ------------------- FIREBASE CUSTOM CLAIM: TEACHER ------------------ //
+      .then(firebaseResp => {
+        const { email } = firebaseResp.user;
+        const functions = firebase.functions();
+        const addAdminRole = functions.httpsCallable("addAdminRole");
+        addAdminRole({ email }).then(result => {
+          console.log("firebase ADMIN claim result:", result);
+        });
+
+        return firebaseResp;
+      })
+      .catch(function(err) {
+        console.log("Error", err.message, err.code);
+      })
+
+      .then(firebaseResp => {
+        const { user } = firebaseResp;
+        dispatch({
+          type: "SIGNUP_ADMIN_SUCCESS",
+          user
+        });
+        return firebaseResp;
+      })
+
+      .catch(err => {
+        dispatch({
+          type: "SIGNUP_ADMIN_ERROR",
+          err
+        });
+      })
+
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        user.updateProfile({
+          displayName: firstName + " " + lastName,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        });
+
+        // .then(() => {
+        //   console.log("inside update profile");
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
+      })
+
+      .catch(err => {
+        console.log("Error Updating Profile");
+      });
+  };
+};
+
 export const signUpSuper = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();

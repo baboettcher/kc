@@ -3,25 +3,16 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks_Teacher = props => {
+const SignedInLinks_Admin = props => {
   const { initials } = props;
   return (
     <div>
       <ul className="right">
         <li>
-          <NavLink to="/studentsall">Students</NavLink>
+          <NavLink to="/studentsall">xStudents</NavLink>
         </li>
         <li>
-          <NavLink to="/groupsall">Groups</NavLink>
-        </li>
-        <li>
-          <NavLink to="/colleagues">Colleagues</NavLink>
-        </li>
-        <li>
-          <NavLink to="/callonme">CallOnMe</NavLink>
-        </li>
-        <li>
-          <NavLink to="/scoreboard">Scoreboard</NavLink>
+          <NavLink to="/groupsall">xGroups</NavLink>
         </li>
 
         <li>
@@ -29,7 +20,7 @@ const SignedInLinks_Teacher = props => {
         </li>
 
         <li>
-          <NavLink to="/teacher" className="btn btn-floating pink lighten-1">
+          <NavLink to="/admin" className="btn btn-floating pink lighten-1">
             {initials}
           </NavLink>
         </li>
@@ -47,4 +38,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-)(SignedInLinks_Teacher);
+)(SignedInLinks_Admin);

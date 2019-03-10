@@ -13,6 +13,7 @@ import SignIn from "./auth/SignIn";
 import SignUpSuper from "./auth/SignUpSuper";
 import SignUpTeacher from "./auth/SignUpTeacher";
 import SignUpStudent from "./auth/SignUpStudent";
+import SignUpAdmin from "./auth/SignUpAdmin";
 
 import SuperDashboard from "./app_super/SuperDashboard";
 import SuperAddDistrict from "./app_super/DistrictAdd";
@@ -57,6 +58,7 @@ class App extends Component {
             <Route path="/signupsuper" component={SignUpSuper} />
             <Route path="/signupteacher" component={SignUpTeacher} />
             <Route path="/signupstudent" component={SignUpStudent} />
+            <Route path="/signupadmin" component={SignUpAdmin} />
 
             <Route path="/super" component={SuperDashboard} />
             <Route path="/super_add_district" component={SuperAddDistrict} />
@@ -64,6 +66,8 @@ class App extends Component {
             <Route path="/schoolmasterlist" component={SchoolMasterList} />
             <Route path="/teachermasterlist" component={TeacherMasterList} />
             <Route path="/studentmasterlist" component={StudentMasterList} />
+
+            <Route path="/admin" component={AdminDashboard} />
 
             <Route path="/teacher" component={TeacherDashboard} />
             <Route path="/scoreboard" component={Scoreboard} />

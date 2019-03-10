@@ -76,15 +76,15 @@ const authReducer = (state = initialState, action) => {
         uid: null
       };
 
-    case "SIGNUP_ADMINISTRATOR_SUCCESS":
+    case "SIGNUP_ADMIN_SUCCESS":
       console.log("signup ADMINISTRATOR success");
       return {
         ...state,
-        authCustomClaim: "administrator",
+        authCustomClaim: "admin",
         authError: null
       };
 
-    case "SIGNUP_ERROR":
+    case "SIGNUP_ADMIN_ERROR":
       console.log("signup ERROR");
       return {
         ...state,
