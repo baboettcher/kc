@@ -24,7 +24,7 @@ export const signIn = credentials => {
 
       // ------- CHECK CUSTOM CLAIM ------ //
       .then(() => {
-        const auth = firebase.auth(); // refactor out firebase.auth()
+        const auth = firebase.auth();
         auth.onAuthStateChanged(user => {
           if (user) {
             user
@@ -34,7 +34,7 @@ export const signIn = credentials => {
                 return authCustomClaim;
               })
               .then(authCustomClaim => {
-                console.log("AGAIN ACC-->", authCustomClaim);
+                console.log("authCustomClaim-->", authCustomClaim);
                 dispatch({ type: "LOGIN_SUCCESS", authCustomClaim });
               })
               .catch(err => console.log("Error in custom claim", err));
@@ -110,7 +110,7 @@ export const signUpStudent = credentials => {
 export const signUpTeacher = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    const { authLevel, firstName, lastName } = credentials;
+    const { authLevel, firstName, lastName, schoolName, email } = credentials;
 
     firebase
       .auth()
@@ -123,13 +123,6 @@ export const signUpTeacher = credentials => {
           displayName: firstName + " " + lastName,
           photoURL: "https://example.com/jane-q-user/profile.jpg"
         });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
         return firebaseResp;
       })
 
@@ -144,9 +137,6 @@ export const signUpTeacher = credentials => {
 
         return firebaseResp;
       })
-      .catch(function(err) {
-        console.log("Error", err.message, err.code);
-      })
 
       .then(firebaseResp => {
         const { user } = firebaseResp;
@@ -157,30 +147,40 @@ export const signUpTeacher = credentials => {
         return firebaseResp;
       })
 
+      // --- MONGO --- //
+      .then(firebaseResp => {
+        const { uid } = firebaseResp.user;
+        const url = "/users/addteacher";
+
+        const data = {
+          first_name: firstName,
+          last_name: lastName,
+          school_name: schoolName,
+          email,
+          fb_uid: uid
+        };
+
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(response =>
+            dispatch({
+              type: "ADD_TEACHER_MONGO_SUCCESS",
+              payload: response
+            })
+          )
+          .catch(error => console.error("Mongo error adding district", error));
+      })
       .catch(err => {
         dispatch({
           type: "SIGNUP_TEACHER_ERROR",
           err
         });
-      })
-
-      .then(() => {
-        const user = firebase.auth().currentUser;
-        user.updateProfile({
-          displayName: firstName + " " + lastName,
-          photoURL: "https://example.com/jane-q-user/profile.jpg"
-        });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
-      })
-
-      .catch(err => {
-        console.log("Error Updating Profile");
       });
   };
 };
@@ -209,16 +209,10 @@ export const signUpAdmin = credentials => {
           photoURL: "https://example.com/jane-q-user/profile.jpg"
         });
 
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
         return firebaseResp;
       })
 
-      // ------------------- FIREBASE CUSTOM CLAIM: TEACHER ------------------ //
+      // ------------------- FIREBASE CUSTOM CLAIM: ADMIN ------------------ //
       .then(firebaseResp => {
         const { email } = firebaseResp.user;
         const functions = firebase.functions();
@@ -247,25 +241,6 @@ export const signUpAdmin = credentials => {
           type: "SIGNUP_ADMIN_ERROR",
           err
         });
-      })
-
-      .then(() => {
-        const user = firebase.auth().currentUser;
-        user.updateProfile({
-          displayName: firstName + " " + lastName,
-          photoURL: "https://example.com/jane-q-user/profile.jpg"
-        });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
-      })
-
-      .catch(err => {
-        console.log("Error Updating Profile");
       });
   };
 };
@@ -286,13 +261,6 @@ export const signUpSuper = credentials => {
           displayName: firstName + " " + lastName,
           photoURL: "https://example.com/jane-q-user/profile.jpg"
         });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
         return firebaseResp;
       })
 

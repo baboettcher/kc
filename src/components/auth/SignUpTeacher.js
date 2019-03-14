@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUpTeacher } from "../../store/actions/authActions";
+import { signUpTeacher, signOut } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 class SignUpTeacher extends Component {
@@ -9,7 +9,8 @@ class SignUpTeacher extends Component {
     password: "",
     firstName: "",
     lastName: "",
-    authLevel: "teacher"
+    authLevel: "teacher",
+    schoolName: "" // later this is dynamically loaded from preset
   };
   handleChange = e => {
     this.setState({
@@ -26,7 +27,8 @@ class SignUpTeacher extends Component {
         password: "",
         firstName: "",
         lastName: "",
-        authLevel: "teacher"
+        authLevel: "teacher",
+        schoolName: "" // later this is dynamic
       };
     });
   };
@@ -35,7 +37,15 @@ class SignUpTeacher extends Component {
     const { auth, authCustomClaim } = this.props;
 
     //if (auth.uid) return <Redirect to="./teacher" />;
-    if (authCustomClaim === "teacher") return <Redirect to="./teacher" />;
+    // if (authCustomClaim === "teacher") return <Redirect to="./teacher" />;
+
+    if (authCustomClaim === "teacher") {
+      // ADD SUCCESS MESSAGE and please log back in
+      console.log("SUCCESS! NOW LOG IN");
+      this.props.signOut();
+
+      return <Redirect to="/signin" />;
+    }
 
     return (
       <div className="container">
@@ -83,6 +93,16 @@ class SignUpTeacher extends Component {
           </div>
 
           <div className="input-field">
+            <label htmlFor="schoolName">School</label>
+            <input
+              type="text"
+              id="schoolName"
+              value={this.state.schoolName}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">
               Sign Up Teacher
             </button>
@@ -95,7 +115,8 @@ class SignUpTeacher extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUpTeacher: creds => dispatch(signUpTeacher(creds))
+    signUpTeacher: creds => dispatch(signUpTeacher(creds)),
+    signOut: () => dispatch(signOut())
   };
 };
 

@@ -58,6 +58,12 @@ const authReducer = (state = initialState, action) => {
         user: null
       };
 
+    case "ADD_TEACHER_MONGO_SUCCESS":
+      return {
+        ...state,
+        newTeacherToMongo: action.payload
+      };
+
     case "SIGNUP_STUDENT_SUCCESS":
       console.log("signup STUDENT success");
       return {
