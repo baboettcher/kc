@@ -1,18 +1,23 @@
 export const loadTeacherDashboard = fb_uid => {
   return (dispatch, getState) => {
-    const url = "/users/loadteacher";
+    const url = "/users/load_teacher_dashboard?fb_uid=";
 
     console.log("load Teacher Dash action");
-    /*    fetch("/users/teacher_record?id=" + fb_uid) // how can i get the data ?
-      .then(teacher1 => teacher1.json())
 
-      .then(teacher2 =>
+    fetch(url + fb_uid) // how can i get the data ?
+      .then(teacher1 => teacher1.json())
+      .then(h => {
+        console.log("============>", h);
+        return h;
+      })
+
+      .then(teacher2 => {
         dispatch({
           type: "LOAD_TEACHER_DASHBOARD",
           payload: teacher2
-        })
-      )
-      .catch(error => console.error("Error adding teacher", error)); */
+        });
+      })
+      .catch(error => console.error("Error adding teacher", error));
   };
 };
 

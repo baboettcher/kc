@@ -9,56 +9,38 @@ class TeacherDashboard extends Component {
   };
 
   componentDidMount() {
-    // const { uid: fb_uid } = this.props.auth;
-    // console.log("fb_uid", fb_uid);
-
-    const { auth: fb_uid, authCustomClaim } = this.props;
-    console.log("auth.uid--(fb_uid.uid)--->", fb_uid.uid);
-    console.log("auth.uid--(fb_uid)--->", fb_uid);
-    this.props.loadTeacherDashboard();
-
-    // WEDS
-    // pass fb__uid into loadTeacherDashbpard
-    // display info
-    // test if  regular loggin in wokrs
-    // add student and refer to them/ one a student is added, who cna erase?
-
-    // load teachers info
-    /*     fetch("/users/all_districts")
-      .then(districts1 => districts1.json())
-      .then(districts2 => {
-        this.setState({
-          districts: districts2
-        });
-      })
-      .catch(err => {
-        console.log("Error on initial load", err);
-      });
- */
+    const { auth, authCustomClaim } = this.props;
+    const fb_uid = auth.uid;
+    this.props.loadTeacherDashboard(fb_uid);
   }
 
   render() {
     const { auth, authCustomClaim } = this.props;
+    // console.log("MTD", this.props.mongoTeacherData);
     // temp guard until local storage
     if (!auth.uid) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
-    return (
-      <div className="container">
-        <h3 className="header text-center">Teacher Dashboard</h3>
-        <h4>{auth.displayName}</h4>
-        <h5>{auth.uid}</h5>
-        <h5>{auth.email}</h5>
-        <h4>mongo stuff here</h4>
-      </div>
-    );
+    if (this.props.mongoTeacherData) {
+      const { first_name, last_name } = this.props.mongoTeacherData;
+      return (
+        <div className="container">
+          <h3 className="header text-center">Teacher Dashboard</h3>
+          <h4>{first_name}</h4>
+          <h5>{last_name}</h5>
+        </div>
+      );
+    } else {
+      return <h1>Loading</h1>;
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
-    authCustomClaim: state.auth.authCustomClaim
+    authCustomClaim: state.auth.authCustomClaim,
+    mongoTeacherData: state.teacher.mongoData
   };
 };
 
