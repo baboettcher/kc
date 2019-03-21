@@ -110,7 +110,15 @@ export const signUpStudent = credentials => {
 export const signUpTeacher = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    const { authLevel, firstName, lastName, schoolName, email } = credentials;
+    const {
+      authLevel,
+      firstName,
+      lastName,
+      schoolName,
+      email,
+      currentStudents,
+      currentClasses
+    } = credentials;
 
     firebase
       .auth()
@@ -157,7 +165,9 @@ export const signUpTeacher = credentials => {
           last_name: lastName,
           school_name: schoolName,
           email,
-          fb_uid: uid
+          fb_uid: uid,
+          current_students: currentStudents,
+          current_classes: currentClasses
         };
 
         fetch(url, {

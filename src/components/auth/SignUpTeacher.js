@@ -10,7 +10,9 @@ class SignUpTeacher extends Component {
     firstName: "",
     lastName: "",
     authLevel: "teacher",
-    schoolName: "" // later this is dynamically loaded from preset
+    schoolName: "",
+    currentStudents: [], // later this is dynamically loaded from preset
+    currentClasses: []
   };
   handleChange = e => {
     this.setState({

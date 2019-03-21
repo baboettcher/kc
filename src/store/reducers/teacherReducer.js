@@ -6,6 +6,11 @@ const teacherReducer = (state = {}, action) => {
         ...state,
         mongoData: action.payload
       };
+    case "TEACHER_ADD_CLASS":
+      console.log("teacher add a class", action.payload);
+      return {
+        ...state
+      };
 
     default:
       return state;
