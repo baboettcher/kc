@@ -18,7 +18,7 @@ export const loadTeacherDashboard = fb_uid => {
 
 export const teacherAddClass = newClassInfo => {
   return (dispatch, getState) => {
-    const url = "/users/teacher_add_class/" + newClassInfo.uid;
+    const url = "/users/teacher_add_class/" + newClassInfo._id;
 
     console.log("newClassInfo-->", newClassInfo);
 
