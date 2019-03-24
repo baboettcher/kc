@@ -13,11 +13,11 @@ class CallOnMe extends Component {
       showModal: false
     };
 
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.onModalClose = this.onModalClose.bind(this);
   }
 
-  onClick() {
+  handleClick() {
     this.setState({
       showModal: true
     });
@@ -35,12 +35,10 @@ class CallOnMe extends Component {
     if (!auth.uid) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
-    console.log(this.state.showModal);
-
     return (
       <div>
         <h1 className="title">Call On Me</h1>
-        <button onClick={this.onClick}>push me if you dare</button>
+        <button handleClick={this.onClick}>Pick a student</button>
         {this.state.showModal ? (
           <Modal
             mainText="This is the big time"
