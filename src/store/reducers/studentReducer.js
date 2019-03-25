@@ -5,10 +5,18 @@ const initialState = {
     { id: "d244b8b2e", first: "Sarah", last: "Jonee", kcoins: 35.1 }
   ]
 };
+
 const studentsReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_STUDENT":
       console.log("student added", action.studentInfo);
+
+    case "CLEAR_STUDENT_ON_SIGNOUT":
+      console.log("clear student data");
+      return {
+        ...state,
+        mongoData: null
+      };
   }
   return state;
 };

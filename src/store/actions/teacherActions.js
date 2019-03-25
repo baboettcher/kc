@@ -2,8 +2,6 @@ export const loadTeacherDashboard = fb_uid => {
   return (dispatch, getState) => {
     const url = "/users/load_teacher_dashboard?fb_uid=";
 
-    console.log("load Teacher Dash action");
-
     fetch(url + fb_uid)
       .then(teacher1 => teacher1.json())
       .then(teacher2 => {
@@ -16,11 +14,17 @@ export const loadTeacherDashboard = fb_uid => {
   };
 };
 
+export const clearTeacherOnSignout = () => {
+  return dispatch => {
+    dispatch({
+      type: "CLEAR_TEACHER_ON_SIGNOUT"
+    });
+  };
+};
+
 export const teacherAddClass = newClassInfo => {
   return (dispatch, getState) => {
     const url = "/users/teacher_add_class/" + newClassInfo._id;
-
-    console.log("newClassInfo-->", newClassInfo);
 
     fetch(url, {
       method: "PUT",
@@ -31,13 +35,17 @@ export const teacherAddClass = newClassInfo => {
     })
       .then(res => res.json())
       .then(response => console.log("Success:", JSON.stringify(response)))
+      .catch(error => console.error("Error teacher adding a class", error));
+
+    /* // not needed
       .then(districtInfo =>
         dispatch({
           type: "TEACHER_ADD_CLASS",
           payload: districtInfo
         })
       )
-      .catch(error => console.error("Error teacher adding a class", error));
+
+ */
   };
 };
 

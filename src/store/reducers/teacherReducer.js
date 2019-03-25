@@ -6,6 +6,14 @@ const teacherReducer = (state = {}, action) => {
         ...state,
         mongoData: action.payload
       };
+
+    case "CLEAR_TEACHER_ON_SIGNOUT":
+      console.log("clear teacher data");
+      return {
+        ...state,
+        mongoData: null
+      };
+
     case "TEACHER_ADD_CLASS":
       console.log("teacher add a class", action.payload);
       return {

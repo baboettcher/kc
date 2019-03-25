@@ -20,7 +20,7 @@ class TeacherDashboard extends Component {
     if (!auth.uid) return <Redirect to="/signin" />;
 
     // comments out for now due to refresh issue
-    //if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
+    // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     if (this.state.classCreate) {
       return <Redirect to="/classcreate" />;
@@ -36,16 +36,12 @@ class TeacherDashboard extends Component {
         current_classes
       } = this.props.mongoTeacherData;
 
-      current_classes.forEach(function(a) {
-        console.log(a.classTitle);
-      });
-
       // make a table
       const listOfClasses = current_classes.map(a => (
         <ul>
           <h6>
             <strong>{a.classTitle}</strong> Grade: {a.gradeLevel} Notes:
-            {a.specialnotes} Join Code: {a.joinPasscode}
+            {a.specialNotes} Join Code: {a.joinPasscode}
           </h6>
         </ul>
       ));
@@ -57,7 +53,6 @@ class TeacherDashboard extends Component {
           </h3>
           <h5>{school_name}</h5>
           <h5>Current classes: {current_classes.length}</h5>
-          <p>Dropdown menu here to select for other array of classes</p>
           {listOfClasses}
 
           <h5>Current students - NEXT : {current_students.length}</h5>

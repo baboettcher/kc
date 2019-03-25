@@ -8,6 +8,14 @@ export const addStudent = studentInfo => {
   };
 };
 
+export const clearStudentOnSignout = () => {
+  return dispatch => {
+    dispatch({
+      type: "CLEAR_STUDENT_ON_SIGNOUT"
+    });
+  };
+};
+
 /* 
 export const addStudent = () => {
   return {

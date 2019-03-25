@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { teacherAddClass } from "../../store/actions/teacherActions";
 import generatePassword from "password-generator";
@@ -15,8 +14,8 @@ class ClassCreate extends Component {
     classTitle: "",
     gradeLevel: "",
     specialNotes: "",
-    joinPasscode: generatePassword(6),
-    teacher_id: "" // set this in ??component did mount?
+    joinPasscode: generatePassword(6)
+    //teacher_id: "" // set this in ??component did mount?
   };
 
   handleChange = e => {
@@ -26,11 +25,10 @@ class ClassCreate extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-
-    //console.log("===>>>", this.props.mongoTeacherData);
-
+    // push new class onto classes array of teacher
     this.props.mongoTeacherData.current_classes.push(this.state);
-    console.log("updated===>", this.props.mongoTeacherData);
+
+    console.log("updated pt1 ======>", this.props.mongoTeacherData);
     this.props.teacherAddClass(this.props.mongoTeacherData);
 
     //this.props.addToCodeLookupList
@@ -41,8 +39,8 @@ class ClassCreate extends Component {
         classTitle: "",
         gradeLevel: "",
         specialNotes: "",
-        joinPasscode: generatePassword(6),
-        teacher_id: this.props.mongoTeacherData._id
+        joinPasscode: generatePassword(6)
+        // teacher_id: this.props.mongoTeacherData._id
       };
     });
   };
@@ -50,7 +48,9 @@ class ClassCreate extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
-    if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
+
+    // TEMP
+    //if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     return (
       <div className="container">

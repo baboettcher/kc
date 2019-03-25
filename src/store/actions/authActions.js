@@ -7,7 +7,7 @@ export const signOut = () => {
       .signOut()
       .then(() => {
         dispatch({
-          type: "SIGNOUT_SUCCESS"
+          type: "SIGNOUT_SUCCESS" // need to clear ALL state: teacher, student, admin, super
         });
       });
   };
@@ -39,7 +39,6 @@ export const signIn = credentials => {
               })
               .catch(err => console.log("Error in custom claim", err));
           } else {
-            // user no logged in. Next steps here?
             console.log("CLAIM ON SIGN-IN CHECKED: Logged out");
             return null;
           }

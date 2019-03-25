@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { addStudent } from "../../store/actions/studentsActions";
+import { addStudent } from "../../store/actions/studentActions";
 
 //import PropTypes from "prop-types";
 

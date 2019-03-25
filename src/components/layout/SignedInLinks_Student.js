@@ -1,38 +1,48 @@
-import React from "react";
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
+import { clearStudentOnSignout } from "../../store/actions/studentActions";
 
-const SignedInLinks_Student = props => {
-  const { initials } = props;
-  return (
-    <ul className="right">
-      <li>
-        {" "}
-        <NavLink to="/myroom">My Room</NavLink>
-      </li>
+class SignedInLinks_Student extends Component {
+  fullSignOut() {
+    this.props.firebaseSignOut();
+    this.props.clearStudentOnSignout();
+  }
 
-      <li>
-        {" "}
-        <NavLink to="/tradezone">Trade</NavLink>
-      </li>
+  render() {
+    const { initials } = this.props;
 
-      <li>
-        <a onClick={props.signOut}>Logout</a>
-      </li>
+    return (
+      <ul className="right">
+        <li>
+          {" "}
+          <NavLink to="/myroom">My Room</NavLink>
+        </li>
 
-      <li>
-        <NavLink to="/student" className="btn btn-floating pink lighten-1">
-          {initials}
-        </NavLink>
-      </li>
-    </ul>
-  );
-};
+        <li>
+          {" "}
+          <NavLink to="/tradezone">Trade</NavLink>
+        </li>
+
+        <li>
+          <a onClick={this.fullSignOut.bind(this)}>Logout</a>
+        </li>
+
+        <li>
+          <NavLink to="/student" className="btn btn-floating pink lighten-1">
+            {initials}
+          </NavLink>
+        </li>
+      </ul>
+    );
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
-    signOut: () => dispatch(signOut())
+    firebaseSignOut: () => dispatch(signOut()),
+    clearStudentOnSignout: () => dispatch(clearStudentOnSignout())
   };
 };
 

@@ -15,30 +15,27 @@ class Navbar extends Component {
 
     const displayName = auth.displayName ? auth.displayName : "no name";
     let initials = displayName.split(" ")[0][0] + displayName.split(" ")[1][0];
-    console.log(initials);
 
     let links = <SignedOutLinks />;
     let userType = "SIGN-UP";
-    let ifUserClickOnName = "/"; // this need to change - to log-in page
+    let ifUserClicksOnName = "/"; // this need to change - to log-in page
 
-    // if (auth.uid) {
     if (authCustomClaim === "super") {
       userType = "SUPER: " + displayName;
       links = <SignedInLinksSuper initials={initials} />;
-      ifUserClickOnName = "./super";
+      ifUserClicksOnName = "./super";
     } else if (authCustomClaim === "teacher") {
       userType = "TEACHER: " + displayName;
       links = <SignedInLinksTeacher initials={initials} />;
-      ifUserClickOnName = "./teacher";
+      ifUserClicksOnName = "./teacher";
     } else if (authCustomClaim === "student") {
       userType = "STUDENT " + displayName;
       links = <SignedInLinksStudent initials={initials} />;
-      ifUserClickOnName = "./student";
+      ifUserClicksOnName = "./student";
     } else if (authCustomClaim === "admin") {
       links = <SignedInLinksAdmin initials={initials} />;
-      ifUserClickOnName = "./admin";
+      ifUserClicksOnName = "./admin";
     }
-    // }
 
     console.log("auth.uid----->", auth.uid);
     console.log("authCustomClaim", authCustomClaim);
@@ -50,7 +47,10 @@ class Navbar extends Component {
         <div className="container">
           {/*         <Link to="/" className="brand-logo left">
            */}{" "}
-          <Link to={ifUserClickOnName} className="left">
+          <Link
+            to={ifUserClicksOnName ? ifUserClicksOnName : "/"}
+            className="left"
+          >
             {" "}
             {userType}
           </Link>
