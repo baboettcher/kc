@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Modal from "../common/modal";
-//import { threadId } from "worker_threads";
 
 //import PropTypes from "prop-types";
 
@@ -13,11 +12,11 @@ class CallOnMe extends Component {
       showModal: false
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleModalClick = this.handleModalClick.bind(this);
     this.onModalClose = this.onModalClose.bind(this);
   }
 
-  handleClick() {
+  handleModalClick() {
     this.setState({
       showModal: true
     });
@@ -38,7 +37,9 @@ class CallOnMe extends Component {
     return (
       <div>
         <h1 className="title">Call On Me</h1>
-        <button handleClick={this.onClick}>Pick a student</button>
+        <button onClick={this.handleModalClick.bind(this)}>
+          Pick a student
+        </button>
         {this.state.showModal ? (
           <Modal
             mainText="This is the big time"
