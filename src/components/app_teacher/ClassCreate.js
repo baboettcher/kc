@@ -33,7 +33,7 @@ class ClassCreate extends Component {
       specialNotes: this.state.specialNotes,
       classTitle: this.state.classTitle,
       joinPasscode: generatePassword(6), // added
-      teacher_id: "comingsoon12345" // added
+      teacher_id: this.props.mongoTeacherData._id // added
     };
     // push new class onto classes array of teacher
     this.props.mongoTeacherData.current_classes.push(partOfStateToSend);
@@ -66,7 +66,7 @@ class ClassCreate extends Component {
   }
 
   render() {
-    const { auth, authCustomClaim } = this.props;
+    const { auth, authCustomClaim, mongoTeacherData } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
 
     if (this.state.returnToDash) return <Redirect to="/teacher" />;
@@ -74,6 +74,7 @@ class ClassCreate extends Component {
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
+    console.log("mongoTeacherData", mongoTeacherData);
     return (
       <div className="container">
         {this.state.showModal ? (
@@ -86,7 +87,8 @@ class ClassCreate extends Component {
 
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">
-            Create a New Class for Mr's____
+            Create a New Class for {mongoTeacherData.first_name}{" "}
+            {mongoTeacherData.last_name}
           </h5>
 
           <div className="input-field">
