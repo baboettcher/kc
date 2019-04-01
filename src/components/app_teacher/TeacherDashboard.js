@@ -40,8 +40,8 @@ class TeacherDashboard extends Component {
       const listOfClasses = current_classes.map(a => (
         <ul>
           <h6>
-            <strong>{a.classTitle}</strong> Grade: {a.gradeLevel} Notes:
-            {a.specialNotes} Join Code: {a.joinPasscode}
+            <strong>{a.class_description}</strong> Grade: {a.grade_level} Notes:
+            {a.special_notes} Join Code: {a.join_code}
           </h6>
         </ul>
       ));

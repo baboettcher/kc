@@ -48,7 +48,7 @@ export const teacherAddClass = newClassInfo => {
 
     // part 2 - add to "add_code" db
     const url2 = "/users/save_new_addcode/";
-    console.log("newClassInfo #2:", newClassInfo);
+    console.log("newClassInfo #2---->:", newClassInfo);
 
     fetch(url2, {
       method: "POST",
