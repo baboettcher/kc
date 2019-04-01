@@ -12,7 +12,7 @@ import Modal from "../common/modal";
 // 2) Save to "quick lookup table" so when students register using this code, they can see teacher name/ special message beofre joining
 class ClassCreate extends Component {
   state = {
-    classTitle: "",
+    classDescription: "",
     gradeLevel: "",
     specialNotes: "",
     joinPasscode: generatePassword(6),
@@ -27,14 +27,24 @@ class ClassCreate extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
+
+    // const partOfStateToSend = {
+    //   classTitle: this.state.classTitle,
+    //   gradeLevel: this.state.gradeLevel,
+    //   specialNotes: this.state.specialNotes,
+    //   classTitle: this.state.classTitle,
+    //   joinPasscode: generatePassword(6), // added
+    //   teacher_id: this.props.mongoTeacherData._id // added
+    // }
+
     const partOfStateToSend = {
-      classTitle: this.state.classTitle,
-      gradeLevel: this.state.gradeLevel,
-      specialNotes: this.state.specialNotes,
-      classTitle: this.state.classTitle,
-      joinPasscode: generatePassword(6), // added
-      teacher_id: this.props.mongoTeacherData._id // added
+      join_code: generatePassword(6), // added
+      grade_level: this.state.gradeLevel,
+      class_description: this.state.classDescription,
+      teacher_id: this.props.mongoTeacherData._id, // added
+      special_notes: this.state.specialNotes
     };
+
     // push new class onto classes array of teacher
     this.props.mongoTeacherData.current_classes.push(partOfStateToSend);
     this.props.teacherAddClass(this.props.mongoTeacherData);
@@ -92,11 +102,11 @@ class ClassCreate extends Component {
           </h5>
 
           <div className="input-field">
-            <label htmlFor="classTitle">Title of this class</label>
+            <label htmlFor="classDescription">Description of this class</label>
             <input
               type="text"
-              id="classTitle"
-              value={this.state.classTitle}
+              id="classDescription"
+              value={this.state.classDescription}
               onChange={this.handleChange}
             />
           </div>

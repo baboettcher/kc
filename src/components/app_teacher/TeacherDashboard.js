@@ -54,7 +54,7 @@ class TeacherDashboard extends Component {
           <h5>{school_name}</h5>
           <h5>Current classes: {current_classes.length}</h5>
           {listOfClasses}
-          <h5>Current students - NEXT : {current_students.length}</h5>
+          <h5>Current students - NEXT: {current_students.length}</h5>
           <li>
             <NavLink to="/classcreate">Create a Class</NavLink>
           </li>
