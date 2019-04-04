@@ -37,9 +37,6 @@ class Navbar extends Component {
       ifUserClicksOnName = "./admin";
     }
 
-    console.log("auth.uid----->", auth.uid);
-    console.log("authCustomClaim", authCustomClaim);
-
     //const links = auth.uid ? <SignedInLinksSuper /> : <SignedOutLinks />;
 
     return (

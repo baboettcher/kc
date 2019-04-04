@@ -4,7 +4,23 @@ import { connect } from "react-redux";
 
 class StudentDashboard extends Component {
   state = {
-    teamNames: []
+    addClassCode: ""
+  };
+
+  handleChange = e => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  };
+
+  handleAddCodeSubmit = e => {
+    e.preventDefault();
+    // this.props.signUpStudent(this.state);
+    this.setState(() => {
+      return {
+        addClassCode: ""
+      };
+    });
   };
 
   render() {
@@ -18,8 +34,18 @@ class StudentDashboard extends Component {
         <h3 className="header text-center">Student Dashboard</h3>
         <div>
           {" "}
-          <h2>Groups</h2>
-          <h2>Peers</h2>
+          <h3>Classes:</h3>
+          <form className="white" onSubmit={this.handleSubmit}>
+            <div className="input-field">
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                id="addClassCode"
+                value={this.state.addClassCode}
+                onChange={this.handleChange}
+              />
+            </div>
+          </form>
         </div>
       </div>
     );

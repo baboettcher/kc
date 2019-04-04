@@ -17,7 +17,6 @@ class ClassCreate extends Component {
     specialNotes: "",
     joinPasscode: generatePassword(6),
     showModal: false
-    //teacher_id: "" // set this in ??component did mount?
   };
 
   handleChange = e => {
@@ -28,39 +27,37 @@ class ClassCreate extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // const partOfStateToSend = {
-    //   classTitle: this.state.classTitle,
-    //   gradeLevel: this.state.gradeLevel,
-    //   specialNotes: this.state.specialNotes,
-    //   classTitle: this.state.classTitle,
-    //   joinPasscode: generatePassword(6), // added
-    //   teacher_id: this.props.mongoTeacherData._id // added
-    // }
-
-    const partOfStateToSend = {
-      join_code: generatePassword(6), // added
-      grade_level: this.state.gradeLevel,
-      class_description: this.state.classDescription,
-      teacher_id: this.props.mongoTeacherData._id, // added
-      special_notes: this.state.specialNotes
-    };
-
-    // push new class onto classes array of teacher
-    this.props.mongoTeacherData.current_classes.push(partOfStateToSend);
-    this.props.teacherAddClass(this.props.mongoTeacherData);
-
-    // NEXT: add teacher ID for codeLookUp database
-
-    this.setState(() => {
-      return {
-        showModal: true // NEW
-        // joinPasscode: generatePassword(6)
-        // teacher_id: this.props.mongoTeacherData._id
+    if (!this.state.gradeLevel || !this.state.classDescription) {
+      console.log("Missing requiered fields -- add modal and fancify later");
+      this.setState({
+        classDescription: "",
+        gradeLevel: "",
+        specialNotes: "",
+        joinPasscode: generatePassword(6),
+        showModal: false
+      });
+    } else {
+      const partOfStateToSend = {
+        join_code: generatePassword(6), // added
+        grade_level: this.state.gradeLevel,
+        class_description: this.state.classDescription,
+        teacher_id: this.props.mongoTeacherData._id, // added
+        special_notes: this.state.specialNotes
       };
-    });
-  };
 
-  // REDIR#ECT BACK TO THE DASH BOARD
+      // push new class onto classes array of teacher - MESSY! refactor later
+      this.props.mongoTeacherData.current_classes.push(partOfStateToSend);
+      this.props.teacherAddClass(this.props.mongoTeacherData);
+
+      this.setState(() => {
+        return {
+          showModal: true // NEW
+          // joinPasscode: generatePassword(6)
+          // teacher_id: this.props.mongoTeacherData._id
+        };
+      });
+    }
+  };
 
   onModalClose() {
     this.setState({
@@ -84,12 +81,11 @@ class ClassCreate extends Component {
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
-    console.log("mongoTeacherData", mongoTeacherData);
     return (
       <div className="container">
         {this.state.showModal ? (
           <Modal
-            mainText={"ADDED:" + this.state.classTitle}
+            mainText={"ADDED:" + this.state.classDescription}
             subtitle1={this.state.specialNotes}
             onModalClose={this.onModalClose.bind(this)}
           />
@@ -97,8 +93,13 @@ class ClassCreate extends Component {
 
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">
-            Create a New Class for {mongoTeacherData.first_name}{" "}
-            {mongoTeacherData.last_name}
+            Create a New Class for
+            {mongoTeacherData && mongoTeacherData.first_name
+              ? mongoTeacherData.first_name
+              : null}
+            {mongoTeacherData && mongoTeacherData.first_last
+              ? mongoTeacherData.first_last
+              : null}
           </h5>
 
           <div className="input-field">

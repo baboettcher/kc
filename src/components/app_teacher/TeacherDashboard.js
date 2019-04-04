@@ -5,7 +5,7 @@ import { loadTeacherDashboard } from "../../store/actions/teacherActions";
 
 class TeacherDashboard extends Component {
   state = {
-    thing1: false
+    classCreate: false
   };
 
   componentDidMount() {
@@ -37,27 +37,54 @@ class TeacherDashboard extends Component {
       } = this.props.mongoTeacherData;
 
       // make a table
-      const listOfClasses = current_classes.map(a => (
-        <ul>
-          <h6>
-            <strong>{a.class_description}</strong> Grade: {a.grade_level} Notes:
-            {a.special_notes} Join Code: {a.join_code}
-          </h6>
-        </ul>
+      const listOfClasses = current_classes.map(singleClass => (
+        <tr>
+          <td>{singleClass.class_description}</td>
+          <td>{singleClass.grade_level}</td>
+          <td>{singleClass.special_notes}</td>
+          <td>{singleClass.join_code}</td>
+        </tr>
       ));
 
       return (
-        <div className="container">
-          <h3>
-            {first_name} {last_name}
-          </h3>
-          <h5>{school_name}</h5>
-          <h5>Current classes: {current_classes.length}</h5>
-          {listOfClasses}
-          <h5>Current students - NEXT: {current_students.length}</h5>
-          <li>
+        <div>
+          <div className="container">
+            <table>
+              <thead>
+                <th>Students</th>
+                <th>Groups</th>
+                <th>Colleagues?</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{current_students.length}</td>
+                  <td>x</td>
+                  <td>x</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="container">
+            {listOfClasses ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Class Description</th>
+                    <th>Grade Level</th>
+                    <th>Notes</th>
+                    <th>Join Code</th>
+                  </tr>
+                </thead>
+                <tbody>{listOfClasses}</tbody>
+              </table>
+            ) : null}
+          </div>
+
+          <button>
+            {" "}
             <NavLink to="/classcreate">Create a Class</NavLink>
-          </li>
+          </button>
         </div>
       );
     } else {
