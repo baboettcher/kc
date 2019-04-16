@@ -16,6 +16,22 @@ export const clearStudentOnSignout = () => {
   };
 };
 
+export const loadStudentDashboard = fb_uid => {
+  return (dispatch, getState) => {
+    const url = "/student/fb_uid=";
+
+    fetch(url + fb_uid)
+      .then(student1 => student1.json())
+      .then(student2 => {
+        dispatch({
+          type: "LOAD_STUDENT_DASHBOARD",
+          payload: student2
+        });
+      })
+      .catch(error => console.error("Error loading student", error));
+  };
+};
+
 /* 
 export const addStudent = () => {
   return {

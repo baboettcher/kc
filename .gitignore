@@ -25,6 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 #temp
+zzz_bin/
 src/index_ORIG.js
 src/dummy-data.js
 

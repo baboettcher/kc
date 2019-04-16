@@ -15,6 +15,7 @@ class StudentDashboard extends Component {
 
   handleAddCodeSubmit = e => {
     e.preventDefault();
+    console.log("SUBMITTED CODE ", this.state.addClassCode);
     // this.props.signUpStudent(this.state);
     this.setState(() => {
       return {
@@ -34,16 +35,21 @@ class StudentDashboard extends Component {
         <h3 className="header text-center">Student Dashboard</h3>
         <div>
           {" "}
-          <h3>Classes:</h3>
-          <form className="white" onSubmit={this.handleSubmit}>
+          <h5>Classes:</h5>
+          <form className="white" onSubmit={this.handleAddCodeSubmit}>
             <div className="input-field">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="addClassCode">Enter class code to join:</label>
               <input
                 type="text"
                 id="addClassCode"
                 value={this.state.addClassCode}
                 onChange={this.handleChange}
               />
+            </div>
+            <div className="input-field">
+              <button className="btn pink lighten-1 z-depth-0">
+                Submit code
+              </button>
             </div>
           </form>
         </div>

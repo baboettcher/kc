@@ -53,7 +53,13 @@ export const signIn = credentials => {
 export const signUpStudent = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    const { authLevel, firstName, lastName, classroomCode } = credentials;
+    const {
+      firstName,
+      lastName,
+      email,
+      classroomCode,
+      authLevel
+    } = credentials;
 
     firebase
       .auth()
@@ -94,6 +100,35 @@ export const signUpStudent = credentials => {
           user
         });
         return firebaseResp;
+      })
+
+      // --- MONGO --- //
+      .then(firebaseResp => {
+        const { uid } = firebaseResp.user;
+        const url = "/users/addstudent";
+
+        const data = {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          fb_uid: uid
+        };
+
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(response =>
+            dispatch({
+              type: "ADD_STUDENT_MONGO_SUCCESS",
+              payload: response
+            })
+          )
+          .catch(error => console.error("Mongo error adding student", error));
       })
 
       .catch(err => {
@@ -157,7 +192,8 @@ export const signUpTeacher = credentials => {
       // --- MONGO --- //
       .then(firebaseResp => {
         const { uid } = firebaseResp.user;
-        const url = "/users/addteacher";
+        //const url = "/users/addteacher";
+        const url = "/teacher/";
 
         const data = {
           first_name: firstName,
@@ -183,7 +219,7 @@ export const signUpTeacher = credentials => {
               payload: response
             })
           )
-          .catch(error => console.error("Mongo error adding district", error));
+          .catch(error => console.error("Mongo error adding teacher", error));
       })
       .catch(err => {
         dispatch({

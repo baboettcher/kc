@@ -1,6 +1,6 @@
 export const loadTeacherDashboard = fb_uid => {
   return (dispatch, getState) => {
-    const url = "/users/load_teacher_dashboard?fb_uid=";
+    const url = "/teacher/fb_uid=";
 
     fetch(url + fb_uid)
       .then(teacher1 => teacher1.json())
@@ -10,7 +10,7 @@ export const loadTeacherDashboard = fb_uid => {
           payload: teacher2
         });
       })
-      .catch(error => console.error("Error adding teacher", error));
+      .catch(error => console.error("Error loading teacher dash", error));
   };
 };
 
@@ -62,7 +62,7 @@ export const teacherAddClass = newClassInfo => {
         console.log("Success adding to AddCode db:", JSON.stringify(response))
       ) // ERROR not being caught bt catch
       .catch(error =>
-        console.error("=====>xError teacher adding class to AddCode db ", error)
+        console.error("=====> Error teacher adding class to AddCode db ", error)
       );
   };
 };

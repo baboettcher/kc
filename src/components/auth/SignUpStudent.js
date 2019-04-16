@@ -6,10 +6,10 @@ import { Redirect } from "react-router-dom";
 // later add GoogleClassroom, other options without email
 class SignUpStudent extends Component {
   state = {
-    email: "",
-    password: "",
     firstName: "",
     lastName: "",
+    email: "",
+    password: "",
     classroomCode: "",
     authLevel: "student"
   };
@@ -23,10 +23,10 @@ class SignUpStudent extends Component {
     this.props.signUpStudent(this.state);
     this.setState(() => {
       return {
-        email: "",
-        password: "",
         firstName: "",
         lastName: "",
+        email: "",
+        password: "",
         classroomCode: "",
         authLevel: "student"
       };
@@ -43,6 +43,25 @@ class SignUpStudent extends Component {
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Sign Up Student</h5>
 
+          <div className="input-field">
+            <label htmlFor="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />
+          </div>
           <div className="input-field">
             <label htmlFor="email">Email</label>
             <input
@@ -64,27 +83,7 @@ class SignUpStudent extends Component {
           </div>
 
           <div className="input-field">
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div className="input-field">
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div className="input-field">
-            <label htmlFor="lastName">Classroom Code</label>
+            <label htmlFor="lastName">Class Code (optional)</label>
             <input
               type="text"
               id="classroomCode"

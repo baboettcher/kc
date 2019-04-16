@@ -42,6 +42,10 @@ class ClassCreate extends Component {
         grade_level: this.state.gradeLevel,
         class_description: this.state.classDescription,
         teacher_id: this.props.mongoTeacherData._id, // added
+        teacher_name:
+          this.props.mongoTeacherData.first_name +
+          " " +
+          this.props.mongoTeacherData.last_name, // added
         special_notes: this.state.specialNotes
       };
 
@@ -97,8 +101,8 @@ class ClassCreate extends Component {
             {mongoTeacherData && mongoTeacherData.first_name
               ? mongoTeacherData.first_name
               : null}
-            {mongoTeacherData && mongoTeacherData.first_last
-              ? mongoTeacherData.first_last
+            {mongoTeacherData && mongoTeacherData.last_name
+              ? mongoTeacherData.last_name
               : null}
           </h5>
 

@@ -11,6 +11,13 @@ const studentsReducer = (state = initialState, action) => {
     case "ADD_STUDENT":
       console.log("student added", action.studentInfo);
 
+    case "LOAD_STUDENT_DASHBOARD":
+      console.log("loaded student dashboard", action.payload);
+      return {
+        ...state,
+        mongoData: action.payload
+      };
+
     case "CLEAR_STUDENT_ON_SIGNOUT":
       console.log("clear student data");
       return {
