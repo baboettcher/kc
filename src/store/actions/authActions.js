@@ -193,7 +193,7 @@ export const signUpTeacher = credentials => {
       .then(firebaseResp => {
         const { uid } = firebaseResp.user;
         //const url = "/users/addteacher";
-        const url = "/teacher/";
+        const url = "/teacher";
 
         const data = {
           first_name: firstName,

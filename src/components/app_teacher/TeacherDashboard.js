@@ -9,15 +9,16 @@ class TeacherDashboard extends Component {
   };
 
   componentDidMount() {
-    const { auth, authCustomClaim } = this.props;
-    const fb_uid = auth.uid;
+    const { fb_auth, authCustomClaim } = this.props;
+    const fb_uid = fb_auth.uid;
+    console.log("WTF -->>> fb_auth", fb_auth);
     this.props.loadTeacherDashboard(fb_uid);
   }
 
   render() {
-    const { auth, authCustomClaim } = this.props;
+    const { fb_auth, authCustomClaim } = this.props;
     // temp guard until local storage
-    if (!auth.uid) return <Redirect to="/signin" />;
+    if (!fb_auth.uid) return <Redirect to="/signin" />;
 
     // comments out for now due to refresh issue
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
@@ -36,35 +37,27 @@ class TeacherDashboard extends Component {
         current_classes
       } = this.props.mongoTeacherData;
 
+      console.log("mongoTeacherData--> ", this.props.mongoTeacherData);
+
       // make a table
-      const listOfClasses = current_classes.map(singleClass => (
-        <tr>
-          <td>{singleClass.class_description}</td>
-          <td>{singleClass.grade_level}</td>
-          <td>{singleClass.special_notes}</td>
-          <td>{singleClass.join_code}</td>
-        </tr>
-      ));
+      const listOfClasses = current_classes
+        ? current_classes.map(singleClass => (
+            <tr>
+              <td>{singleClass.class_description}</td>
+              <td>{singleClass.grade_level}</td>
+              <td>{singleClass.special_notes}</td>
+              <td>{singleClass.join_code}</td>
+            </tr>
+          ))
+        : null;
 
       return (
         <div>
-          <div className="container">
-            <table>
-              <thead>
-                <th>Students</th>
-                <th>Groups</th>
-                <th>Colleagues?</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{current_students.length}</td>
-                  <td>x</td>
-                  <td>x</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+          <h6>
+            Basic info:
+            {first_name}
+            {last_name}
+          </h6>
           <div className="container">
             {listOfClasses ? (
               <table>
@@ -95,7 +88,7 @@ class TeacherDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
+    fb_auth: state.firebase.auth,
     authCustomClaim: state.auth.authCustomClaim,
     mongoTeacherData: state.teacher.mongoData
   };

@@ -1,10 +1,13 @@
 const teacherReducer = (state = {}, action) => {
   switch (action.type) {
     case "LOAD_TEACHER_DASHBOARD":
-      console.log("loaded teacher dashboard", action.payload);
+      console.log(
+        "🎃🎃🎃🎃🎃load teacher dashboard, payload-->>",
+        action.payload
+      );
       return {
         ...state,
-        mongoData: action.payload
+        mongoData: action.payload[0]
       };
 
     case "CLEAR_TEACHER_ON_SIGNOUT":

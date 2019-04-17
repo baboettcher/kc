@@ -1,8 +1,7 @@
 export const loadTeacherDashboard = fb_uid => {
   return (dispatch, getState) => {
-    const url = "/teacher/fb_uid=";
-
-    fetch(url + fb_uid)
+    console.log("💋💋💋--- >fb_uid: ", fb_uid);
+    fetch("/teacher/" + fb_uid)
       .then(teacher1 => teacher1.json())
       .then(teacher2 => {
         dispatch({

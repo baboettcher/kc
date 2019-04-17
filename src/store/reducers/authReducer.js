@@ -18,7 +18,9 @@ const authReducer = (state = initialState, action) => {
       return { ...state, authError: "Auth failed" }; // another option: authError: action.err
 
     case "SIGNOUT_SUCCESS":
-      console.log("signout success");
+      console.log(
+        "signout success -> WHY is FB.auth not null when called from teacherSignedIn links?"
+      );
       return { ...state, authCustomClaim: null };
 
     case "SIGNUP_SUPER_SUCCESS":

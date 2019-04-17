@@ -6,6 +6,7 @@ import SignedInLinksSuper from "./SignedInLinks_Super";
 import SignedInLinksAdmin from "./SignedInLinks_Admin";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
+import { signOut } from "../../store/actions/authActions";
 
 class Navbar extends Component {
   state = {};
@@ -18,7 +19,7 @@ class Navbar extends Component {
 
     let links = <SignedOutLinks />;
     let userType = "SIGN-UP";
-    let ifUserClicksOnName = "/"; // this need to change - to log-in page
+    let ifUserClicksOnName = "/signin"; // change?
 
     if (authCustomClaim === "super") {
       userType = "SUPER: " + displayName;
@@ -50,6 +51,7 @@ class Navbar extends Component {
           >
             {" "}
             {userType}
+            <p onClick={this.props.signOut}> +++SIGNOUT+++</p>
           </Link>
           {links}
         </div>
@@ -66,4 +68,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = dispatch => {
+  return {
+    signOut: () => dispatch(signOut())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navbar);
