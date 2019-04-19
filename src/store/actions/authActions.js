@@ -98,7 +98,6 @@ export const signUpStudent = credentials => {
       // --- MONGO --- //
       .then(firebaseResp => {
         const { uid } = firebaseResp.user;
-        console.log(`+++ 11111 +++ uid: ${uid} +++++`);
         const url = "/student";
 
         const data = {

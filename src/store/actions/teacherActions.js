@@ -26,17 +26,26 @@ export const teacherAddClass = newClassInfo => {
     // part 1 - update teacher array of classes
     // WHAT is the object being sent to the db for addCode?
     console.log("newClassInfo #1:", newClassInfo);
-    const url1 = "/users/teacher_add_class/" + newClassInfo._id;
+    const url1 = "/teacher/" + newClassInfo._id;
+
+    // temp object to remove  misc from object to send
+    const newClassInfo2 = Object.assign({}, newClassInfo);
+    delete newClassInfo2._id; // or delete person["age"];
+    delete newClassInfo2.__v;
+
+    console.log("newClassInfo #2:", newClassInfo2);
+
     fetch(url1, {
       method: "PUT",
-      body: JSON.stringify(newClassInfo),
+      body: JSON.stringify(newClassInfo2),
       headers: {
         "Content-Type": "application/json"
       }
     })
       .then(res => res.json())
       .then(response => console.log("Success:", JSON.stringify(response)))
-      .catch(error => console.error("Error teacher adding a class", error));
+      .catch(error => console.log("❌❌❌Error teacher adding a class", error));
+
     /* no need to update store -- VERIFY 
     .then(districtInfo =>
       dispatch({
@@ -45,8 +54,8 @@ export const teacherAddClass = newClassInfo => {
       })
       )*/
 
-    // part 2 - add to "add_code" db
-    const url2 = "/users/save_new_addcode/";
+    // ------------- part 2 - add to "add_code" db
+    /*     const url2 = "/users/save_new_addcode/";
     console.log("newClassInfo #2---->:", newClassInfo);
 
     fetch(url2, {
@@ -63,6 +72,7 @@ export const teacherAddClass = newClassInfo => {
       .catch(error =>
         console.error("=====> Error teacher adding class to AddCode db ", error)
       );
+ */
   };
 };
 

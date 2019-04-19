@@ -16,7 +16,7 @@ class ClassCreate extends Component {
     gradeLevel: "",
     specialNotes: "",
     joinPasscode: generatePassword(6),
-    showModal: false
+    showModal: false // sliced before push to class array
   };
 
   handleChange = e => {
@@ -24,11 +24,12 @@ class ClassCreate extends Component {
       [e.target.id]: e.target.value
     });
   };
+  // >>>> submit is not sending the correct PUT call <<<<<<
   handleSubmit = e => {
     e.preventDefault();
 
+    // missing fields - add modals
     if (!this.state.gradeLevel || !this.state.classDescription) {
-      console.log("Missing requiered fields -- add modal and fancify later");
       this.setState({
         classDescription: "",
         gradeLevel: "",
@@ -37,7 +38,7 @@ class ClassCreate extends Component {
         showModal: false
       });
     } else {
-      const partOfStateToSend = {
+      const partOfStateToAddToClass = {
         join_code: generatePassword(6), // added
         grade_level: this.state.gradeLevel,
         class_description: this.state.classDescription,
@@ -49,8 +50,9 @@ class ClassCreate extends Component {
         special_notes: this.state.specialNotes
       };
 
-      // push new class onto classes array of teacher - MESSY! refactor later
-      this.props.mongoTeacherData.current_classes.push(partOfStateToSend);
+      // push new class onto classes array of teacher
+      // works,  but messy!
+      this.props.mongoTeacherData.current_classes.push(partOfStateToAddToClass);
       this.props.teacherAddClass(this.props.mongoTeacherData);
 
       this.setState(() => {

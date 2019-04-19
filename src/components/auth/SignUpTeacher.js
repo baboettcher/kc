@@ -22,7 +22,6 @@ class SignUpTeacher extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.signUpTeacher(this.state);
-    console.log("sign up teacher submitted");
     this.setState(() => {
       return {
         email: "",

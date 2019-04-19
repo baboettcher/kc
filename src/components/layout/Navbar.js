@@ -6,7 +6,7 @@ import SignedInLinksSuper from "./SignedInLinks_Super";
 import SignedInLinksAdmin from "./SignedInLinks_Admin";
 import SignedOutLinks from "./SignedOutLinks";
 import { connect } from "react-redux";
-import { signOut } from "../../store/actions/authActions";
+//import { signOut } from "../../store/actions/authActions";
 
 class Navbar extends Component {
   state = {};
@@ -51,7 +51,8 @@ class Navbar extends Component {
           >
             {" "}
             {userType}
-            <p onClick={this.props.signOut}> +++SIGNOUT+++</p>
+            {/*             <p onClick={this.props.signOut}> +++SIGNOUT+++</p>
+             */}{" "}
           </Link>
           {links}
         </div>
@@ -68,13 +69,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    signOut: () => dispatch(signOut())
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     signOut: () => dispatch(signOut())
+//   };
+// };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
+  //mapDispatchToProps
 )(Navbar);

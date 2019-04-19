@@ -39,8 +39,6 @@ import GroupsAll from "./app_teacher/GroupsAll";
 import StudentsAdd from "./app_teacher/StudentsAdd";
 import StudentsAll from "./app_teacher/StudentsAll";
 
-import ToDo from "./ToDo";
-
 class App extends Component {
   render() {
     return (
@@ -52,7 +50,6 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/players" component={Players} />
             <Route path="/teams" component={Teams} />
-            <Route path="/todolist" component={ToDo} />
             <Route path="/adminProtectedRoute" component={TopLevelAdmin} />
 
             <Route path="/signin" component={SignIn} />
