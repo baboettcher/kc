@@ -5,13 +5,12 @@ import { loadTeacherDashboard } from "../../store/actions/teacherActions";
 
 class TeacherDashboard extends Component {
   state = {
-    classCreate: false
+    createNewClass: false
   };
 
   componentDidMount() {
     const { fb_auth, authCustomClaim } = this.props;
     const fb_uid = fb_auth.uid;
-    console.log("WTF -->>> fb_auth", fb_auth);
     this.props.loadTeacherDashboard(fb_uid);
   }
 
@@ -23,11 +22,11 @@ class TeacherDashboard extends Component {
     // comments out for now due to refresh issue
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
-    if (this.state.classCreate) {
+    if (this.state.createNewClass) {
       return <Redirect to="/classcreate" />;
     }
 
-    // Dashboard page
+    // Ready to render dashboard
     if (this.props.mongoTeacherData) {
       const {
         first_name,
@@ -36,8 +35,6 @@ class TeacherDashboard extends Component {
         current_students,
         current_classes
       } = this.props.mongoTeacherData;
-
-      console.log("mongoTeacherData--> ", this.props.mongoTeacherData);
 
       // make a table
       const listOfClasses = current_classes
@@ -52,13 +49,15 @@ class TeacherDashboard extends Component {
         : null;
 
       return (
-        <div>
-          <h6>
-            Basic info:
-            {first_name}
-            {last_name}
-          </h6>
-          <div className="container">
+        <div className="container">
+          <div>
+            <h3 className="header text-center">Teacher Dashboard</h3>
+
+            <h6>
+              Basic info:
+              {first_name}
+              {last_name}
+            </h6>
             {listOfClasses ? (
               <table>
                 <thead>

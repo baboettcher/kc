@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUpStudent } from "../../store/actions/authActions";
+import { signUpStudent, signOut } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 // later add GoogleClassroom, other options without email
@@ -35,8 +35,13 @@ class SignUpStudent extends Component {
 
   render() {
     const { auth, authCustomClaim } = this.props;
-    if (authCustomClaim === "student") return <Redirect to="./student" />;
-    //if (auth.uid) return <Redirect to="./student" />;
+
+    if (authCustomClaim === "student") {
+      // ADD SUCCESS MESSAGE and please log back in
+      console.log("SUCCESS! NOW LOG IN");
+      this.props.signOut();
+      return <Redirect to="/signin" />;
+    }
 
     return (
       <div className="container">
@@ -105,7 +110,8 @@ class SignUpStudent extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUpStudent: creds => dispatch(signUpStudent(creds))
+    signUpStudent: creds => dispatch(signUpStudent(creds)),
+    signOut: () => dispatch(signOut())
   };
 };
 

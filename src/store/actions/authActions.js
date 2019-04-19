@@ -72,13 +72,6 @@ export const signUpStudent = credentials => {
           displayName: firstName + " " + lastName,
           photoURL: "https://example.com/jane-q-user/profile.jpg"
         });
-
-        // .then(() => {
-        //   console.log("inside update profile");
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // });
         return firebaseResp;
       })
 
@@ -105,13 +98,15 @@ export const signUpStudent = credentials => {
       // --- MONGO --- //
       .then(firebaseResp => {
         const { uid } = firebaseResp.user;
-        const url = "/users/addstudent";
+        console.log(`+++ 11111 +++ uid: ${uid} +++++`);
+        const url = "/student";
 
         const data = {
           first_name: firstName,
           last_name: lastName,
           email,
-          fb_uid: uid
+          fb_uid: uid,
+          new_class_code: classroomCode ? classroomCode : null
         };
 
         fetch(url, {
@@ -176,7 +171,6 @@ export const signUpTeacher = credentials => {
         addTeacherRole({ email }).then(result => {
           console.log("firebase claim result:", result);
         });
-
         return firebaseResp;
       })
 
@@ -189,7 +183,7 @@ export const signUpTeacher = credentials => {
         return firebaseResp;
       })
 
-      // --- MONGO --- //
+      // --- TEACHER MONGO --- //
       .then(firebaseResp => {
         const { uid } = firebaseResp.user;
         //const url = "/users/addteacher";
@@ -198,9 +192,9 @@ export const signUpTeacher = credentials => {
         const data = {
           first_name: firstName,
           last_name: lastName,
-          school_name: schoolName,
-          email,
           fb_uid: uid,
+          email,
+          school_name: schoolName,
           current_students: currentStudents,
           current_classes: currentClasses
         };
@@ -221,6 +215,7 @@ export const signUpTeacher = credentials => {
           )
           .catch(error => console.error("Mongo error adding teacher", error));
       })
+
       .catch(err => {
         dispatch({
           type: "SIGNUP_TEACHER_ERROR",
@@ -239,6 +234,7 @@ export const signUpAdmin = credentials => {
       school,
       district,
       state,
+      email,
       authLevel
     } = credentials;
 
@@ -279,6 +275,38 @@ export const signUpAdmin = credentials => {
           user
         });
         return firebaseResp;
+      })
+      // --- ADMIN MONGO --- //
+      .then(firebaseResp => {
+        const { uid } = firebaseResp.user;
+        //const url = "/users/addteacher";
+        const url = "/admin";
+
+        const data = {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          fb_uid: uid,
+          school_name: school,
+          district_name: district,
+          state
+        };
+
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(response =>
+            dispatch({
+              type: "ADD_ADMIN_MONGO_SUCCESS",
+              payload: response
+            })
+          )
+          .catch(error => console.error("Mongo error adding admin", error));
       })
 
       .catch(err => {
@@ -338,118 +366,3 @@ export const signUpSuper = credentials => {
       });
   };
 };
-
-// ------------------- MONGO ------------------ //
-
-/* 
-      .then(firebaseResp => {
-        const {
-          uid,
-          providerData,
-          email,
-          displayName,
-          emailVerified
-        } = firebaseResp.user;
-        
-        const url = "/users/super";
-        const data = {
-          first_name: credentials.firstName,
-          last_name: credentials.lastName,
-          fb_uid: uid,
-          initials: (
-            credentials.firstName[0] + credentials.lastName[0]
-            ).toUpperCase(),
-            kc_auth: {
-              //TEMP
-              super: true,
-              admin: true,
-              student: true,
-              teacher: true
-            }
-          };
-          
-          fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-          .then(res => res.json())
-          .then(response => console.log("Success:", JSON.stringify(response)))
-          .catch(err => console.error("Entry invalid", err));
-        });
-        
-        */
-
-/* 
-
-export const authCheck = () => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .onAuthStateChanged(user => {
-        if (user) {
-          firebase
-            .auth()
-            .currentUser.getIdToken(true)
-
-            .then(idToken => {
-              dispatch({ type: "AUTH_CHECKED_LOGGED_IN", payload: idToken });
-            });
-        } else {
-          dispatch({ type: "AUTH_CHECKED_LOGGED_OUT", payload: null });
-        }
-      })
-      .catch(() => {
-        console.log("auth change error - TEMP");
-      });
-  };
-};
-
-
-
-export const signUpSuper = credentials => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    const { authLevel } = credentials;
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(credentials.email, credentials.password)
-
-      // ------------------- FIREBASE CUSTOM CLAIM: SUPER ------------------ //
-      .then(firebaseResp => {
-        console.log("#2 -->", firebaseResp);
-        const { email } = firebaseResp.user;
-        const functions = firebase.functions();
-        const addSuperRole = functions.httpsCallable("addSuperRole");
-        addSuperRole({ email }).then(result => {
-          console.log("firebase claim result:", result);
-        });
-
-        return firebaseResp; // what is returned here is irrelevant (?)
-      })
-      .catch(function(err) {
-        console.log("Error", err.message, err.code);
-      })
-
-      .then(firebaseResp => {
-        const { user } = firebaseResp;
-        dispatch({
-          type: "SIGNUP_SUPER_SUCCESS",
-          user
-        });
-        return firebaseResp;
-      })
-      .catch(err => {
-        dispatch({
-          type: "SIGNUP_SUPER_ERROR",
-          err
-        });
-      });
-
-
-  };
-}; */

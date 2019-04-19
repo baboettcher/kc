@@ -1,3 +1,17 @@
+export const loadStudentDashboard = fb_uid => {
+  return (dispatch, getState) => {
+    fetch("/student/" + fb_uid)
+      .then(student1 => student1.json())
+      .then(student2 => {
+        dispatch({
+          type: "LOAD_STUDENT_DASHBOARD",
+          payload: student2
+        });
+      })
+      .catch(error => console.error("Error loading student", error));
+  };
+};
+
 export const addStudent = studentInfo => {
   return (dispatch, getState) => {
     // make async call
@@ -13,22 +27,6 @@ export const clearStudentOnSignout = () => {
     dispatch({
       type: "CLEAR_STUDENT_ON_SIGNOUT"
     });
-  };
-};
-
-export const loadStudentDashboard = fb_uid => {
-  return (dispatch, getState) => {
-    const url = "/student/fb_uid=";
-
-    fetch(url + fb_uid)
-      .then(student1 => student1.json())
-      .then(student2 => {
-        dispatch({
-          type: "LOAD_STUDENT_DASHBOARD",
-          payload: student2
-        });
-      })
-      .catch(error => console.error("Error loading student", error));
   };
 };
 

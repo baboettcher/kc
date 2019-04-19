@@ -1,20 +1,20 @@
 import { firebaseReducer } from "react-redux-firebase";
 import authReducer from "./authReducer";
-import currentUserReducer from "./currentUserReducer";
 import groupsReducer from "./groupsReducer";
 import studentReducer from "./studentReducer";
 import teacherReducer from "./teacherReducer"; // no 's'
 import districtsReducer from "./districtsReducer";
+import adminReducer from "./adminReducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  firebase: firebaseReducer,
   auth: authReducer,
-  currentUser: currentUserReducer,
+  firebase: firebaseReducer,
+  teacher: teacherReducer,
+  admin: adminReducer,
   groups: groupsReducer,
   student: studentReducer,
-  districts: districtsReducer,
-  teacher: teacherReducer
+  districts: districtsReducer
 });
 
 export default rootReducer;

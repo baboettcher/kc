@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signUpAdmin } from "../../store/actions/authActions";
+import { signUpAdmin, signOut } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
 
 class SignUpAdmin extends Component {
@@ -22,7 +22,6 @@ class SignUpAdmin extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.signUpAdmin(this.state);
-    console.log("sign up admin submitted");
     this.setState(() => {
       return {
         firstName: "",
@@ -40,8 +39,12 @@ class SignUpAdmin extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
 
-    //if (auth.uid) return <Redirect to="./admin" />;
-    if (authCustomClaim === "admin") return <Redirect to="./admin" />;
+    if (authCustomClaim === "admin") {
+      // ADD SUCCESS MESSAGE and please log back in
+      console.log("SUCCESS! NOW LOG IN");
+      this.props.signOut();
+      return <Redirect to="/signin" />;
+    }
 
     return (
       <div className="container">
@@ -132,7 +135,8 @@ class SignUpAdmin extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUpAdmin: creds => dispatch(signUpAdmin(creds))
+    signUpAdmin: creds => dispatch(signUpAdmin(creds)),
+    signOut: () => dispatch(signOut())
   };
 };
 

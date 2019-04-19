@@ -38,14 +38,10 @@ class SignUpTeacher extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
 
-    //if (auth.uid) return <Redirect to="./teacher" />;
-    // if (authCustomClaim === "teacher") return <Redirect to="./teacher" />;
-
     if (authCustomClaim === "teacher") {
       // ADD SUCCESS MESSAGE and please log back in
       console.log("SUCCESS! NOW LOG IN");
       this.props.signOut();
-
       return <Redirect to="/signin" />;
     }
 
