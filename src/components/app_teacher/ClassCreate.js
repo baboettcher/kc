@@ -28,38 +28,31 @@ class ClassCreate extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // missing fields - add modals
     if (!this.state.gradeLevel || !this.state.classDescription) {
       this.setState({
         classDescription: "",
         gradeLevel: "",
         specialNotes: "",
-        joinPasscode: generatePassword(6),
         showModal: false
       });
     } else {
-      const partOfStateToAddToClass = {
-        join_code: generatePassword(6), // added
+      const teacher_id = this.props.mongoTeacherData._id;
+      const newClassInfo = {
         grade_level: this.state.gradeLevel,
         class_description: this.state.classDescription,
-        teacher_id: this.props.mongoTeacherData._id, // added
         teacher_name:
           this.props.mongoTeacherData.first_name +
           " " +
           this.props.mongoTeacherData.last_name, // added
-        special_notes: this.state.specialNotes
+        special_notes: this.state.specialNotes,
+        add_code: generatePassword(6),
+        teacher_id
       };
-
-      // push new class onto classes array of teacher
-      // works,  but messy!
-      this.props.mongoTeacherData.current_classes.push(partOfStateToAddToClass);
-      this.props.teacherAddClass(this.props.mongoTeacherData);
+      this.props.teacherAddClass([newClassInfo, teacher_id]);
 
       this.setState(() => {
         return {
           showModal: true // NEW
-          // joinPasscode: generatePassword(6)
-          // teacher_id: this.props.mongoTeacherData._id
         };
       });
     }
@@ -159,7 +152,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    teacherAddClass: newClassObject => dispatch(teacherAddClass(newClassObject))
+    teacherAddClass: (newClassInfo, teacherId) =>
+      dispatch(teacherAddClass(newClassInfo, teacherId))
   };
 };
 

@@ -21,29 +21,28 @@ export const clearTeacherOnSignout = () => {
   };
 };
 
-export const teacherAddClass = newClassInfo => {
+export const teacherAddClass = ([newClassInfo, teacherId]) => {
   return (dispatch, getState) => {
-    // part 1 - update teacher array of classes
+    // NEED: teacherID for a PUT amd newClassData
+    // PART 1 - update teacher array of classes
     // WHAT is the object being sent to the db for addCode?
-    console.log("newClassInfo #1:", newClassInfo);
-    const url1 = "/teacher/" + newClassInfo._id;
 
-    // temp object to remove  misc from object to send
-    const newClassInfo2 = Object.assign({}, newClassInfo);
-    delete newClassInfo2._id; // or delete person["age"];
-    delete newClassInfo2.__v;
+    // PART 2 - NEED THE WHOLE TEACHER OBJECT
 
-    console.log("newClassInfo #2:", newClassInfo2);
+    const url1 = "/teacher/addclass/" + teacherId;
 
     fetch(url1, {
       method: "PUT",
-      body: JSON.stringify(newClassInfo2),
+      body: JSON.stringify(newClassInfo),
       headers: {
         "Content-Type": "application/json"
       }
     })
       .then(res => res.json())
-      .then(response => console.log("Success:", JSON.stringify(response)))
+      .then(response =>
+        console.log("Success Step #1:", JSON.stringify(response))
+      )
+
       .catch(error => console.log("❌❌❌Error teacher adding a class", error));
 
     /* no need to update store -- VERIFY 
