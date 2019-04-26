@@ -23,14 +23,9 @@ export const clearTeacherOnSignout = () => {
 
 export const teacherAddClass = ([newClassInfo, teacherId]) => {
   return (dispatch, getState) => {
-    // NEED: teacherID for a PUT amd newClassData
     // PART 1 - update teacher array of classes
-    // WHAT is the object being sent to the db for addCode?
-
-    // PART 2 - NEED THE WHOLE TEACHER OBJECT
-
     const url1 = "/teacher/addclass/" + teacherId;
-
+    // 1) JOINCODE
     fetch(url1, {
       method: "PUT",
       body: JSON.stringify(newClassInfo),
@@ -38,12 +33,25 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.json())
+      .then(res => res.json()) // ERROR HERE
       .then(response =>
         console.log("Success Step #1:", JSON.stringify(response))
       )
+      // 2) JOINCODE
+      .then(() => {
+        console.log("PART 3333)");
+      })
 
-      .catch(error => console.log("❌❌❌Error teacher adding a class", error));
+      .catch(error => console.log("Error teacher adding a class", error));
+
+    // PART 2 - NEED THE WHOLE TEACHER OBJECT
+    fetch("/joincode/", {
+      method: "POST",
+      body: JSON.stringify(newClassInfo),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
 
     /* no need to update store -- VERIFY 
     .then(districtInfo =>

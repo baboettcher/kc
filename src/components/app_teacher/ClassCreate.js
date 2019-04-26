@@ -45,10 +45,11 @@ class ClassCreate extends Component {
           " " +
           this.props.mongoTeacherData.last_name, // added
         special_notes: this.state.specialNotes,
-        add_code: generatePassword(6),
+        join_code: generatePassword(6),
         teacher_id
       };
       this.props.teacherAddClass([newClassInfo, teacher_id]);
+      console.log("newClassInfo-->", newClassInfo);
 
       this.setState(() => {
         return {
