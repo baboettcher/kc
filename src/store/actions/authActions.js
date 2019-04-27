@@ -95,7 +95,7 @@ export const signUpStudent = credentials => {
         return firebaseResp;
       })
 
-      // --- MONGO --- //
+      // --- STUDENT MONGO --- //
       .then(firebaseResp => {
         const { uid } = firebaseResp.user;
         const url = "/student";
@@ -104,9 +104,13 @@ export const signUpStudent = credentials => {
           first_name: firstName,
           last_name: lastName,
           email,
-          fb_uid: uid,
-          new_class_code: classroomCode ? classroomCode : null
+          fb_uid: uid
         };
+
+        // QUIRK: add new_class_code if it exists; avoiding issue with null vs "" in joi validation
+        if (classroomCode) {
+          data.new_class_code = classroomCode;
+        }
 
         fetch(url, {
           method: "POST",
