@@ -12,20 +12,28 @@ export const loadStudentDashboard = fb_uid => {
   };
 };
 
+export const clearStudentOnSignout = () => {
+  return dispatch => {
+    dispatch({
+      type: "CLEAR_STUDENT_ON_SIGNOUT"
+    });
+  };
+};
+
+export const studentAddClassWithCode = () => {
+  return dispatch => {
+    dispatch({
+      type: "STUDENT_ADD_CLASS_WITH_CODE"
+    });
+  };
+};
+
 export const addStudent = studentInfo => {
   return (dispatch, getState) => {
     // make async call
     dispatch({
       type: "ADD_STUDENT",
       studentInfo: studentInfo
-    });
-  };
-};
-
-export const clearStudentOnSignout = () => {
-  return dispatch => {
-    dispatch({
-      type: "CLEAR_STUDENT_ON_SIGNOUT"
     });
   };
 };

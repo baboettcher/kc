@@ -15,8 +15,14 @@ const studentsReducer = (state = {}, action) => {
       };
 
     case "ADD_STUDENT":
-      console.log("TBC:student added", action.studentInfo);
+      console.log("TBC: Student added", action.studentInfo);
 
+    case "STUDENT_ADD_CLASS_WITH_CODE":
+      console.log("TBC: Student add class with code");
+      return {
+        ...state,
+        mongoData: null
+      };
     default:
       return state;
   }

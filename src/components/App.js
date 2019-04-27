@@ -27,6 +27,7 @@ import AdminDashboard from "./app_admin/AdminDashboard";
 import StudentDashboard from "./app_student/StudentDashboard";
 import TradeZone from "./app_student/TradeZone";
 import MyRoom from "./app_student/MyRoom";
+import AddClass from "./app_student/AddClass";
 
 import TeacherDashboard from "./app_teacher/TeacherDashboard";
 import Colleagues from "./app_teacher/Colleagues";
@@ -81,6 +82,7 @@ class App extends Component {
             <Route path="/student" component={StudentDashboard} />
             <Route path="/myroom" component={MyRoom} />
             <Route path="/tradezone" component={TradeZone} />
+            <Route path="/addclasswithcode" component={AddClass} />
 
             <Route path="/:teamId" exact component={TeamPage} />
             <Route path="/:teamId/articles" component={Articles} />
