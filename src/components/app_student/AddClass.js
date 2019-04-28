@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { studentAddClassWithCode } from "../../store/actions/studentActions";
+import {
+  checkCode,
+  studentAddClassWithCode
+} from "../../store/actions/studentActions";
 import Modal from "../common/modal";
 
 //import PropTypes from "prop-types";
@@ -9,7 +12,11 @@ import Modal from "../common/modal";
 class AddClass extends Component {
   state = {
     joinCode: "",
-    showModal: false,
+    modal_problemWithInput: false,
+    modal_problemWithInput_text: "",
+    modal_checkingCode: false,
+    modal_checkingCode_main: "",
+    modal_checkingCode_text: "",
     returnToDash: false
   };
 
@@ -18,44 +25,69 @@ class AddClass extends Component {
       [e.target.id]: e.target.value
     });
   };
+
   // >>>> submit is not sending the correct PUT call <<<<<<
   handleSubmit = e => {
     e.preventDefault();
-    console.log("joincode", this.state.joinCode);
-    // check code and display result
-    // as user to confirm or reject
-    // rejct reutrn to dashboard
-    // confirm, add to student record current_classes
-    // add to field {enrollmentStatus: pending/accepted}
-    // and add to teacher array of students
-    // add field {enrollmentCondirmed: false}
-    // if teacher hit reject, run ** DeleteStudentFromClass
+    // add more specific validation
+    if (!this.state.joinCode) {
+      this.setState({
+        joinCode: "",
+        modal_problemWithInput: true,
+        modal_problemWithInput_text: "Please enter a valid code"
+      });
+    } else {
+      this.setState({
+        modal_checkingCode: true,
+        modal_checkingCode_main: `One moment please.`,
+        modal_checkingCode_text: `Checking ${this.state.joinCode}`
+      });
+      // SUBMIT
+      // as user to confirm or reject
+      // rejct reutrn to dashboard
+      // confirm, add to student record current_classes
+      // add to field {enrollmentStatus: pending/accepted}
+      // and add to teacher array of students
+      // add field {enrollmentCondirmed: false}
+      // if teacher hit reject, run ** DeleteStudentFromClass
+    }
   };
 
-  onModalClose() {
+  onModalClose1() {
     this.setState({
-      showModal: false,
-      returnToDash: true,
-      joinCode: ""
+      joinCode: "",
+      modal_problemWithInput: false,
+      modal_problemWithInput_text: "",
+      modal_checkingCode: false,
+      modal_checkingCode_main: "",
+      modal_checkingCode_text: "",
+      returnToDash: false
     });
   }
 
   render() {
-    const { auth, authCustomClaim, mongoTeacherData } = this.props;
+    const { auth, authCustomClaim, mongoStudentData } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
 
-    if (this.state.returnToDash) return <Redirect to="/teacher" />;
+    if (this.state.returnToDash) return <Redirect to="/student" />;
 
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     return (
       <div className="container">
-        {this.state.showModal ? (
+        {this.state.modal_problemWithInput ? (
           <Modal
-            mainText={"ADDED:" + this.state.classDescription}
-            subtitle1={this.state.specialNotes}
-            onModalClose={this.onModalClose.bind(this)}
+            mainText={"Oops!"}
+            subtitle1={this.state.modal_problemWithInput_text}
+            onModalClose={this.onModalClose1.bind(this)}
+          />
+        ) : null}
+
+        {this.state.modal_checkingCode ? (
+          <Modal
+            mainText={this.state.modal_checkingCode_text}
+            onModalClose={this.onModalClose1.bind(this)}
           />
         ) : null}
 

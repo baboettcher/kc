@@ -20,6 +20,15 @@ export const clearStudentOnSignout = () => {
   };
 };
 
+export const checkJoinCode = joinCode => {
+  // FETCH CALL HERE!
+  return dispatch => {
+    dispatch({
+      type: "CHECK_JOIN_CODE"
+    });
+  };
+};
+
 export const studentAddClassWithCode = () => {
   return dispatch => {
     dispatch({

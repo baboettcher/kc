@@ -17,6 +17,9 @@ const studentsReducer = (state = {}, action) => {
     case "ADD_STUDENT":
       console.log("TBC: Student added", action.studentInfo);
 
+    case "CHECK_JOIN_CODE":
+      console.log("TBC: Check join code successfull", action.studentInfo);
+
     case "STUDENT_ADD_CLASS_WITH_CODE":
       console.log("TBC: Student add class with code");
       return {
