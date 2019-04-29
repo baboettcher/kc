@@ -14,11 +14,20 @@ const studentsReducer = (state = {}, action) => {
         mongoData: null
       };
 
+    case "JOIN_CODE_MATCH":
+      return {
+        ...state,
+        join_code: action.payload
+      };
+
+    case "JOIN_CODE_NOT_FOUND":
+      return {
+        ...state,
+        join_code: null
+      };
+
     case "ADD_STUDENT":
       console.log("TBC: Student added", action.studentInfo);
-
-    case "CHECK_JOIN_CODE":
-      console.log("TBC: Check join code successfull", action.studentInfo);
 
     case "STUDENT_ADD_CLASS_WITH_CODE":
       console.log("TBC: Student add class with code");

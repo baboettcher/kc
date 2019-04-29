@@ -22,11 +22,29 @@ export const clearStudentOnSignout = () => {
 
 export const checkJoinCode = joinCode => {
   // FETCH CALL HERE!
-  return dispatch => {
-    dispatch({
-      type: "CHECK_JOIN_CODE"
-    });
+  console.log("🔫🔫🔫🔫JOIN CODE", joinCode);
+  return (dispatch, getState) => {
+    fetch("/joincode/" + joinCode)
+      .then(joincode1 => joincode1.json())
+      .then(joincode2 => {
+        dispatch({
+          type: "JOIN_CODE_MATCH",
+          payload: joincode2[0]
+        });
+      })
+      .catch(error => {
+        console.log("Joincode NOT found", error);
+        dispatch({
+          type: "JOIN_CODE_NOT_FOUND"
+        });
+      });
   };
+
+  // return dispatch => {
+  //   dispatch({
+  //     type: "CHECK_JOIN_CODE"
+  //   });
+  // };
 };
 
 export const studentAddClassWithCode = () => {
