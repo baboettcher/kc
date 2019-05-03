@@ -17,13 +17,22 @@ const studentsReducer = (state = {}, action) => {
     case "JOIN_CODE_MATCH":
       return {
         ...state,
-        join_code: action.payload
+        join_code: action.payload,
+        join_code_found: true
       };
 
     case "JOIN_CODE_NOT_FOUND":
       return {
         ...state,
-        join_code: null
+        join_code: null,
+        join_code_found: false
+      };
+
+    case "JOIN_CODE_CLEAR":
+      return {
+        ...state,
+        join_code: null,
+        join_code_found: null
       };
 
     case "ADD_STUDENT":
@@ -35,6 +44,7 @@ const studentsReducer = (state = {}, action) => {
         ...state,
         mongoData: null
       };
+
     default:
       return state;
   }
