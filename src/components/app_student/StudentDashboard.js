@@ -5,16 +5,15 @@ import { loadStudentDashboard } from "../../store/actions/studentActions";
 
 class StudentDashboard extends Component {
   state = {
-    addClassCode: ""
+    addJoinCode: ""
   };
 
   componentDidMount() {
     const { fb_auth, authCustomClaim } = this.props;
     const fb_uid = fb_auth.uid;
-    console.log("->>> fb_auth", fb_auth);
     this.props.loadStudentDashboard(fb_uid);
   }
-
+  /* 
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -23,14 +22,12 @@ class StudentDashboard extends Component {
 
   handleAddCodeSubmit = e => {
     e.preventDefault();
-    console.log("SUBMITTED CODE ", this.state.addClassCode);
-    // this.props.signUpStudent(this.state);
     this.setState(() => {
       return {
-        addClassCode: ""
+        addJoinCode: ""
       };
     });
-  };
+  }; */
 
   render() {
     const { auth, authCustomClaim } = this.props;

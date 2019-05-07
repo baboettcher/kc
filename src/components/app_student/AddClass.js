@@ -8,13 +8,14 @@ import {
 } from "../../store/actions/studentActions";
 import ModalWithButton from "../common/modalWithButton";
 import Modal from "../common/modal";
-import Spinner from "../common/spinner";
+import Spinner from "../common/spinner"; // change this to material-UI
+//import { threadId } from "worker_threads";
 
 // import PropTypes from "prop-types";
 
 class AddClass extends Component {
   state = {
-    joinCode: "",
+    joinCodeInputted: "",
     modal_problemWithInput: false,
     modal_problemWithInput_text: "",
     showSpinner: false,
@@ -30,37 +31,23 @@ class AddClass extends Component {
     });
   };
 
-  // >>>> submit is not sending the correct PUT call <<<<<<
   handleSubmit = e => {
     e.preventDefault();
     // add more specific validation
-    if (!this.state.joinCode) {
+    if (!this.state.joinCodeInputted) {
       this.setState({
-        joinCode: "",
+        joinCodeInputted: "",
         modal_problemWithInput: true,
         modal_problemWithInput_text: "Please enter a valid code"
       });
     } else {
       this.setState({
-        showSpinner: true
+        showSpinner: true,
+        modal_confirmClass: true,
+        modal_confirmClass_main: "test abcd",
+        modal_confirmClass_text: "test EFGH"
       });
-
-      this.props.joinCodeCheck(this.state.joinCode);
-
-      // modal displays class info
-
-      // STEP 1
-      // confirm, add to student record current_classes
-      // (LATER: add new step of pending_current_classes)
-      // v1 - just add the object
-      // v2 - add the objectID -- When do you "populate"
-
-      // STEP 2
-      // v1 - push student/name/id object to teacher record
-      // WHERE?
-      // and add to teacher array of students
-      // add field {enrollmentCondirmed: false}
-      // if teacher hit reject, run ** DeleteStudentFromClass
+      this.props.joinCodeCheck(this.state.joinCodeInputted);
     }
   };
 
@@ -92,7 +79,7 @@ class AddClass extends Component {
   }
  */
   confirmClassEnrollment() {
-    console.log("++++JOINING THE CLASS!+++++");
+    const { joinCode, mongoStudentData } = this.props;
 
     // spinner
     this.setState({
@@ -100,43 +87,49 @@ class AddClass extends Component {
       modal_problemWithInput: false,
       modal_problemWithInput_text: "",
       showSpinner: true,
-      modal_confirmClass: false,
+      modal_confirmClass: false, // remove?
       modal_confirmClass_main: "",
       modal_confirmClass_text: "",
-      returnToDash: false
+      returnToDash: true
     });
 
     console.log(
       "++++ 1a. DB CALL to ADDCODE: PUSH studend_UID to current_students"
-    );
+    ); // .../addcode/:code    PUT
+    // .find()   $push
+
     console.log(
       "++++ 1b. DB CALL to ADDCODE: PUSH studend_UID to pending_students ** later"
-    );
+    ); // .../addcode/:code      PUT , $push
+
     console.log(
       "++++ 2. DB CALL to STUDENT: PUSH addCode_ID to current_classess +++++"
-    );
+    ); // .../student/:id      PUT , $push
+
     console.log(
       "++++ 3. DB CALL to STUDENT: PUSH  { teacherNAme, classDescripion, classID} to current_classes_cache"
-    );
+    ); // .../student/:id      PUT , $push
 
     console.log(
-      "++++ 5. DB CALL to STUDENT: Dashboard loads classes (later both pending and actual"
-    );
+      "++++ 5. (LATER FROM STUDENT) DB CALL to STUDENT: Dashboard loads classes (later both pending and actual"
+    ); // .../student/:id      GET .populate
 
     console.log(
-      "++++ (LATER) 6.  DB CALL to TEACHER: On login, populate all classes with students. Temporarily, populate BOTH pending_students and (confirmed) current_students"
+      "++++ 6. (LATER FROM TEACHER) DB CALL to TEACHER: On login, populate all classes with students. Temporarily, populate BOTH pending_students and (confirmed) current_students"
     );
+
+    this.props.studentAddClassWithCode({ joinCode, mongoStudentData });
 
     /*     this.setState({
-      joinCode: "",
-      modal_problemWithInput: false,
-      modal_problemWithInput_text: "",
-      showSpinner: true,
-      modal_confirmClass: false,
-      modal_confirmClass_main: "",
-      modal_confirmClass_text: "",
-      returnToDash: true
-    }); */
+                joinCode: "",
+                modal_problemWithInput: false,
+                modal_problemWithInput_text: "",
+                showSpinner: true,
+                modal_confirmClass: false,
+                modal_confirmClass_main: "",
+                modal_confirmClass_text: "",
+                returnToDash: true
+              }); */
 
     // TEACHER: Push to unconfirmed list in teacherDB
     // STUDENT: Push to awaiting confirmation in student_class_list
@@ -182,11 +175,11 @@ class AddClass extends Component {
           <form className="white" onSubmit={this.handleSubmit}>
             <h5 className="grey-text text-darken-3">Enter a class code:</h5>
             <div className="input-field">
-              <label htmlFor="joinCode">5-digit join code</label>
+              <label htmlFor="joinCodeInputted">5-digit join code</label>
               <input
                 type="text"
-                id="joinCode"
-                value={this.state.joinCode}
+                id="joinCodeInputted"
+                value={this.state.joinCodeInputted}
                 onChange={this.handleChange}
               />
             </div>
@@ -196,7 +189,7 @@ class AddClass extends Component {
           </form>
         )}
 
-        {this.props.joinCode ? (
+        {this.props.joinCode && this.state.modal_confirmClass ? (
           <ModalWithButton
             mainText={`Teacher: ${this.props.joinCode.teacher_name}`}
             subtitle1={`Class: ${this.props.joinCode.class_description}`}
