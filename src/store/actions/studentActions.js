@@ -87,7 +87,7 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
     });
 
     Promise.all([f1, f2])
-      .then(result => result.json())
+      .then(result => console.log("result", result))
       .then(() => {
         dispatch({
           type: "STUDENT_ADD_CLASS_WITH_CODE"
