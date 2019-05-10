@@ -65,9 +65,49 @@ export const joinCodeClear = () => {
 // TO DO: Combine all fetch calls into "all or none"
 export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
   return (dispatch, getState) => {
-    console.log("🐠🐠🐠🐠 joinCode", joinCode);
-    console.log("🐠🐠🐠🐠 mongoStudentData", mongoStudentData);
+    // 1) ADDCODE TO UPDATE:
+    const url1 = "/joincode/" + joinCode._id;
+    const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
 
+    const f1 = fetch(url1, {
+      method: "PUT",
+      body: JSON.stringify(mongoStudentData),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    // 2) STUDENT RECORD TO UPDATE
+    const f2 = fetch(url2, {
+      method: "PUT",
+      body: JSON.stringify(joinCode),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    Promise.all([f1, f2])
+      .then(result => result.json())
+      .then(() => {
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE"
+        });
+      })
+      .catch(error =>
+        console.error(
+          "PART #1: 🐲🐲🐲🐲🐲🐲ERROR pushing student data to addcode",
+          error
+        )
+      );
+  };
+};
+
+// TO DO: Combine all fetch calls into "all or none"
+export const studentAddClassWithCode_orig = ({
+  joinCode,
+  mongoStudentData
+}) => {
+  return (dispatch, getState) => {
     // 1) ADDCODE TO UPDATE:
     const url1 = "/joincode/" + joinCode._id;
 
@@ -79,11 +119,19 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
       }
     })
       .then(response => response.json())
-      .then(parsedJSON =>
-        console.log("PART #1: Student data pushed to addcode", parsedJSON)
+      .then(
+        parsedJSON =>
+          console.log(
+            "🐖🐖🐖🐖🐖🐖PART #1: Student data pushed to addcode",
+            parsedJSON
+          ),
+        err => console.log("🚔🚔🚔🚔🚔ERROR ------>>", err)
       )
       .catch(error =>
-        console.log("PART #1: ERROR pushing student data to addcode", error)
+        console.error(
+          "PART #1: 🐲🐲🐲🐲🐲🐲ERROR pushing student data to addcode",
+          error
+        )
       );
 
     // 2) STUDENT RECORD TO UPDATE
@@ -100,48 +148,8 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
         console.log("PART 2: Addcode data pushed to student", parsedJSON)
       )
       .catch(error =>
-        console.log("PART 2: Error pushing adcode data to student", error)
+        console.log("PART 2: Error pushing addcode data to student", error)
       );
-
-    //    push to pending_classes (NEW)
-    //        this new array takes ID only
-    //        populates pending_classes_display (?) for dashboard - HOW LONG?
-    //    clear/update store
-
-    // 3)  TEACHER (L) teacherConfirmsStudent will then check pending_students, and confirm individually to add then to current)students
-
-    // * DIAGRAM ENTIRE DATABASE IN WIREFRAME
-
-    /*   const url1 = "/teacher/addclass/" + teacherId;
-
-    fetch(url1, {
-      method: "PUT",
-      body: JSON.stringify(newClassInfo),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json()) // error?
-      .then(parsedJSON => console.log("Success Step #1:", parsedJSON))
-      .catch(error =>
-        console.log("Error in Step #1 teacher adding a class", error)
-      );
-
-    //2) - NEED THE WHOLE TEACHER OBJECT
-    fetch("/joincode/", {
-      method: "POST",
-      body: JSON.stringify(newClassInfo),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(parsedJSON => console.log("Success Step #2:", parsedJSON))
-      .catch(error =>
-        console.log("Error in Step #2 teacher adding a class", error)
-      );
-  };
- */
 
     dispatch({
       type: "STUDENT_ADD_CLASS_WITH_CODE"

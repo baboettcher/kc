@@ -92,7 +92,7 @@ class AddClass extends Component {
       modal_confirmClass_text: "",
       returnToDash: true
     });
-
+    /* 
     console.log(
       "++++ 1a. DB CALL to ADDCODE: PUSH studend_UID to current_students"
     ); // .../addcode/:code    PUT
@@ -116,7 +116,7 @@ class AddClass extends Component {
 
     console.log(
       "++++ 6. (LATER FROM TEACHER) DB CALL to TEACHER: On login, populate all classes with students. Temporarily, populate BOTH pending_students and (confirmed) current_students"
-    );
+    ); */
 
     this.props.studentAddClassWithCode({ joinCode, mongoStudentData });
 
