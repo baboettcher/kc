@@ -62,13 +62,13 @@ export const joinCodeClear = () => {
   };
 };
 
-// TO DO: Combine all fetch calls into "all or none"
+// TO DO: 404 not being nabbed by catch
 export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
   return (dispatch, getState) => {
-    // 1) ADDCODE TO UPDATE:
     const url1 = "/joincode/" + joinCode._id;
     const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
 
+    // 1) ADDCODE TO UPDATE:
     const f1 = fetch(url1, {
       method: "PUT",
       body: JSON.stringify(mongoStudentData),
@@ -95,7 +95,7 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
       })
       .catch(error =>
         console.error(
-          "PART #1: 🐲🐲🐲🐲🐲🐲ERROR pushing student data to addcode",
+          "PART #1: 🐲🐲🐲ERROR pushing student data to addcode",
           error
         )
       );

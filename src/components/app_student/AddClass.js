@@ -9,8 +9,7 @@ import {
 import ModalWithButton from "../common/modalWithButton";
 import Modal from "../common/modal";
 import Spinner from "../common/spinner"; // change this to material-UI
-//import { threadId } from "worker_threads";
-
+// import { threadId } from "worker_threads"; _ WHERE is this coming from?
 // import PropTypes from "prop-types";
 
 class AddClass extends Component {
@@ -93,15 +92,7 @@ class AddClass extends Component {
       returnToDash: true
     });
     /* 
-    console.log(
-      "++++ 1a. DB CALL to ADDCODE: PUSH studend_UID to current_students"
-    ); // .../addcode/:code    PUT
-    // .find()   $push
-
-    console.log(
-      "++++ 1b. DB CALL to ADDCODE: PUSH studend_UID to pending_students ** later"
-    ); // .../addcode/:code      PUT , $push
-
+   
     console.log(
       "++++ 2. DB CALL to STUDENT: PUSH addCode_ID to current_classess +++++"
     ); // .../student/:id      PUT , $push
@@ -135,7 +126,7 @@ class AddClass extends Component {
     // STUDENT: Push to awaiting confirmation in student_class_list
   }
   componentWillUnmount() {
-    console.log("💎💎💎💎💎 UNMOUNTED  💎💎💎💎💎 ");
+    console.log("💎💎💎💎💎 ADDCLASS UNMOUNTED  💎💎💎💎💎 ");
     this.props.joinCodeClear();
   }
 
