@@ -45,7 +45,7 @@ class AddClass extends Component {
       this.setState({
         showSpinner: true,
         modal_confirmClass: true,
-        modal_confirmClass_main: "test abcd",
+        modal_confirmClass_main: "test abcd", // use in modal
         modal_confirmClass_text: "test EFGH"
       });
       this.props.joinCodeCheck(this.state.joinCodeInputted);
@@ -58,9 +58,9 @@ class AddClass extends Component {
       modal_problemWithInput: false,
       modal_problemWithInput_main: "",
       modal_problemWithInput_text: "",
-      modal_confirmClass: false, // remove
-      modal_confirmClass_main: "", // remove
-      modal_confirmClass_text: "", // remove
+      modal_confirmClass: false, // remove?
+      modal_confirmClass_main: "", // remove?
+      modal_confirmClass_text: "", // remove?
       showSpinner: false,
       returnToDash: false
     });
@@ -83,7 +83,10 @@ class AddClass extends Component {
   confirmClassEnrollment() {
     const { joinCode, mongoStudentData } = this.props;
     this.props.studentAddClassWithCode({ joinCode, mongoStudentData });
-    // spinner?
+    this.setState({
+      returnToDash: true
+    });
+    // NEXT: if this hangs, check about what loads in componentWillMount in dashboard
   }
   componentWillUnmount() {
     console.log("💎💎💎💎💎 ADDCLASS UNMOUNTED  💎💎💎💎💎 ");
@@ -100,8 +103,10 @@ class AddClass extends Component {
     if (!auth.uid) return <Redirect to="/signin" />;
     if (this.state.returnToDash) return <Redirect to="/student" />;
 
-    if (mongoStudentData && mongoStudentData.recentClassAddedBool)
+    if (mongoStudentData && mongoStudentData.recentClassAddedBool) {
+      console.log("🛵🛵🛵🛵🛵 recentClassAddedBool 🛵🛵🛵🛵🛵");
       return <Redirect to="/student" />;
+    }
 
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
