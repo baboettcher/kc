@@ -86,19 +86,36 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
       }
     });
 
+    let promiseResults = [];
+    let process = prom => {
+      prom.then(data => {
+        promiseResults.push(data);
+      });
+    };
+
     Promise.all([f1, f2])
-      .then(result => console.log("result", result))
+      .then(responseArr => {
+        responseArr.forEach(res => {
+          process(res.json());
+        });
+      }) // nothing passed bc we use promiseResults from above
       .then(() => {
         dispatch({
-          type: "STUDENT_ADD_CLASS_WITH_CODE"
+          type: "STUDENT_ADD_CLASS_WITH_CODE",
+          payload: promiseResults
         });
       })
-      .catch(error =>
+
+      .catch(error => {
         console.error(
           "PART #1: 🐲🐲🐲ERROR pushing student data to addcode",
           error
-        )
-      );
+        );
+
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE_ERROR"
+        });
+      });
   };
 };
 

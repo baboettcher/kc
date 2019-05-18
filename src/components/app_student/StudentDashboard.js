@@ -41,9 +41,15 @@ class StudentDashboard extends Component {
         first_name,
         last_name,
         school_name,
-        current_students,
-        current_classes
+        tentative_classes_ids,
+        current_classes_ids
       } = this.props.mongoStudentData;
+
+      console.log("tentative_classes_ids-->", tentative_classes_ids);
+      const tentativeClasses =
+        tentative_classes_ids && tentative_classes_ids.length > 0
+          ? tentative_classes_ids.map(singleClass => <p>{singleClass}</p>)
+          : null;
 
       return (
         <div className="container">
@@ -55,6 +61,7 @@ class StudentDashboard extends Component {
               {last_name}
             </h6>{" "}
             <h5>Classes:</h5>
+            {tentativeClasses}
             <div className="input-field">
               <button>
                 {" "}

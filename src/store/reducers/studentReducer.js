@@ -1,7 +1,7 @@
 const studentsReducer = (state = {}, action) => {
   switch (action.type) {
     case "LOAD_STUDENT_DASHBOARD":
-      console.log("loaded student dashboard", action.payload);
+      console.log("loaded student dashboard", action.payload[0]);
       return {
         ...state,
         mongoData: action.payload[0]
@@ -39,10 +39,22 @@ const studentsReducer = (state = {}, action) => {
       console.log("TBC: Student added", action.studentInfo);
 
     case "STUDENT_ADD_CLASS_WITH_CODE":
-      console.log("TBC: Student add class with code");
       return {
         ...state,
-        mongoData: null
+        recentClassAddedData: action.payload,
+        recentClassAddedBool: true
+      };
+
+    case "STUDENT_ADD_CLASS_WITH_CODE_CLEAR":
+      return {
+        ...state,
+        recentClassAddedBool: false // this after return to dashboard
+      };
+
+    case "STUDENT_ADD_CLASS_WITH_CODE_ERROR":
+      return {
+        ...state,
+        recentClassAddedBool: false
       };
 
     default:

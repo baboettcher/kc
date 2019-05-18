@@ -17,10 +17,12 @@ class AddClass extends Component {
     joinCodeInputted: "",
     modal_problemWithInput: false,
     modal_problemWithInput_text: "",
-    showSpinner: false,
+
     modal_confirmClass: false,
     modal_confirmClass_main: "",
     modal_confirmClass_text: "",
+
+    showSpinner: false,
     returnToDash: false
   };
 
@@ -50,80 +52,38 @@ class AddClass extends Component {
     }
   };
 
-  onModalClose() {
+  onModalClose_inputIssue() {
     this.setState({
       joinCode: "",
       modal_problemWithInput: false,
       modal_problemWithInput_main: "",
       modal_problemWithInput_text: "",
-      modal_confirmClass: false,
-      modal_confirmClass_main: "",
-      modal_confirmClass_text: "",
+      modal_confirmClass: false, // remove
+      modal_confirmClass_main: "", // remove
+      modal_confirmClass_text: "", // remove
       showSpinner: false,
       returnToDash: false
     });
   }
 
-  /*   componentUpdate() {
-    // fires immediately after rendering with new P or S
-    console.log("COMPONENT DID UPDATE FIRING!");
-    if (this.props.joinCode) {
-      this.setState({
-        showSpinner: false,
-        modal_confirmClass: true,
-        modal_confirmClass_main: "Is this correct?",
-        modal_confirmClass_text: this.props.joinCode.teacher_name
-      });
-    }
-  }
- */
-  confirmClassEnrollment() {
-    const { joinCode, mongoStudentData } = this.props;
-
-    // spinner
+  onModalClose_finish() {
     this.setState({
-      joinCode: "", // much of this can be deleted--check
-      modal_problemWithInput: false,
-      modal_problemWithInput_text: "",
-      showSpinner: true,
-      modal_confirmClass: false, // remove?
-      modal_confirmClass_main: "",
-      modal_confirmClass_text: "",
+      // joinCode: "",
+      // modal_problemWithInput: false,
+      // modal_problemWithInput_main: "",
+      // modal_problemWithInput_text: "",
+      // modal_confirmClass: false, // remove
+      // modal_confirmClass_main: "", // remove
+      // modal_confirmClass_text: "", // remove
+      // showSpinner: false,
       returnToDash: true
     });
-    /* 
-   
-    console.log(
-      "++++ 2. DB CALL to STUDENT: PUSH addCode_ID to current_classess +++++"
-    ); // .../student/:id      PUT , $push
+  }
 
-    console.log(
-      "++++ 3. DB CALL to STUDENT: PUSH  { teacherNAme, classDescripion, classID} to current_classes_cache"
-    ); // .../student/:id      PUT , $push
-
-    console.log(
-      "++++ 5. (LATER FROM STUDENT) DB CALL to STUDENT: Dashboard loads classes (later both pending and actual"
-    ); // .../student/:id      GET .populate
-
-    console.log(
-      "++++ 6. (LATER FROM TEACHER) DB CALL to TEACHER: On login, populate all classes with students. Temporarily, populate BOTH pending_students and (confirmed) current_students"
-    ); */
-
+  confirmClassEnrollment() {
+    const { joinCode, mongoStudentData } = this.props;
     this.props.studentAddClassWithCode({ joinCode, mongoStudentData });
-
-    /*     this.setState({
-                joinCode: "",
-                modal_problemWithInput: false,
-                modal_problemWithInput_text: "",
-                showSpinner: true,
-                modal_confirmClass: false,
-                modal_confirmClass_main: "",
-                modal_confirmClass_text: "",
-                returnToDash: true
-              }); */
-
-    // TEACHER: Push to unconfirmed list in teacherDB
-    // STUDENT: Push to awaiting confirmation in student_class_list
+    // spinner?
   }
   componentWillUnmount() {
     console.log("💎💎💎💎💎 ADDCLASS UNMOUNTED  💎💎💎💎💎 ");
@@ -131,9 +91,6 @@ class AddClass extends Component {
   }
 
   render() {
-    // decontruct all of the props stuff - or will this cause error
-    // show modal for not found
-    // this.props.join_code_not_found
     const {
       auth,
       authCustomClaim,
@@ -142,6 +99,9 @@ class AddClass extends Component {
     } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
     if (this.state.returnToDash) return <Redirect to="/student" />;
+
+    if (mongoStudentData && mongoStudentData.recentClassAddedBool)
+      return <Redirect to="/student" />;
 
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
@@ -156,7 +116,7 @@ class AddClass extends Component {
           <Modal
             mainText={"Oops!"}
             subtitle1={this.state.modal_problemWithInput_text}
-            onModalClose={this.onModalClose.bind(this)}
+            onModalClose={this.onModalClose_inputIssue.bind(this)}
           />
         ) : null}
 
@@ -186,7 +146,7 @@ class AddClass extends Component {
             subtitle1={`Class: ${this.props.joinCode.class_description}`}
             buttonAction={this.confirmClassEnrollment.bind(this)}
             buttonText={"Click to confirm enrollment"}
-            onModalClose={this.onModalClose.bind(this)}
+            onModalClose={this.onModalClose_finish.bind(this)}
           />
         ) : null}
       </div>
