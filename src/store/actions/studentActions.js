@@ -68,7 +68,7 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
     const url1 = "/joincode/" + joinCode._id;
     const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
 
-    // 1) ADDCODE TO UPDATE:
+    // 1) ADD RECORD TO ADDCODE
     const f1 = fetch(url1, {
       method: "PUT",
       body: JSON.stringify(mongoStudentData),
@@ -77,7 +77,7 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
       }
     });
 
-    // 2) STUDENT RECORD TO UPDATE
+    // 2) STUDENT RECORD PUSH TO ARRAY
     const f2 = fetch(url2, {
       method: "PUT",
       body: JSON.stringify(joinCode),
