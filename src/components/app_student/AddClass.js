@@ -88,6 +88,7 @@ class AddClass extends Component {
     });
     // NEXT: if this hangs, check about what loads in componentWillMount in dashboard
   }
+
   componentWillUnmount() {
     console.log("💎💎💎💎💎 ADDCLASS UNMOUNTED  💎💎💎💎💎 ");
     this.props.joinCodeClear();
@@ -98,16 +99,25 @@ class AddClass extends Component {
       auth,
       authCustomClaim,
       mongoStudentData,
+      recentClassAdded,
       join_code_found
     } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
-    if (this.state.returnToDash) return <Redirect to="/student" />;
 
-    if (mongoStudentData && mongoStudentData.recentClassAddedBool) {
-      console.log("🛵🛵🛵🛵🛵 recentClassAddedBool 🛵🛵🛵🛵🛵");
-      return <Redirect to="/student" />;
+    if (this.state.returnToDash) return <Redirect to="/student" />;
+    /* 
+    if (mongoStudentData) {
+      console.log("mongoStudentData-->", mongoStudentData);
     }
 
+    if (recentClassAdded) {
+      console.log(
+        "🛵🛵🛵🛵🛵 recentClassAddedBool 🛵🛵🛵🛵🛵",
+        recentClassAdded
+      );
+      return <Redirect to="/student" />;
+    }
+ */
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
@@ -164,6 +174,7 @@ const mapStateToProps = state => {
     auth: state.firebase.auth,
     authCustomClaim: state.auth.authCustomClaim,
     mongoStudentData: state.student.mongoData,
+    recentClassAdded: state.student.recentClassAdded,
     joinCode: state.student.join_code
   };
 };

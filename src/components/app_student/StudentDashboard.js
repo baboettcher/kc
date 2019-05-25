@@ -11,6 +11,7 @@ class StudentDashboard extends Component {
   componentDidMount() {
     const { fb_auth, authCustomClaim } = this.props;
     const fb_uid = fb_auth.uid;
+    console.log("==== COMPONENT DID MOUNT =======");
     this.props.loadStudentDashboard(fb_uid);
   }
   /* 
@@ -41,14 +42,18 @@ class StudentDashboard extends Component {
         first_name,
         last_name,
         school_name,
-        tentative_classes_ids,
-        current_classes_ids
+        tentative_classes,
+        current_classes
       } = this.props.mongoStudentData;
 
-      console.log("tentative_classes_ids-->", tentative_classes_ids);
       const tentativeClasses =
-        tentative_classes_ids && tentative_classes_ids.length > 0
-          ? tentative_classes_ids.map(singleClass => <p>{singleClass}</p>)
+        tentative_classes && tentative_classes.length > 0
+          ? tentative_classes.map(singleClass => (
+              <p>
+                {singleClass.teacher_name} {singleClass.grade_level}{" "}
+                {singleClass.class_description}
+              </p>
+            ))
           : null;
 
       return (
@@ -60,7 +65,7 @@ class StudentDashboard extends Component {
               {first_name}
               {last_name}
             </h6>{" "}
-            <h5>Classes:</h5>
+            <h5>Enrolled tentatively:</h5>
             {tentativeClasses}
             <div className="input-field">
               <button>
