@@ -37,13 +37,16 @@ class TeacherDashboard extends Component {
       } = this.props.mongoTeacherData;
 
       // make a table
+      // Under ICON, green for active, yellow for student pending
       const listOfClasses = current_classes
         ? current_classes.map(singleClass => (
             <tr>
+              <td>ICON</td>
               <td>{singleClass.class_description}</td>
               <td>{singleClass.grade_level}</td>
               <td>{singleClass.special_notes}</td>
               <td>{singleClass.join_code}</td>
+              <td>#</td>
             </tr>
           ))
         : null;
@@ -51,21 +54,25 @@ class TeacherDashboard extends Component {
       return (
         <div className="container">
           <div>
-            <h3 className="header text-center">Teacher Dashboard</h3>
+            {/* <h3 className="header text-center">Teacher Dashboard</h3> */}
 
+            <h3 className="header text-center">
+              {first_name} {last_name}
+            </h3>
             <h6>
-              Basic info:
-              {first_name}
-              {last_name}
+              <strong>New students join request:</strong>
+              <p>Name Class Requested Admit / Deny</p>
             </h6>
             {listOfClasses ? (
               <table>
                 <thead>
                   <tr>
+                    <th>Status</th>
                     <th>Class Description</th>
                     <th>Grade Level</th>
                     <th>Notes</th>
                     <th>Join Code</th>
+                    <th>Members</th>
                   </tr>
                 </thead>
                 <tbody>{listOfClasses}</tbody>

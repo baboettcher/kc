@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+//import SelectForm from "../common/selectForm";
 //import PropTypes from "prop-types";
 
 class StudentsAll extends Component {
@@ -25,12 +26,27 @@ class StudentsAll extends Component {
 
       return (
         <div className="container">
-          <h5>Current students:{current_students.length}</h5>
-          <h5>Current Classes</h5>
+          <h5>Current Class Selected (make drop down)</h5>
+          <h5>Current students (depend on dropdown)</h5>
+          <div className="input-field col s12">
+            <select className="browser-default">
+              {/*    <option value="" disabled selected>
+                Choose your option
+              </option> */}
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </select>
+            <label>Materialize Select</label>
+          </div>
         </div>
       );
     } else {
-      return <h1>Loading</h1>;
+      return (
+        <div className="container">
+          <h1>Loading</h1>
+        </div>
+      );
     }
 
     const currentStudents = this.props.mongoData
