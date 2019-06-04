@@ -28,7 +28,10 @@ class StudentsAll extends Component {
         <div className="container">
           <h5>Current Class Selected (make drop down)</h5>
           <h5>Current students (depend on dropdown)</h5>
-          <SelectForm menuItems={["Homeroom", "ALD", "Golden Dragons"]} />
+          <SelectForm
+            menuItems={["Homeroom", "ALD", "Golden Dragons"]}
+            instructions={"Choose your default class"}
+          />
         </div>
       );
     } else {

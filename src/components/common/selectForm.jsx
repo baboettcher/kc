@@ -26,7 +26,7 @@ class SelectForm extends React.Component {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
-            Pick your favorite flavor:
+            {this.props.instructions}
             <select value={this.state.value} onChange={this.handleChange}>
               {this.props.menuItems.map(item => {
                 return <option value={item}>{item}</option>;
