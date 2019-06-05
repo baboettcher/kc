@@ -13,6 +13,7 @@ class StudentsAll extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
+
     if (!auth.uid) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
@@ -21,15 +22,23 @@ class StudentsAll extends Component {
         // first_name,
         // last_name,
         // school_name,
-        current_students
+        current_students,
+        current_classes
       } = this.props.mongoTeacherData;
+
+      console.log("current_classes-->", current_classes);
+      const currentClassesMenu = current_classes.map(c => {
+        return c.class_description;
+      });
+
+      //c.class_description
 
       return (
         <div className="container">
           <h5>Current Class Selected (make drop down)</h5>
           <h5>Current students (depend on dropdown)</h5>
           <SelectForm
-            menuItems={["Homeroom", "ALD", "Golden Dragons"]}
+            menuItems={currentClassesMenu}
             instructions={"Choose your default class"}
           />
         </div>
@@ -41,11 +50,6 @@ class StudentsAll extends Component {
         </div>
       );
     }
-
-    const currentStudents = this.props.mongoData
-      ? this.props.mongoData.students
-      : "not defined";
-    console.log("currentStudents-->", currentStudents);
 
     return (
       <div>
