@@ -1,12 +1,21 @@
 import React from "react";
+import _ from "lodash";
 
 class SelectForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "coconut" };
+    this.state = {
+      value: "null"
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({
+      menuItemsFull: this.props.menuItemsFull
+    });
   }
 
   handleChange(event) {
@@ -14,13 +23,16 @@ class SelectForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert("Your favorite flavor is: " + this.state.value);
     event.preventDefault();
+    const selectedClass = _.find(this.state.menuItemsFull, {
+      _id: this.state.value
+    });
+    this.props.selectResult(selectedClass);
   }
 
   render() {
-    console.log("PROPS===>>>", this.props.menuItems);
-    if (!this.props.menuItems) {
+    console.log("state:", this.state);
+    if (!this.props.menuItemsFull) {
       return null;
     } else {
       return (
@@ -28,8 +40,10 @@ class SelectForm extends React.Component {
           <label>
             {this.props.instructions}
             <select value={this.state.value} onChange={this.handleChange}>
-              {this.props.menuItems.map(item => {
-                return <option value={item}>{item}</option>;
+              {this.props.menuItemsFull.map(item => {
+                return (
+                  <option value={item._id}>{item.class_description}</option>
+                );
               })}
             </select>
           </label>

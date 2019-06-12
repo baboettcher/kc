@@ -1,5 +1,11 @@
 const teacherReducer = (state = {}, action) => {
   switch (action.type) {
+    case "TEACHER_SET_DEFAULT_CLASS":
+      return {
+        ...state,
+        defaultClass: action.payload
+      };
+
     case "LOAD_TEACHER_DASHBOARD":
       return {
         ...state,

@@ -2,12 +2,23 @@ import React, { Component } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import SelectForm from "../common/selectForm";
+import { setDefaultClass } from "../../store/actions/teacherActions";
 //import PropTypes from "prop-types";
 
 class StudentsAll extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    // this.state = {
+    //   defaultClass: "nada todavia"
+    // };
+    this.selectDefaultClass = this.selectDefaultClass.bind(this);
+  }
+  //passed to select menu
+  selectDefaultClass(classSelected) {
+    // this.setState({
+    //   defaultClass: classSelected
+    // });
+    this.props.setDefaultClass(classSelected); // set on store
   }
 
   render() {
@@ -26,20 +37,14 @@ class StudentsAll extends Component {
         current_classes
       } = this.props.mongoTeacherData;
 
-      console.log("current_classes-->", current_classes);
-      const currentClassesMenu = current_classes.map(c => {
-        return c.class_description;
-      });
-
-      //c.class_description
-
       return (
         <div className="container">
-          <h5>Current Class Selected (make drop down)</h5>
+          <h5>Current Class {"coming"}</h5>
           <h5>Current students (depend on dropdown)</h5>
           <SelectForm
-            menuItems={currentClassesMenu}
+            menuItemsFull={current_classes ? current_classes : null}
             instructions={"Choose your default class"}
+            selectResult={this.selectDefaultClass}
           />
         </div>
       );
@@ -71,4 +76,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(StudentsAll);
+const mapDispatchToProps = dispatch => {
+  return {
+    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StudentsAll);

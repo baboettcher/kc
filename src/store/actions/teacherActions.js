@@ -21,6 +21,7 @@ export const clearTeacherOnSignout = () => {
 };
 
 // order reversed 6/2 in order to get the _id of addode and use THAT to push to teacher array
+// Add to store?
 export const teacherAddClass = ([newClassInfo, teacherId]) => {
   return (dispatch, getState) => {
     // ** 1:  Posting the entire new class to /joincode
@@ -59,6 +60,16 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
       });
   };
 };
+
+export const setDefaultClass = defaultClass => {
+  return dispatch => {
+    dispatch({
+      type: "TEACHER_SET_DEFAULT_CLASS",
+      payload: defaultClass
+    });
+  };
+};
+
 /* 
 
 // ORIG: 1) push to teacher array and then 2) post to joincode
