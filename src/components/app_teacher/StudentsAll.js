@@ -3,7 +3,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import SelectForm from "../common/selectForm";
 import { setDefaultClass } from "../../store/actions/teacherActions";
-//import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 class StudentsAll extends Component {
   constructor(props) {
@@ -13,12 +13,18 @@ class StudentsAll extends Component {
     // };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
   }
-  //passed to select menu
+  //this is passed to selectForm
   selectDefaultClass(classSelected) {
-    // this.setState({
-    //   defaultClass: classSelected
-    // });
-    this.props.setDefaultClass(classSelected); // set on store
+    const { _id } = this.props.mongoTeacherData;
+    const tempArray = [classSelected, _id];
+    //console.log("1._id--->>", _id);
+    //console.log("1.classSelected--->>>", classSelected);
+    /// -------
+    // WHY does the second argument "arrive" as undefined?
+    // EX:
+    // this.props.setDefaultClass(classSelected, _id)
+    // DUCT-tape: put in an array:
+    this.props.setDefaultClass(tempArray);
   }
 
   render() {
@@ -44,7 +50,7 @@ class StudentsAll extends Component {
           <SelectForm
             menuItemsFull={current_classes ? current_classes : null}
             instructions={"Choose your default class"}
-            selectResult={this.selectDefaultClass}
+            selectDefaultClass={this.selectDefaultClass}
           />
         </div>
       );

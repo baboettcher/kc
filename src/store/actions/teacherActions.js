@@ -46,7 +46,7 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
           {},
           { class_description, grade_level, _id, join_code }
         );
-        console.log("// valuesForTeacherRecord-->", valuesForTeacherRecord);
+        console.log("valuesForTeacherRecord-->", valuesForTeacherRecord);
         fetch("/teacher/addclass/" + teacherId, {
           method: "PUT",
           body: JSON.stringify(valuesForTeacherRecord),
@@ -61,11 +61,25 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
   };
 };
 
-export const setDefaultClass = defaultClass => {
+export const setDefaultClass = tempArrayDueTo2ndArgIssue => {
+  console.log("++++111 TEACHER ACTION SETDEFAULTCLASS++++");
+  const classSelected = tempArrayDueTo2ndArgIssue[0];
+  const _id = tempArrayDueTo2ndArgIssue[1];
   return dispatch => {
+    console.log("++++222 TEACHER ACTION SETDEFAULTCLASS++++");
+    fetch("/teacher/setdefaultclass/" + _id, {
+      method: "PUT",
+      body: JSON.stringify(classSelected),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      console.log("response", response);
+    });
+
     dispatch({
       type: "TEACHER_SET_DEFAULT_CLASS",
-      payload: defaultClass
+      payload: classSelected
     });
   };
 };

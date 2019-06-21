@@ -27,7 +27,7 @@ class SelectForm extends React.Component {
     const selectedClass = _.find(this.state.menuItemsFull, {
       _id: this.state.value
     });
-    this.props.selectResult(selectedClass);
+    this.props.selectDefaultClass(selectedClass);
   }
 
   render() {

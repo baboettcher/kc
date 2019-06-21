@@ -3,7 +3,7 @@ const teacherReducer = (state = {}, action) => {
     case "TEACHER_SET_DEFAULT_CLASS":
       return {
         ...state,
-        defaultClass: action.payload
+        defaultClass: action.payload // will this be needed if populated  vaue on monngoData loads anyways?
       };
 
     case "LOAD_TEACHER_DASHBOARD":
