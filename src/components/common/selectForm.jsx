@@ -31,7 +31,7 @@ class SelectForm extends React.Component {
   }
 
   render() {
-    console.log("state:", this.state);
+    //console.log("state:", this.state);
     if (!this.props.menuItemsFull) {
       return null;
     } else {

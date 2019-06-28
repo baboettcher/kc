@@ -8,18 +8,29 @@ import { setDefaultClass } from "../../store/actions/teacherActions";
 class StudentsAll extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   defaultClass: "nada todavia"
-    // };
+    this.state = {
+      defaultClass: "WTF"
+    };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
   }
+
+  // componentDidUpdate(oldProps) {
+  //   const newProps = this.props;
+  //   console.log("oldProps-->", oldProps);
+
+  //   if (oldProps.mongoTeacherData !== newProps.mongoTeacherData) {
+  //     this.setState({
+  //       defaultClass: oldProps.mongoTeacherData.default_class
+  //     });
+  //   }
+  // }
+
   //this is passed to selectForm
   selectDefaultClass(classSelected) {
     const { _id } = this.props.mongoTeacherData;
     const tempArray = [classSelected, _id];
-    //console.log("1._id--->>", _id);
-    //console.log("1.classSelected--->>>", classSelected);
-    /// -------
+
+    /// ------- ISSUE ------
     // WHY does the second argument "arrive" as undefined?
     // EX:
     // this.props.setDefaultClass(classSelected, _id)
@@ -40,12 +51,17 @@ class StudentsAll extends Component {
         // last_name,
         // school_name,
         current_students,
-        current_classes
+        current_classes,
+        default_class
       } = this.props.mongoTeacherData;
 
       return (
         <div className="container">
-          <h5>Current Class {"coming"}</h5>
+          <h3>Current Class (local state): {this.state.defaultClass}</h3>
+          <h3>
+            Current Class (redux state):{" "}
+            {default_class ? default_class.class_description : null}
+          </h3>
           <h5>Current students (depend on dropdown)</h5>
           <SelectForm
             menuItemsFull={current_classes ? current_classes : null}

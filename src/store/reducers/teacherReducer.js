@@ -1,9 +1,11 @@
 const teacherReducer = (state = {}, action) => {
   switch (action.type) {
     case "TEACHER_SET_DEFAULT_CLASS":
+      console.log(action.payload);
+
       return {
         ...state,
-        defaultClass: action.payload // will this be needed if populated  vaue on monngoData loads anyways?
+        mongoData: action.payload
       };
 
     case "LOAD_TEACHER_DASHBOARD":

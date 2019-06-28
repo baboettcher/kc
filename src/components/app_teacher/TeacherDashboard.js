@@ -31,6 +31,7 @@ class TeacherDashboard extends Component {
       const {
         first_name,
         last_name,
+        default_class,
         school_name,
         current_students,
         current_classes
@@ -56,13 +57,17 @@ class TeacherDashboard extends Component {
           <div>
             {/* <h3 className="header text-center">Teacher Dashboard</h3> */}
 
-            <h3 className="header text-center">
+            <h1 className="header text-center">
               {first_name} {last_name}
-            </h3>
-            <h6>
-              <strong>New students join request:</strong>
-              <p>Name Class Requested Admit / Deny</p>
-            </h6>
+            </h1>
+            <h2>
+              Current class:
+              {default_class ? default_class.class_description : null}
+            </h2>
+            <p>
+              New students join request (t/f) - Name Class Requested Admit /
+              Deny
+            </p>
             {listOfClasses ? (
               <table>
                 <thead>

@@ -61,63 +61,28 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
   };
 };
 
+// ISSUE: What to load after updating?
+// -- 1) loadTeacherDashboard AFTER updating record
+//       in this case, update state locally for UI update
+//       Currently TEACHER_SET_DEFAULT_CLASS is updating a special field outside mongoData
 export const setDefaultClass = tempArrayDueTo2ndArgIssue => {
-  console.log("++++111 TEACHER ACTION SETDEFAULTCLASS++++");
   const classSelected = tempArrayDueTo2ndArgIssue[0];
   const _id = tempArrayDueTo2ndArgIssue[1];
+
   return dispatch => {
-    console.log("++++222 TEACHER ACTION SETDEFAULTCLASS++++");
     fetch("/teacher/setdefaultclass/" + _id, {
       method: "PUT",
       body: JSON.stringify(classSelected),
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(response => {
-      console.log("response", response);
-    });
-
-    dispatch({
-      type: "TEACHER_SET_DEFAULT_CLASS",
-      payload: classSelected
-    });
+    })
+      .then(res => res.json())
+      .then(entireTeacherRecord => {
+        dispatch({
+          type: "TEACHER_SET_DEFAULT_CLASS",
+          payload: entireTeacherRecord
+        });
+      });
   };
 };
-
-/* 
-
-// ORIG: 1) push to teacher array and then 2) post to joincode
-export const teacherAddClass = ([newClassInfo, teacherId]) => {
-  return (dispatch, getState) => {
-    // 1) Push to teacher array of classes
-    const url1 = "/teacher/addclass/" + teacherId;
-
-    fetch(url1, {
-      method: "PUT",
-      body: JSON.stringify(newClassInfo),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json()) // error?
-      .then(parsedJSON => console.log("Success Step #1:", parsedJSON))
-      .catch(error =>
-        console.log("Error in Step #1 teacher adding a class", error)
-      );
-
-    //2) - NEED THE WHOLE TEACHER OBJECT
-    fetch("/joincode/", {
-      method: "POST",
-      body: JSON.stringify(newClassInfo),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(parsedJSON => console.log("Success Step #2:", parsedJSON))
-      .catch(error =>
-        console.log("Error in Step #2 teacher adding a class", error)
-      );
-  };
-};
- */
