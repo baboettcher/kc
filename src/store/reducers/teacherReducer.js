@@ -1,8 +1,6 @@
 const teacherReducer = (state = {}, action) => {
   switch (action.type) {
     case "TEACHER_SET_DEFAULT_CLASS":
-      console.log(action.payload);
-
       return {
         ...state,
         mongoData: action.payload

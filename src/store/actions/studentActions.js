@@ -64,6 +64,8 @@ export const joinCodeClear = () => {
 
 // TO DO: 404 not being nabbed by catch
 export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
+  console.log("joinCode==>", joinCode);
+  console.log("mongoStudentData==>", mongoStudentData);
   return (dispatch, getState) => {
     const url1 = "/joincode/" + joinCode._id;
     const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
@@ -173,12 +175,3 @@ export const studentAddClassWithCode_orig = ({
     });
   };
 };
-
-/* 
-export const addStudent = () => {
-  return {
-    type: "ADD_STUDENT",
-    studentInfo: "all the info"
-  };
-};
- */

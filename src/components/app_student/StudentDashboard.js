@@ -49,24 +49,24 @@ class StudentDashboard extends Component {
       const tentativeClasses =
         tentative_classes && tentative_classes.length > 0
           ? tentative_classes.map(singleClass => (
-              <p>
+              <li>
                 {singleClass.teacher_name} {singleClass.grade_level}{" "}
                 {singleClass.class_description}
-              </p>
+              </li>
             ))
           : null;
 
       return (
         <div className="container">
-          <h3 className="header text-center">Student Dashboard</h3>
+          <h5 className="header text-center">Student Dashboard</h5>
           <div>
-            <h6>
-              Basic info:
-              {first_name}
-              {last_name}
-            </h6>{" "}
-            <h5>Enrolled tentatively:</h5>
-            {tentativeClasses}
+            <h1>
+              {first_name} {last_name}
+            </h1>
+            <h5>
+              Enrolled tentatively:
+              {tentativeClasses}
+            </h5>
             <div className="input-field">
               <button>
                 {" "}

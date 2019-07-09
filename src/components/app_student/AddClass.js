@@ -86,7 +86,6 @@ class AddClass extends Component {
     this.setState({
       returnToDash: true
     });
-    // NEXT: if this hangs, check about what loads in componentWillMount in dashboard
   }
 
   componentWillUnmount() {

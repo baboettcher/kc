@@ -9,26 +9,16 @@ class StudentsAll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultClass: "WTF"
+      defaultClass: ""
     };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
   }
 
-  // componentDidUpdate(oldProps) {
-  //   const newProps = this.props;
-  //   console.log("oldProps-->", oldProps);
-
-  //   if (oldProps.mongoTeacherData !== newProps.mongoTeacherData) {
-  //     this.setState({
-  //       defaultClass: oldProps.mongoTeacherData.default_class
-  //     });
-  //   }
-  // }
-
-  //this is passed to selectForm
+  // this callback is passed to selectForm
+  // "tempArray" is temporary workaround
   selectDefaultClass(classSelected) {
-    const { _id } = this.props.mongoTeacherData;
-    const tempArray = [classSelected, _id];
+    const { _id: teacherId } = this.props.mongoTeacherData;
+    const tempArray = [classSelected, teacherId];
 
     /// ------- ISSUE ------
     // WHY does the second argument "arrive" as undefined?
@@ -52,20 +42,38 @@ class StudentsAll extends Component {
         // school_name,
         current_students,
         current_classes,
-        default_class
+        default_class_id,
+        default_class_info,
+        default_class_students
       } = this.props.mongoTeacherData;
+
+      console.log("default_class_students=====>>>>", default_class_students);
+
+      let allCurrentStudents = "No students to list";
+
+      if (default_class_students) {
+        allCurrentStudents = default_class_students.map(student => {
+          return <li>{student.first_name}</li>;
+        });
+      }
 
       return (
         <div className="container">
-          <h3>Current Class (local state): {this.state.defaultClass}</h3>
           <h3>
-            Current Class (redux state):{" "}
-            {default_class ? default_class.class_description : null}
+            Current Class:{" "}
+            {default_class_info ? default_class_info.class_description : null}
           </h3>
-          <h5>Current students (depend on dropdown)</h5>
+          <h5>Current students</h5>
+          <h3>
+            {default_class_students
+              ? "number of students:" + default_class_students.length
+              : null}{" "}
+          </h3>
+          <h3>{default_class_students ? allCurrentStudents : null} </h3>
+
           <SelectForm
             menuItemsFull={current_classes ? current_classes : null}
-            instructions={"Choose your default class"}
+            instructions={"Choose your default class: "}
             selectDefaultClass={this.selectDefaultClass}
           />
         </div>

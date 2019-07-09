@@ -61,13 +61,16 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
   };
 };
 
-// ISSUE: What to load after updating?
+// STACK OVERFLOW ISSUE: What to load after updating?
 // -- 1) loadTeacherDashboard AFTER updating record
 //       in this case, update state locally for UI update
 //       Currently TEACHER_SET_DEFAULT_CLASS is updating a special field outside mongoData
 export const setDefaultClass = tempArrayDueTo2ndArgIssue => {
+  console.log("tempArrayDueTo2ndArgIssue ===>", tempArrayDueTo2ndArgIssue);
+
   const classSelected = tempArrayDueTo2ndArgIssue[0];
   const _id = tempArrayDueTo2ndArgIssue[1];
+  console.log("classSelected===>", classSelected);
 
   return dispatch => {
     fetch("/teacher/setdefaultclass/" + _id, {
@@ -79,6 +82,7 @@ export const setDefaultClass = tempArrayDueTo2ndArgIssue => {
     })
       .then(res => res.json())
       .then(entireTeacherRecord => {
+        console.log("👠👠👠👠👠👠entireTeacherRecord", entireTeacherRecord);
         dispatch({
           type: "TEACHER_SET_DEFAULT_CLASS",
           payload: entireTeacherRecord
