@@ -36,6 +36,7 @@ class SimpleModal extends React.Component {
     open: true
   };
 
+  // needed?
   // handleOpen = () => {
   //   this.setState({ open: true });
   // };

@@ -30,8 +30,10 @@ export const addStudent = studentInfo => {
   };
 };
 
+// this neeed to set state back to turn off the spinner!
 export const joinCodeCheck = joinCode => {
   return (dispatch, getState) => {
+    console.log("---joinCode to test--->>", joinCode);
     fetch("/joincode/" + joinCode)
       .then(joincode1 => joincode1.json())
       .then(joincode2 => {
@@ -41,7 +43,7 @@ export const joinCodeCheck = joinCode => {
         });
       })
       .catch(error => {
-        console.log("Joincode NOT found", error);
+        console.log("Joincode NOT found!!!", error);
         dispatch({
           type: "JOIN_CODE_NOT_FOUND"
         });
@@ -62,7 +64,7 @@ export const joinCodeClear = () => {
   };
 };
 
-// TO DO: 404 not being nabbed by catch
+// TO DO: 404 not being nabbed by .catch
 export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
   console.log("joinCode==>", joinCode);
   console.log("mongoStudentData==>", mongoStudentData);
@@ -70,8 +72,8 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
     const url1 = "/joincode/" + joinCode._id;
     const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
 
-    // 1) ADD RECORD TO ADDCODE
-    const f1 = fetch(url1, {
+    // 1) PUSH STUDENT RECORD TO JOINCODE /joincode/
+    const f1_joinCodeResponse = fetch(url1, {
       method: "PUT",
       body: JSON.stringify(mongoStudentData),
       headers: {
@@ -80,7 +82,7 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
     });
 
     // 2) STUDENT RECORD PUSH TO ARRAY
-    const f2 = fetch(url2, {
+    const f2_studentRecord = fetch(url2, {
       method: "PUT",
       body: JSON.stringify(joinCode),
       headers: {
@@ -88,20 +90,60 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
       }
     });
 
-    let promiseResults = [];
+    let promiseResults = []; // promiseResults: 👑👑👑0_Class Record! 🧤🧤🧤1_Student Record!"
+
+    // the helper function "process"
+    // takes each promise (in responseArr) and runs .json()
     let process = prom => {
       prom.then(data => {
         promiseResults.push(data);
       });
     };
 
-    Promise.all([f1, f2])
+    // --------- NOTES  -------------
+
+    // This Promise.all takes a 2-item array of promises
+    // and runs helper function "process"
+    // which pushes results to an array (promiseResults)
+    // why am I getting an array, with both items
+    // but individual indexs are undefined?
+
+    // --------- EXAMPLE  -------------
+
+    /*     Promise.all([a, b]).then(function([resultA, resultB]) {
+      // more processing
+      return;
+    });
+     */
+    /* 
+
+    // --------- NEW -------------
+    Promise.all([f1_joinCodeResponse, f2_studentRecord])
+      .then(function(responseArr) {
+        responseArr.forEach(res => {
+          process(res.json());
+        });
+      })
+      .then(() => {
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE",
+          payload: promiseResults
+        });
+      });
+
+ */
+
+    // ORIG
+    Promise.all([f1_joinCodeResponse, f2_studentRecord])
       .then(responseArr => {
         responseArr.forEach(res => {
           process(res.json());
         });
-      }) // nothing passed bc we use promiseResults from above
+      })
+      // .then((promiseResults)=>)// nothing passed bc we use promiseResults from above
       .then(() => {
+        console.log("👘👘👘👘👘 promiseResults:", promiseResults);
+        console.log("👘👘👘👘👘 promiseResults[0]:", promiseResults[0]);
         dispatch({
           type: "STUDENT_ADD_CLASS_WITH_CODE",
           payload: promiseResults

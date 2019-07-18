@@ -1,3 +1,6 @@
+// NEXT: get student page to update immediately
+// PLay with styles - Semantic UI
+
 import React, { Component } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -57,19 +60,24 @@ class StudentsAll extends Component {
         });
       }
 
+      const divStyle = {
+        color: "blue"
+        // backgroundImage: 'url(' + imgUrl + ')',
+      };
+
       return (
         <div className="container">
           <h3>
-            Current Class:{" "}
-            {default_class_info ? default_class_info.class_description : null}
-          </h3>
-          <h5>Current students</h5>
-          <h3>
+            {/* <span style="color:blue"> */}
+            <div style={divStyle}>
+              Current Class:{" "}
+              {default_class_info ? default_class_info.class_description : null}
+            </div>
+            {default_class_students ? allCurrentStudents : null}
             {default_class_students
-              ? "number of students:" + default_class_students.length
+              ? "Number of tentative students: " + default_class_students.length
               : null}{" "}
           </h3>
-          <h3>{default_class_students ? allCurrentStudents : null} </h3>
 
           <SelectForm
             menuItemsFull={current_classes ? current_classes : null}

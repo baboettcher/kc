@@ -1,14 +1,12 @@
 const studentsReducer = (state = {}, action) => {
   switch (action.type) {
     case "LOAD_STUDENT_DASHBOARD":
-      //console.log("loaded student dashboard", action.payload[0]);
       return {
         ...state,
         mongoData: action.payload[0]
       };
 
     case "CLEAR_STUDENT_ON_SIGNOUT":
-      console.log("clear student data");
       return {
         ...state,
         mongoData: null
@@ -35,16 +33,16 @@ const studentsReducer = (state = {}, action) => {
         join_code_found: null
       };
 
-    case "ADD_STUDENT":
-      console.log("TBC: Student added", action.studentInfo);
-
-    // STUDENT_ADD_CLASS - not being used yet
     case "STUDENT_ADD_CLASS_WITH_CODE":
+      console.log("💋💋💋💋PAYLOAD💋💋💋💋💋💋💋", action.payload);
       return {
         ...state,
-        recentClassAdded: action.payload
+        thing123_FULL: action.payload,
+        thing123_0: action.payload[0]
+        //mongoData: action.payload[1]
       };
 
+    // STUDENT_ADD_CLASS - not being used yet
     case "STUDENT_ADD_CLASS_WITH_CODE_CLEAR":
       return {
         ...state,
@@ -56,6 +54,9 @@ const studentsReducer = (state = {}, action) => {
         ...state,
         recentClassAddedBool: false
       };
+
+    case "ADD_STUDENT":
+      console.log("TBC: Student added", action.studentInfo);
 
     default:
       return state;

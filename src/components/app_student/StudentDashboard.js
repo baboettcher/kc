@@ -11,24 +11,19 @@ class StudentDashboard extends Component {
   componentDidMount() {
     const { fb_auth, authCustomClaim } = this.props;
     const fb_uid = fb_auth.uid;
-    console.log("==== COMPONENT DID MOUNT =======");
+    console.log("------STUDENT DASHBOARD DID MOUNT-------");
     this.props.loadStudentDashboard(fb_uid);
   }
-  /* 
-  handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
 
-  handleAddCodeSubmit = e => {
-    e.preventDefault();
-    this.setState(() => {
-      return {
-        addJoinCode: ""
-      };
-    });
-  }; */
+  //NEXT:
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.mongoStudentData !== this.props.mongoStudentData) {
+  //     console.log(
+  //       "======= STUDENT: DID UPDATE!!!! ===>",
+  //       this.props.mongoStudentData
+  //     );
+  //   }
+  // }
 
   render() {
     const { auth, authCustomClaim } = this.props;
@@ -48,8 +43,8 @@ class StudentDashboard extends Component {
 
       const tentativeClasses =
         tentative_classes && tentative_classes.length > 0
-          ? tentative_classes.map(singleClass => (
-              <li>
+          ? tentative_classes.map((singleClass, i) => (
+              <li key={i}>
                 {singleClass.teacher_name} {singleClass.grade_level}{" "}
                 {singleClass.class_description}
               </li>

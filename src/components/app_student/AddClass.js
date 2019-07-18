@@ -4,25 +4,21 @@ import { connect } from "react-redux";
 import {
   joinCodeCheck,
   joinCodeClear,
-  studentAddClassWithCode
+  studentAddClassWithCode,
+  loadStudentDashboard
 } from "../../store/actions/studentActions";
 import ModalWithButton from "../common/modalWithButton";
 import Modal from "../common/modal";
 import Spinner from "../common/spinner"; // change this to material-UI
-// import { threadId } from "worker_threads"; _ WHERE is this coming from?
 // import PropTypes from "prop-types";
 
 class AddClass extends Component {
   state = {
     joinCodeInputted: "",
+    numberOfTries: 0,
     modal_problemWithInput: false,
     modal_problemWithInput_text: "",
-
-    modal_confirmClass: false,
-    modal_confirmClass_main: "",
-    modal_confirmClass_text: "",
-
-    showSpinner: false,
+    showSpinnerWhenChecking: false,
     returnToDash: false
   };
 
@@ -34,55 +30,39 @@ class AddClass extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // add more specific validation
-    if (!this.state.joinCodeInputted) {
-      this.setState({
-        joinCodeInputted: "",
-        modal_problemWithInput: true,
-        modal_problemWithInput_text: "Please enter a valid code"
-      });
-    } else {
-      this.setState({
-        showSpinner: true,
-        modal_confirmClass: true,
-        modal_confirmClass_main: "test abcd", // use in modal
-        modal_confirmClass_text: "test EFGH"
-      });
-      this.props.joinCodeCheck(this.state.joinCodeInputted);
-    }
+    this.setState((state, props) => {
+      return {
+        showSpinnerWhenChecking: true,
+        numberOfTries: this.state.numberOfTries + 1
+      };
+    });
+
+    this.props.joinCodeCheck(this.state.joinCodeInputted);
   };
 
   onModalClose_inputIssue() {
     this.setState({
-      joinCode: "",
+      joinCodeInputted: "",
       modal_problemWithInput: false,
-      modal_problemWithInput_main: "",
       modal_problemWithInput_text: "",
-      modal_confirmClass: false, // remove?
-      modal_confirmClass_main: "", // remove?
-      modal_confirmClass_text: "", // remove?
-      showSpinner: false,
+      showSpinnerWhenChecking: false,
       returnToDash: false
     });
   }
 
   onModalClose_finish() {
     this.setState({
-      // joinCode: "",
-      // modal_problemWithInput: false,
-      // modal_problemWithInput_main: "",
-      // modal_problemWithInput_text: "",
-      // modal_confirmClass: false, // remove
-      // modal_confirmClass_main: "", // remove
-      // modal_confirmClass_text: "", // remove
-      // showSpinner: false,
       returnToDash: true
     });
   }
 
+  // ++++++++  setState updates returnToDash which sends everything back
+  // ++++++++ to the dashboard before the update has a chance to finish
   confirmClassEnrollment() {
     const { joinCode, mongoStudentData } = this.props;
     this.props.studentAddClassWithCode({ joinCode, mongoStudentData });
+    // ++++++++  setState need to happen ATER the update
+    // +++++++ should loading the dashboard be added to this action/??
     this.setState({
       returnToDash: true
     });
@@ -93,80 +73,83 @@ class AddClass extends Component {
     this.props.joinCodeClear();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.showSpinnerWhenChecking === true) {
+      console.log("TURNING THE SPINNER OFF!");
+
+      this.setState((state, props) => {
+        return {
+          showSpinnerWhenChecking: false,
+          joinCodeInputted: ""
+        };
+      });
+    }
+  }
+
   render() {
     const {
       auth,
       authCustomClaim,
       mongoStudentData,
       recentClassAdded,
-      join_code_found
+      joinCodeFound,
+      joinCode
     } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
-
+    // TEMP: if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
     if (this.state.returnToDash) return <Redirect to="/student" />;
-    /* 
-    if (mongoStudentData) {
-      console.log("mongoStudentData-->", mongoStudentData);
-    }
 
-    if (recentClassAdded) {
-      console.log(
-        "🛵🛵🛵🛵🛵 recentClassAddedBool 🛵🛵🛵🛵🛵",
-        recentClassAdded
-      );
-      return <Redirect to="/student" />;
-    }
- */
-    // TEMP
-    // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
+    // joinCodeFound: null--> never been checked
+    //                true--> stopSpinner
+    //                false--> stopSpinner
 
-    const renderProblemWithInput = () => {
-      return <div>lala</div>;
-    };
-
-    return (
-      <div className="container">
-        {this.state.modal_problemWithInput ? (
-          <Modal
-            mainText={"Oops!"}
-            subtitle1={this.state.modal_problemWithInput_text}
-            onModalClose={this.onModalClose_inputIssue.bind(this)}
-          />
-        ) : null}
-
-        {this.state.showSpinner && !this.props.joinCode ? (
-          <Spinner />
-        ) : (
-          <form className="white" onSubmit={this.handleSubmit}>
-            <h5 className="grey-text text-darken-3">Enter a class code:</h5>
-            <div className="input-field">
-              <label htmlFor="joinCodeInputted">5-digit join code</label>
-              <input
-                type="text"
-                id="joinCodeInputted"
-                value={this.state.joinCodeInputted}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="input-field">
-              <button className="btn pink lighten-1 z-depth-0">Submit:</button>
-            </div>
-          </form>
-        )}
-
-        {this.props.joinCode && this.state.modal_confirmClass ? (
+    if (joinCode) {
+      return (
+        <div>
+          {" "}
+          <h2>joincode found!</h2>
           <ModalWithButton
-            mainText={`Teacher: ${this.props.joinCode.teacher_name}`}
-            subtitle1={`Class: ${this.props.joinCode.class_description}`}
+            mainText={`Teacher: ${joinCode.teacher_name}`}
+            subtitle1={`Class: ${joinCode.class_description}`}
             buttonAction={this.confirmClassEnrollment.bind(this)}
             buttonText={"Click to confirm enrollment"}
             onModalClose={this.onModalClose_finish.bind(this)}
           />
-        ) : null}
-      </div>
-    );
-  }
-}
+        </div>
+      );
+    } else {
+      // SHOW <Spinner />
+
+      if (this.state.showSpinnerWhenChecking) {
+        return <h1>SPINNER</h1>;
+      } else {
+        // No spinner to show and no joincode to confirm
+        return (
+          <div>
+            <h3>joincode NOT found</h3>
+            <form className="white" onSubmit={this.handleSubmit}>
+              <h1 className="grey-text text-darken-3">Join a new class! </h1>
+              <div className="input-field">
+                <label htmlFor="joinCodeInputted">Enter 5-digit code:</label>
+                <input
+                  type="text"
+                  id="joinCodeInputted"
+                  value={this.state.joinCodeInputted}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="input-field">
+                <button className="btn pink lighten-1 z-depth-0">
+                  Submit:
+                </button>
+              </div>
+            </form>
+          </div>
+        );
+      }
+    }
+  } // end of render
+} //end of AddClass
 
 const mapStateToProps = state => {
   return {
@@ -174,7 +157,8 @@ const mapStateToProps = state => {
     authCustomClaim: state.auth.authCustomClaim,
     mongoStudentData: state.student.mongoData,
     recentClassAdded: state.student.recentClassAdded,
-    joinCode: state.student.join_code
+    joinCode: state.student.join_code,
+    joinCodeFound: state.student.join_code_found
   };
 };
 
@@ -183,7 +167,8 @@ const mapDispatchToProps = dispatch => {
     studentAddClassWithCode: (newClassInfo, studentId) =>
       dispatch(studentAddClassWithCode(newClassInfo, studentId)),
     joinCodeCheck: joinCode => dispatch(joinCodeCheck(joinCode)),
-    joinCodeClear: () => dispatch(joinCodeClear())
+    joinCodeClear: () => dispatch(joinCodeClear()),
+    loadStudentDashboard: fb_uid => dispatch(loadStudentDashboard(fb_uid))
   };
 };
 
@@ -191,3 +176,20 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AddClass);
+
+// return (
+//   <div className="container">
+//     <h2>Adding a class code:</h2>
+//     {joinCode ? (
+//       <div>
+
+//           <div>
+//             <h3>do not show spinner not checking</h3>
+//             <Modal
+//               mainText={"Oops!"}
+//               subtitle1={"The code you entered seems to be invalid."}
+//               onModalClose={this.onModalClose_inputIssue.bind(this)}
+//             />
+//           </div>
+
+//         <Spinner />
