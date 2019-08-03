@@ -50,8 +50,6 @@ class StudentsAll extends Component {
         default_class_students
       } = this.props.mongoTeacherData;
 
-      console.log("default_class_students=====>>>>", default_class_students);
-
       let allCurrentStudents = "\nNo students to list.";
 
       if (default_class_students && default_class_students.length > 0) {
