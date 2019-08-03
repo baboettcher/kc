@@ -41,15 +41,12 @@ class TeacherDashboard extends Component {
 
       console.log("default_class_id===>>>", default_class_id);
 
-      // make a table
-      // Under ICON, green for active, yellow for student pending
       const listOfClasses = current_classes
         ? current_classes.map(singleClass => (
-            <tr>
+            <tr key={singleClass.join_code}>
               <td>ICON</td>
               <td>{singleClass.class_description}</td>
               <td>{singleClass.grade_level}</td>
-              <td>{singleClass.special_notes}</td>
               <td>{singleClass.join_code}</td>
               <td>#</td>
             </tr>
@@ -79,8 +76,7 @@ class TeacherDashboard extends Component {
                     <th>Status</th>
                     <th>Class Description</th>
                     <th>Grade Level</th>
-                    <th>Notes</th>
-                    <th>Join Code</th>
+                    <th>Code</th>
                     <th>Members</th>
                   </tr>
                 </thead>

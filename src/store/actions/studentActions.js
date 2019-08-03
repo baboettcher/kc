@@ -64,8 +64,124 @@ export const joinCodeClear = () => {
   };
 };
 
-// TO DO: 404 not being nabbed by .catch
+// v2 - using promise.all twice
 export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
+  // console.log("joinCode==>", joinCode);
+  // console.log("mongoStudentData==>", mongoStudentData);
+  return (dispatch, getState) => {
+    const url1 = "/joincode/" + joinCode._id;
+    const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
+
+    // 1) PUSH STUDENT RECORD TO JOINCODE /joincode/
+    const f1_joinCodeResponse = fetch(url1, {
+      method: "PUT",
+      body: JSON.stringify(mongoStudentData),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    // 2) STUDENT RECORD PUSH TO ARRAY
+    const f2_studentRecord = fetch(url2, {
+      method: "PUT",
+      body: JSON.stringify(joinCode),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const resultAll = Promise.all([f1_joinCodeResponse, f2_studentRecord]).then(
+      responseArr => {
+        return Promise.all(responseArr.map(item => item.json()));
+      }
+    );
+
+    resultAll
+      .then(promiseResults => {
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE",
+          payload: promiseResults
+        });
+      })
+
+      .catch(error => {
+        console.error(
+          "PART #1: 🐲🐲🐲ERROR pushing student data to addcode",
+          error
+        );
+
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE_ERROR"
+        });
+      });
+  };
+};
+
+// v1
+export const studentAddClassWithCode_alt = ({ joinCode, mongoStudentData }) => {
+  console.log("joinCode==>", joinCode);
+  console.log("mongoStudentData==>", mongoStudentData);
+  return (dispatch, getState) => {
+    const url1 = "/joincode/" + joinCode._id;
+    const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
+
+    // 1) PUSH STUDENT RECORD TO JOINCODE /joincode/
+    const f1_joinCodeResponse = fetch(url1, {
+      method: "PUT",
+      body: JSON.stringify(mongoStudentData),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    // 2) STUDENT RECORD PUSH TO ARRAY
+    const f2_studentRecord = fetch(url2, {
+      method: "PUT",
+      body: JSON.stringify(joinCode),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    async function getJsonResults(promisesArr) {
+      // Get fetch promises response
+      const results = await Promise.all(promisesArr);
+
+      // Get JSON from each response promise
+      const jsonResults = await Promise.all(results.map(r => r.json()));
+      return jsonResults;
+    }
+
+    getJsonResults([f1_joinCodeResponse, f2_studentRecord])
+      //.then(theResults => console.log("All results:", theResults))
+
+      .then(promiseResults => {
+        console.log("👘👘👘👘👘 promiseResults:", promiseResults);
+        console.log("👘👘👘👘👘 promiseResults[0]:", promiseResults[0]);
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE",
+          payload: promiseResults
+        });
+      })
+
+      .catch(error => {
+        console.error(
+          "PART #1: 🐲🐲🐲ERROR pushing student data to addcode",
+          error
+        );
+
+        dispatch({
+          type: "STUDENT_ADD_CLASS_WITH_CODE_ERROR"
+        });
+      });
+  };
+};
+
+// TO DO: 404 not being nabbed by .catch
+export const studentAddClassWithCode_orig_with_external_process = ({
+  joinCode,
+  mongoStudentData
+}) => {
   console.log("joinCode==>", joinCode);
   console.log("mongoStudentData==>", mongoStudentData);
   return (dispatch, getState) => {
@@ -160,60 +276,5 @@ export const studentAddClassWithCode = ({ joinCode, mongoStudentData }) => {
           type: "STUDENT_ADD_CLASS_WITH_CODE_ERROR"
         });
       });
-  };
-};
-
-// TO DO: Combine all fetch calls into "all or none"
-export const studentAddClassWithCode_orig = ({
-  joinCode,
-  mongoStudentData
-}) => {
-  return (dispatch, getState) => {
-    // 1) ADDCODE TO UPDATE:
-    const url1 = "/joincode/" + joinCode._id;
-
-    fetch(url1, {
-      method: "PUT",
-      body: JSON.stringify(mongoStudentData),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(
-        parsedJSON =>
-          console.log(
-            "🐖🐖🐖🐖🐖🐖PART #1: Student data pushed to addcode",
-            parsedJSON
-          ),
-        err => console.log("🚔🚔🚔🚔🚔ERROR ------>>", err)
-      )
-      .catch(error =>
-        console.error(
-          "PART #1: 🐲🐲🐲🐲🐲🐲ERROR pushing student data to addcode",
-          error
-        )
-      );
-
-    // 2) STUDENT RECORD TO UPDATE
-    const url2 = "/student/addtentativeclass/" + mongoStudentData._id;
-    fetch(url2, {
-      method: "PUT",
-      body: JSON.stringify(joinCode),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(parsedJSON =>
-        console.log("PART 2: Addcode data pushed to student", parsedJSON)
-      )
-      .catch(error =>
-        console.log("PART 2: Error pushing addcode data to student", error)
-      );
-
-    dispatch({
-      type: "STUDENT_ADD_CLASS_WITH_CODE"
-    });
   };
 };

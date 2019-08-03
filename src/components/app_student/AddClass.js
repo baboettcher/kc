@@ -8,17 +8,10 @@ import {
   loadStudentDashboard
 } from "../../store/actions/studentActions";
 import ModalWithButton from "../common/modalWithButton";
-import Modal from "../common/modal";
-import Spinner from "../common/spinner"; // change this to material-UI
-// import PropTypes from "prop-types";
 
 class AddClass extends Component {
   state = {
     joinCodeInputted: "",
-    numberOfTries: 0,
-    modal_problemWithInput: false,
-    modal_problemWithInput_text: "",
-    showSpinnerWhenChecking: false,
     returnToDash: false
   };
 
@@ -30,58 +23,27 @@ class AddClass extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState((state, props) => {
-      return {
-        showSpinnerWhenChecking: true,
-        numberOfTries: this.state.numberOfTries + 1
-      };
-    });
-
     this.props.joinCodeCheck(this.state.joinCodeInputted);
   };
 
-  onModalClose_inputIssue() {
-    this.setState({
-      joinCodeInputted: "",
-      modal_problemWithInput: false,
-      modal_problemWithInput_text: "",
-      showSpinnerWhenChecking: false,
-      returnToDash: false
-    });
-  }
-
-  onModalClose_finish() {
-    this.setState({
-      returnToDash: true
-    });
-  }
-
-  // ++++++++  setState updates returnToDash which sends everything back
-  // ++++++++ to the dashboard before the update has a chance to finish
   confirmClassEnrollment() {
     const { joinCode, mongoStudentData } = this.props;
     this.props.studentAddClassWithCode({ joinCode, mongoStudentData });
-    // ++++++++  setState need to happen ATER the update
-    // +++++++ should loading the dashboard be added to this action/??
-    this.setState({
-      returnToDash: true
-    });
   }
 
-  componentWillUnmount() {
-    console.log("💎💎💎💎💎 ADDCLASS UNMOUNTED  💎💎💎💎💎 ");
+  componentDidMount() {
     this.props.joinCodeClear();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.showSpinnerWhenChecking === true) {
-      console.log("TURNING THE SPINNER OFF!");
-
-      this.setState((state, props) => {
-        return {
-          showSpinnerWhenChecking: false,
-          joinCodeInputted: ""
-        };
+  componentDidUpdate(prevProps) {
+    // if tentative_class increases, setState and return to studentDash
+    if (
+      prevProps.mongoStudentData &&
+      prevProps.mongoStudentData.tentative_classes.length !==
+        this.props.mongoStudentData.tentative_classes.length
+    ) {
+      this.setState({
+        returnToDash: true
       });
     }
   }
@@ -92,29 +54,24 @@ class AddClass extends Component {
       authCustomClaim,
       mongoStudentData,
       recentClassAdded,
-      joinCodeFound,
       joinCode
     } = this.props;
+
     if (!auth.uid) return <Redirect to="/signin" />;
     // TEMP: if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
     if (this.state.returnToDash) return <Redirect to="/student" />;
 
-    // joinCodeFound: null--> never been checked
-    //                true--> stopSpinner
-    //                false--> stopSpinner
-
-    if (joinCode) {
+    if (joinCode && joinCode !== "return-to-dash") {
       return (
         <div>
           {" "}
-          <h2>joincode found!</h2>
-          <ModalWithButton
-            mainText={`Teacher: ${joinCode.teacher_name}`}
-            subtitle1={`Class: ${joinCode.class_description}`}
-            buttonAction={this.confirmClassEnrollment.bind(this)}
-            buttonText={"Click to confirm enrollment"}
-            onModalClose={this.onModalClose_finish.bind(this)}
-          />
+          <h2>Joincode found!</h2>
+          <h3>Teacher:{joinCode.teacher_name}</h3>
+          <h3> Class: {joinCode.class_description}</h3>
+          <button onClick={this.confirmClassEnrollment.bind(this)}>
+            {" "}
+            Click to confirm enrollment.
+          </button>
         </div>
       );
     } else {
@@ -157,8 +114,7 @@ const mapStateToProps = state => {
     authCustomClaim: state.auth.authCustomClaim,
     mongoStudentData: state.student.mongoData,
     recentClassAdded: state.student.recentClassAdded,
-    joinCode: state.student.join_code,
-    joinCodeFound: state.student.join_code_found
+    joinCode: state.student.join_code
   };
 };
 
@@ -176,20 +132,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AddClass);
-
-// return (
-//   <div className="container">
-//     <h2>Adding a class code:</h2>
-//     {joinCode ? (
-//       <div>
-
-//           <div>
-//             <h3>do not show spinner not checking</h3>
-//             <Modal
-//               mainText={"Oops!"}
-//               subtitle1={"The code you entered seems to be invalid."}
-//               onModalClose={this.onModalClose_inputIssue.bind(this)}
-//             />
-//           </div>
-
-//         <Spinner />

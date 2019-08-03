@@ -5,51 +5,56 @@ import { loadStudentDashboard } from "../../store/actions/studentActions";
 
 class StudentDashboard extends Component {
   state = {
-    addJoinCode: ""
+    joinNewClass: false
   };
 
   componentDidMount() {
     const { fb_auth, authCustomClaim } = this.props;
     const fb_uid = fb_auth.uid;
-    console.log("------STUDENT DASHBOARD DID MOUNT-------");
     this.props.loadStudentDashboard(fb_uid);
   }
 
-  //NEXT:
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.mongoStudentData !== this.props.mongoStudentData) {
-  //     console.log(
-  //       "======= STUDENT: DID UPDATE!!!! ===>",
-  //       this.props.mongoStudentData
-  //     );
-  //   }
-  // }
-
   render() {
-    const { auth, authCustomClaim } = this.props;
-    // if (!auth.uid) return <Redirect to="/signin" />;
-    // Add to local storage? browser refreshing clears customclaim
-    if (authCustomClaim !== "student") return <Redirect to="./signin" />;
+    const { fb_auth, authCustomClaim } = this.props;
 
-    // Dashboard page
-    if (this.props.mongoStudentData) {
-      const {
-        first_name,
-        last_name,
-        school_name,
-        tentative_classes,
-        current_classes
-      } = this.props.mongoStudentData;
+    // temp guard until local storage
+    if (!fb_auth.uid) return <Redirect to="/signin" />;
 
-      const tentativeClasses =
-        tentative_classes && tentative_classes.length > 0
-          ? tentative_classes.map((singleClass, i) => (
-              <li key={i}>
-                {singleClass.teacher_name} {singleClass.grade_level}{" "}
-                {singleClass.class_description}
-              </li>
-            ))
-          : null;
+    // Add to local storage / commented out for now due to refresh issue
+    //if (authCustomClaim !== "student") return <Redirect to="./signin" />;
+
+    if (this.state.joinNewClass) {
+      return <Redirect to="/addclasswithcode" />;
+    }
+
+    // Data Loading Test #1
+    if (!this.props.mongoStudentData) return <h1>Loading!</h1>;
+
+    const {
+      first_name,
+      last_name,
+      school_name,
+      tentative_classes,
+      current_classes
+    } = this.props.mongoStudentData;
+
+    // Data Loading Test #2
+    // ISSUE: after state update in reducer, tentative_classes is an array UIDs. These are not populated until loadStudentDashboard finishes, which takes some time.
+    // TEMP HACKY SOLUTION: check tentative_classes for existance, then for a length more than 0, then test index 0 to see that it is an object, and not a string. When the array is popuated with objects, state updates properly.
+
+    let tentativeClasses = null;
+
+    if (
+      tentative_classes &&
+      tentative_classes.length > 0 &&
+      typeof tentative_classes[0] === "object"
+    ) {
+      tentativeClasses = tentative_classes.map((singleClass, i) => (
+        <li key={i}>
+          {singleClass.teacher_name} {singleClass.grade_level}{" "}
+          {singleClass.class_description}
+        </li>
+      ));
 
       return (
         <div className="container">
@@ -71,8 +76,29 @@ class StudentDashboard extends Component {
           </div>
         </div>
       );
+    }
+
+    if (tentative_classes.length === 0) {
+      return (
+        <React.Fragment>
+          <h1>
+            {first_name} {last_name}
+          </h1>
+          <h5>You are not currently enrolled in any classes</h5>
+          <div className="input-field">
+            <button>
+              {" "}
+              <NavLink to="/addclasswithcode">Add a Class</NavLink>
+            </button>
+          </div>
+        </React.Fragment>
+      );
     } else {
-      return <h1>Loading Student</h1>;
+      return (
+        <React.Fragment>
+          <h1>Loading</h1>
+        </React.Fragment>
+      );
     }
   }
 }

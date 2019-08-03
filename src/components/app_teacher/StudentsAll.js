@@ -52,9 +52,9 @@ class StudentsAll extends Component {
 
       console.log("default_class_students=====>>>>", default_class_students);
 
-      let allCurrentStudents = "No students to list";
+      let allCurrentStudents = "\nNo students to list.";
 
-      if (default_class_students) {
+      if (default_class_students && default_class_students.length > 0) {
         allCurrentStudents = default_class_students.map(student => {
           return <li>{student.first_name}</li>;
         });
@@ -73,8 +73,9 @@ class StudentsAll extends Component {
               Current Class:{" "}
               {default_class_info ? default_class_info.class_description : null}
             </div>
-            {default_class_students ? allCurrentStudents : null}
-            {default_class_students
+            {allCurrentStudents}
+            {/* {default_class_students ? allCurrentStudents : null} */}
+            {default_class_students.length > 0
               ? "Number of tentative students: " + default_class_students.length
               : null}{" "}
           </h3>

@@ -34,12 +34,12 @@ const studentsReducer = (state = {}, action) => {
       };
 
     case "STUDENT_ADD_CLASS_WITH_CODE":
-      console.log("💋💋💋💋PAYLOAD💋💋💋💋💋💋💋", action.payload);
+      // action.payload[0] - class info
+      // action.payload[1] - student data
+
       return {
         ...state,
-        thing123_FULL: action.payload,
-        thing123_0: action.payload[0]
-        //mongoData: action.payload[1]
+        mongoData: action.payload[1]
       };
 
     // STUDENT_ADD_CLASS - not being used yet
