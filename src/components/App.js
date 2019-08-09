@@ -33,6 +33,7 @@ import TeacherDashboard from "./app_teacher/TeacherDashboard";
 import Colleagues from "./app_teacher/Colleagues";
 import Scoreboard from "./app_teacher/Scoreboard";
 import CallOnMe from "./app_teacher/CallOnMe";
+import CallOnMe2 from "./app_teacher/CallOnMe/CallOnMe2";
 import ClassCreate from "./app_teacher/ClassCreate";
 import GroupsCreate from "./app_teacher/GroupsCreate";
 import GroupsEdit from "./app_teacher/GroupsEdit";
@@ -72,6 +73,7 @@ class App extends Component {
             <Route path="/scoreboard" component={Scoreboard} />
             <Route path="/colleagues" component={Colleagues} />
             <Route path="/callonme" component={CallOnMe} />
+            <Route path="/callonme2" component={CallOnMe2} />
             <Route path="/classcreate" component={ClassCreate} />
             <Route path="/groupscreate" component={GroupsCreate} />
             <Route path="/groupsedit" component={GroupsEdit} />

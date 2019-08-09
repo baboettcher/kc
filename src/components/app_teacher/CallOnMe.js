@@ -3,7 +3,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Modal from "../common/modal";
-import { loadTeacherDashboard } from "../../store/actions/teacherActions";
+// import { loadTeacherDashboard } from "../../store/actions/teacherActions";
 //import PropTypes from "prop-types";
 
 class CallOnMe extends Component {
@@ -111,13 +111,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+/* const mapDispatchToProps = dispatch => {
   return {
     loadTeacherDashboard: fb_uid => dispatch(loadTeacherDashboard(fb_uid))
   };
 };
-
+ */
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
+  // mapDispatchToProps
 )(CallOnMe);

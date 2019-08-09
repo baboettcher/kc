@@ -28,6 +28,9 @@ class SignedInLinks_Teacher extends Component {
             <NavLink to="/callonme">CallOnMe</NavLink>
           </li>
           <li>
+            <NavLink to="/callonme2">CallOnMe2</NavLink>
+          </li>
+          <li>
             <NavLink to="/scoreboard">Scoreboard</NavLink>
           </li>
 
