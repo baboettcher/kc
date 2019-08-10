@@ -15,6 +15,8 @@ class StudentsAll extends Component {
       defaultClass: ""
     };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
+    this.loadStudentRecord = this.loadStudentRecord.bind(this);
+    this.awardPoint = this.awardPoint.bind(this);
   }
 
   // this callback is passed to selectForm
@@ -31,10 +33,17 @@ class StudentsAll extends Component {
     this.props.setDefaultClass(tempArray);
   }
 
+  loadStudentRecord(studentObject) {
+    console.log("LOAD PAGE:", studentObject);
+  }
+
+  awardPoint(studentObject) {
+    console.log("POINT!:", studentObject);
+  }
+
   render() {
     const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
-
     if (!auth.uid) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
@@ -54,7 +63,16 @@ class StudentsAll extends Component {
 
       if (default_class_students && default_class_students.length > 0) {
         allCurrentStudents = default_class_students.map(student => {
-          return <li>{student.first_name}</li>;
+          return (
+            <li>
+              <span onClick={() => this.loadStudentRecord(student.first_name)}>
+                {student.first_name}
+              </span>
+              <span onClick={() => this.awardPoint(student.first_name)}>
+                💎
+              </span>
+            </li>
+          );
         });
       }
 
