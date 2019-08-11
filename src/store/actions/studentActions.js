@@ -30,10 +30,8 @@ export const addStudent = studentInfo => {
   };
 };
 
-// this neeed to set state back to turn off the spinner!
 export const joinCodeCheck = joinCode => {
   return (dispatch, getState) => {
-    console.log("---joinCode to test--->>", joinCode);
     fetch("/joincode/" + joinCode)
       .then(joincode1 => joincode1.json())
       .then(joincode2 => {

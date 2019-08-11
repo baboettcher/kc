@@ -20,8 +20,29 @@ export const clearTeacherOnSignout = () => {
   };
 };
 
-// order reversed 6/2 in order to get the _id of addode and use THAT to push to teacher array
-// Add to store?
+export const awardStudentCredit = (fb_uid, creditsAwarded = 1) => {
+  console.log("AWARD TO : ", fb_uid);
+  return (dispatch, getState) => {
+    const url = "/teacher/addcredit/" + fb_uid;
+
+    fetch(url, {
+      method: "PUT",
+      body: JSON.stringify({ credits: creditsAwarded }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(student1 => student1.json())
+      .then(student2 => {
+        dispatch({
+          type: "LOAD_STUDENT_DASHBOARD",
+          payload: student2
+        });
+      })
+      .catch(error => console.error("Error loading student", error));
+  };
+};
+
 export const teacherAddClass = ([newClassInfo, teacherId]) => {
   return (dispatch, getState) => {
     // ** 1:  Posting the entire new class to /joincode

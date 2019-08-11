@@ -5,7 +5,10 @@ import React, { Component } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import SelectForm from "../common/selectForm";
-import { setDefaultClass } from "../../store/actions/teacherActions";
+import {
+  setDefaultClass,
+  awardStudentCredit
+} from "../../store/actions/teacherActions";
 // import PropTypes from "prop-types";
 
 class StudentsAll extends Component {
@@ -38,7 +41,8 @@ class StudentsAll extends Component {
   }
 
   awardPoint(studentObject) {
-    console.log("POINT!:", studentObject);
+    const amountAwarded = 10;
+    this.props.awardStudentCredit(studentObject._id, amountAwarded);
   }
 
   render() {
@@ -68,9 +72,7 @@ class StudentsAll extends Component {
               <span onClick={() => this.loadStudentRecord(student.first_name)}>
                 {student.first_name}
               </span>
-              <span onClick={() => this.awardPoint(student.first_name)}>
-                💎
-              </span>
+              <span onClick={() => this.awardPoint(student)}>💎</span>
             </li>
           );
         });
@@ -133,7 +135,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass))
+    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass)),
+    awardStudentCredit: (uid, amount) =>
+      dispatch(awardStudentCredit(uid, amount)) // second param is amount of credits
   };
 };
 
