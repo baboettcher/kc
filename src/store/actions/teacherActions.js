@@ -20,10 +20,9 @@ export const clearTeacherOnSignout = () => {
   };
 };
 
-export const awardStudentCredit = (fb_uid, creditsAwarded = 1) => {
-  console.log("AWARD TO : ", fb_uid);
+export const increaseStudentCredit = (fb_uid, creditsAwarded = 1) => {
   return (dispatch, getState) => {
-    const url = "/teacher/addcredit/" + fb_uid;
+    const url = "/teacher/increasecredit/" + fb_uid;
 
     fetch(url, {
       method: "PUT",
@@ -31,15 +30,37 @@ export const awardStudentCredit = (fb_uid, creditsAwarded = 1) => {
       headers: {
         "Content-Type": "application/json"
       }
-    })
-      .then(student1 => student1.json())
+    });
+    /*       .then(student1 => student1.json())
       .then(student2 => {
         dispatch({
-          type: "LOAD_STUDENT_DASHBOARD",
+          type: "INCREASE_STUDENT_CREDIT",
           payload: student2
         });
       })
-      .catch(error => console.error("Error loading student", error));
+      .catch(error => console.error("Error loading student", error)); */
+  };
+};
+
+export const decreaseStudentCredit = (fb_uid, creditsSubtracted = 1) => {
+  return (dispatch, getState) => {
+    const url = "/teacher/increasecredit/" + fb_uid;
+
+    fetch(url, {
+      method: "PUT",
+      body: JSON.stringify({ credits: creditsSubtracted }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    /*       .then(student1 => student1.json())
+      .then(student2 => {
+        dispatch({
+          type: "DECREASE_STUDENT_CREDIT",
+          payload: student2
+        });
+      })
+      .catch(error => console.error("Error loading student", error)); */
   };
 };
 

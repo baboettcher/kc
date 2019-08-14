@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import SelectForm from "../common/selectForm";
 import {
   setDefaultClass,
-  awardStudentCredit
+  increaseStudentCredit
 } from "../../store/actions/teacherActions";
 // import PropTypes from "prop-types";
 
@@ -19,7 +19,7 @@ class StudentsAll extends Component {
     };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
     this.loadStudentRecord = this.loadStudentRecord.bind(this);
-    this.awardPoint = this.awardPoint.bind(this);
+    this.awardCredit = this.awardCredit.bind(this);
   }
 
   // this callback is passed to selectForm
@@ -40,9 +40,10 @@ class StudentsAll extends Component {
     console.log("LOAD PAGE:", studentObject);
   }
 
-  awardPoint(studentObject) {
-    const amountAwarded = 10;
-    this.props.awardStudentCredit(studentObject._id, amountAwarded);
+  awardCredit(studentObject) {
+    const amountAwarded = 10; // temp
+    console.log("amountAwarded:", amountAwarded);
+    this.props.increaseStudentCredit(studentObject._id, amountAwarded);
   }
 
   render() {
@@ -72,7 +73,7 @@ class StudentsAll extends Component {
               <span onClick={() => this.loadStudentRecord(student.first_name)}>
                 {student.first_name}
               </span>
-              <span onClick={() => this.awardPoint(student)}>💎</span>
+              <span onClick={() => this.awardCredit(student)}>💎</span>
             </li>
           );
         });
@@ -136,8 +137,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass)),
-    awardStudentCredit: (uid, amount) =>
-      dispatch(awardStudentCredit(uid, amount)) // second param is amount of credits
+    increaseStudentCredit: (uid, amount) =>
+      dispatch(increaseStudentCredit(uid, amount)) // second param is amount of credits
   };
 };
 
