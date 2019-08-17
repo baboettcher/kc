@@ -39,8 +39,6 @@ class TeacherDashboard extends Component {
         current_classes
       } = this.props.mongoTeacherData;
 
-      console.log("default_class_id===>>>", default_class_id);
-
       const listOfClasses = current_classes
         ? current_classes.map(singleClass => (
             <tr key={singleClass.join_code}>
@@ -65,10 +63,7 @@ class TeacherDashboard extends Component {
               Current class:
               {default_class_info ? default_class_info.class_description : null}
             </h2>
-            <p>
-              New students join request (t/f) - Name Class Requested Admit /
-              Deny
-            </p>
+
             {listOfClasses ? (
               <table>
                 <thead>

@@ -30,15 +30,15 @@ export const increaseStudentCredit = (fb_uid, creditsAwarded = 1) => {
       headers: {
         "Content-Type": "application/json"
       }
-    });
-    /*       .then(student1 => student1.json())
+    })
+      .then(student1 => student1.json())
       .then(student2 => {
         dispatch({
           type: "INCREASE_STUDENT_CREDIT",
           payload: student2
         });
       })
-      .catch(error => console.error("Error loading student", error)); */
+      .catch(error => console.error("Error loading student", error));
   };
 };
 
@@ -103,6 +103,19 @@ export const teacherAddClass = ([newClassInfo, teacherId]) => {
   };
 };
 
+export const refreshDefaultClass = _id => {
+  return (dispatch, getState) => {
+    fetch("/teacher/refreshdefaultclass/" + _id)
+      .then(teacher1 => teacher1.json())
+      .then(teacher2 => {
+        dispatch({
+          type: "REFRESH_DEFAULT_CLASS",
+          payload: teacher2
+        });
+      })
+      .catch(error => console.error("Error refreshing defaultClass", error));
+  };
+};
 // STACK OVERFLOW ISSUE: What to load after updating?
 // -- 1) loadTeacherDashboard AFTER updating record
 //       in this case, update state locally for UI update

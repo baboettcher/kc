@@ -33,6 +33,7 @@ class StudentDashboard extends Component {
     const {
       first_name,
       last_name,
+      credits,
       school_name,
       tentative_classes,
       current_classes
@@ -63,6 +64,7 @@ class StudentDashboard extends Component {
             <h1>
               {first_name} {last_name}
             </h1>
+            <h2>Kidcoins: {credits}</h2>
             <h5>
               Enrolled tentatively:
               {tentativeClasses}

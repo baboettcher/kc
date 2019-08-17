@@ -1,13 +1,12 @@
-// NEXT: get student page to update immediately
-// PLay with styles - Semantic UI
-
 import React, { Component } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import _ from "lodash";
 import SelectForm from "../common/selectForm";
 import {
   setDefaultClass,
-  increaseStudentCredit
+  increaseStudentCredit,
+  refreshDefaultClass
 } from "../../store/actions/teacherActions";
 // import PropTypes from "prop-types";
 
@@ -15,7 +14,8 @@ class StudentsAll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultClass: ""
+      currentClass: "",
+      teacherId: ""
     };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
     this.loadStudentRecord = this.loadStudentRecord.bind(this);
@@ -39,17 +39,47 @@ class StudentsAll extends Component {
   loadStudentRecord(studentObject) {
     console.log("LOAD PAGE:", studentObject);
   }
+  awardCredit(studentObject, amountAwarded = 10) {
+    console.log("studentObject._id:", studentObject._id);
+    console.log("this.state.currentClass", this.state.currentClass);
 
-  awardCredit(studentObject) {
-    const amountAwarded = 10; // temp
-    console.log("amountAwarded:", amountAwarded);
+    // 1 - update local state for ui
+    const newCurrentClass = [];
+    this.state.currentClass.forEach(student => {
+      if (student._id === studentObject._id) {
+        student.credits = student.credits + amountAwarded;
+      }
+      newCurrentClass.push(student);
+    });
+
+    this.setState({
+      currentClass: newCurrentClass
+    });
+
+    // 2 - call action to update db
     this.props.increaseStudentCredit(studentObject._id, amountAwarded);
   }
 
+  componentDidMount() {
+    this.setState({
+      currentClass: this.props.mongoTeacherData.default_class_students,
+      teacherId: this.props.mongoTeacherData._id
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.state.teacherId) {
+      this.props.refreshDefaultClass(this.state.teacherId);
+    }
+  }
+
   render() {
+    console.log("currentClass", this.state.currentClass);
     const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
+    //if (!auth.uid) return <Redirect to="/signin" />;
     if (!auth.uid) return <Redirect to="/signin" />;
+
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     if (this.props.mongoTeacherData) {
@@ -65,24 +95,40 @@ class StudentsAll extends Component {
       } = this.props.mongoTeacherData;
 
       let allCurrentStudents = "\nNo students to list.";
+      const divStyle = {
+        color: "blue"
+        // backgroundImage: 'url(' + imgUrl + ')',
+      };
 
-      if (default_class_students && default_class_students.length > 0) {
+      /* (v1 - orig version from redux state)
+    if (default_class_students && default_class_students.length > 0) {
         allCurrentStudents = default_class_students.map(student => {
           return (
             <li>
               <span onClick={() => this.loadStudentRecord(student.first_name)}>
-                {student.first_name}
+                {student.first_name}{" "}
               </span>
+              <span style={divStyle}> {student.credits}</span>
+              <span onClick={() => this.awardCredit(student)}>💎</span>
+            </li>
+          );
+        });
+      } */
+
+      //(v2- use local state rather than store/props state for quick UI update)
+      if (this.state.currentClass && this.state.currentClass.length > 0) {
+        allCurrentStudents = this.state.currentClass.map(student => {
+          return (
+            <li>
+              <span onClick={() => this.loadStudentRecord(student.first_name)}>
+                {student.first_name}{" "}
+              </span>
+              <span style={divStyle}> {student.credits}</span>
               <span onClick={() => this.awardCredit(student)}>💎</span>
             </li>
           );
         });
       }
-
-      const divStyle = {
-        color: "blue"
-        // backgroundImage: 'url(' + imgUrl + ')',
-      };
 
       return (
         <div className="container">
@@ -136,9 +182,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass)),
+    refreshDefaultClass: fb_uid => dispatch(refreshDefaultClass(fb_uid)),
+    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass)), // FIX: second param is amount of credits
     increaseStudentCredit: (uid, amount) =>
-      dispatch(increaseStudentCredit(uid, amount)) // second param is amount of credits
+      dispatch(increaseStudentCredit(uid, amount))
   };
 };
 
