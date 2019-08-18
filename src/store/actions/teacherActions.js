@@ -52,15 +52,15 @@ export const decreaseStudentCredit = (fb_uid, creditsSubtracted = 1) => {
       headers: {
         "Content-Type": "application/json"
       }
-    });
-    /*       .then(student1 => student1.json())
+    })
+      .then(student1 => student1.json())
       .then(student2 => {
         dispatch({
           type: "DECREASE_STUDENT_CREDIT",
           payload: student2
         });
       })
-      .catch(error => console.error("Error loading student", error)); */
+      .catch(error => console.error("Error loading student", error));
   };
 };
 
@@ -137,7 +137,7 @@ export const setDefaultClass = tempArrayDueTo2ndArgIssue => {
     })
       .then(res => res.json())
       .then(entireTeacherRecord => {
-        console.log("👠👠👠👠👠👠entireTeacherRecord", entireTeacherRecord);
+        console.log("👠👠👠entireTeacherRecord", entireTeacherRecord);
         dispatch({
           type: "TEACHER_SET_DEFAULT_CLASS",
           payload: entireTeacherRecord

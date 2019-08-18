@@ -18,7 +18,6 @@ class StudentsAll extends Component {
       teacherId: ""
     };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
-    this.loadStudentRecord = this.loadStudentRecord.bind(this);
     this.awardCredit = this.awardCredit.bind(this);
   }
 
@@ -36,9 +35,6 @@ class StudentsAll extends Component {
     this.props.setDefaultClass(tempArray);
   }
 
-  loadStudentRecord(studentObject) {
-    console.log("LOAD PAGE:", studentObject);
-  }
   awardCredit(studentObject, amountAwarded = 10) {
     console.log("studentObject._id:", studentObject._id);
     console.log("this.state.currentClass", this.state.currentClass);
@@ -65,6 +61,20 @@ class StudentsAll extends Component {
       currentClass: this.props.mongoTeacherData.default_class_students,
       teacherId: this.props.mongoTeacherData._id
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.mongoTeacherData &&
+      this.props.mongoTeacherData &&
+      prevProps.mongoTeacherData.default_class_id !==
+        this.props.mongoTeacherData.default_class_id
+    ) {
+      console.log("UPDATED NOTICED!");
+      this.setState({
+        currentClass: this.props.mongoTeacherData.default_class_students
+      });
+    }
   }
 
   componentWillUnmount() {
