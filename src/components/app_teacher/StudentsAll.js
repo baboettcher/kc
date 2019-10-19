@@ -58,7 +58,9 @@ class StudentsAll extends Component {
 
   componentDidMount() {
     this.setState({
-      currentClass: this.props.mongoTeacherData.default_class_students,
+      currentClass: this.props.mongoTeacherData
+        ? this.props.mongoTeacherData.default_class_students
+        : "",
       teacherId: this.props.mongoTeacherData._id
     });
   }
@@ -84,7 +86,6 @@ class StudentsAll extends Component {
   }
 
   render() {
-    console.log("currentClass", this.state.currentClass);
     const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
     //if (!auth.uid) return <Redirect to="/signin" />;

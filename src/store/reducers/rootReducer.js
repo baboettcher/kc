@@ -1,6 +1,6 @@
 import { firebaseReducer } from "react-redux-firebase";
 import authReducer from "./authReducer";
-import groupsReducer from "./groupsReducer";
+import groupReducer from "./groupReducer";
 import studentReducer from "./studentReducer";
 import teacherReducer from "./teacherReducer"; // no 's'
 import districtsReducer from "./districtsReducer";
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   firebase: firebaseReducer,
   teacher: teacherReducer,
   admin: adminReducer,
-  groups: groupsReducer,
+  groups: groupReducer,
   student: studentReducer,
   districts: districtsReducer
 });

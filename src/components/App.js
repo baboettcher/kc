@@ -46,7 +46,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navbar />
+          {/*       <Navbar /> */}
           <Navbar_new />
           <Switch>
             <Route path="/" exact component={Home} />

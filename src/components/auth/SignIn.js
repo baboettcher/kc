@@ -54,8 +54,6 @@ class SignIn extends Component {
             </div>
           </div>
         </form>
-        <h3>123456</h3>
-        <h3>mrb@husd.us</h3>
       </div>
     );
   }

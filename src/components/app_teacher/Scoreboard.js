@@ -17,6 +17,8 @@ class Scoreboard extends Component {
     return (
       <div>
         <h1 className="title">Scoreboard</h1>
+        <h2>Current Grouping</h2>
+        <h2>Individual</h2>
       </div>
     );
   }
