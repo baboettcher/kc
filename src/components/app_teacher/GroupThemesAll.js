@@ -5,14 +5,14 @@ import { Redirect } from "react-router-dom";
 
 //import PropTypes from "prop-types";
 
-class GroupsAll extends Component {
+class GroupThemesAll extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { auth, authCustomClaim, groups } = this.props;
+    const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
     if (!auth.uid) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
@@ -37,30 +37,34 @@ class GroupsAll extends Component {
     if (!default_class_id) {
       return <h1>PLease select a default class from 'Students' tab</h1>;
     }
-
-    const listOfGroups =
-      groups.current &&
-      groups.current.map(group => {
+    const listOfGroupThemes =
+      default_class_info &&
+      default_class_info.group_themes.map(groupTheme => {
         return (
-          <li key={group.id}>
-            {group.name} has {group.members} members
+          <li key={groupTheme.id}>
+            {groupTheme.name} {groupTheme.teacher_notes}
           </li>
         );
       });
 
+    // show name, explanation, number of groups
+
+    console.log("default_class_info", default_class_info);
+    console.log(".group_themes", default_class_info.group_themes);
+
     return (
       <div>
-        <h1 className="title">
-          All groups for:{default_class_info.class_description}
-        </h1>
+        <h1 className="title">{default_class_info.class_description}</h1>
+        <h3>Current Group Themes</h3>
 
-        <h5>{listOfGroups}</h5>
+        {/* // make this a table */}
+        <h5>{listOfGroupThemes}</h5>
 
         <h5>
-          <NavLink to="/groupsedit">Edit a Group</NavLink>
+          <NavLink to="/groupthemesedit">Edit a Group Theme</NavLink>
         </h5>
         <h5>
-          <NavLink to="/groupscreate">Add a Group</NavLink>
+          <NavLink to="/groupthemescreate">Add a Group Theme</NavLink>
         </h5>
         <button>QUICK GROUP</button>
         <button>Size of group</button>
@@ -80,4 +84,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(GroupsAll);
+export default connect(mapStateToProps)(GroupThemesAll);

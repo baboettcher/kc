@@ -19,7 +19,7 @@ class SignedInLinks_Teacher extends Component {
             <NavLink to="/studentsall">Students</NavLink>
           </li>
           <li>
-            <NavLink to="/groupsall">Groups</NavLink>
+            <NavLink to="/groupthemesall">Group Themes</NavLink>
           </li>
           <li>
             <NavLink to="/colleagues">Colleagues</NavLink>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 //import PropTypes from "prop-types";
 
-export default class GroupEdit extends Component {
+export default class GroupThemeEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,9 +11,9 @@ export default class GroupEdit extends Component {
   render() {
     return (
       <div>
-        <h1 className="title">Edit Group</h1>
+        <h1 className="title">Edit Group Theme</h1>
         <li>
-          <NavLink to="/groupsall">All Groups</NavLink>
+          <NavLink to="/groupthemesall">All Group Themes</NavLink>
         </li>
       </div>
     );

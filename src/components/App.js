@@ -35,9 +35,9 @@ import Scoreboard from "./app_teacher/Scoreboard";
 import CallOnMe from "./app_teacher/CallOnMe";
 import CallOnMe2 from "./app_teacher/CallOnMe/CallOnMe2";
 import ClassCreate from "./app_teacher/ClassCreate";
-import GroupsCreate from "./app_teacher/GroupsCreate";
-import GroupsEdit from "./app_teacher/GroupsEdit";
-import GroupsAll from "./app_teacher/GroupsAll";
+import GroupThemesCreate from "./app_teacher/GroupThemesCreate";
+import GroupThemesEdit from "./app_teacher/GroupThemesEdit";
+import GroupThemesAll from "./app_teacher/GroupThemesAll";
 import StudentsAdd from "./app_teacher/StudentsAdd";
 import StudentsAll from "./app_teacher/StudentsAll";
 
@@ -75,9 +75,9 @@ class App extends Component {
             <Route path="/callonme" component={CallOnMe} />
             <Route path="/callonme2" component={CallOnMe2} />
             <Route path="/classcreate" component={ClassCreate} />
-            <Route path="/groupscreate" component={GroupsCreate} />
-            <Route path="/groupsedit" component={GroupsEdit} />
-            <Route path="/groupsall" component={GroupsAll} />
+            <Route path="/groupthemescreate" component={GroupThemesCreate} />
+            <Route path="/groupthemesedit" component={GroupThemesEdit} />
+            <Route path="/groupthemesall" component={GroupThemesAll} />
             <Route path="/studentsall" component={StudentsAll} />
             <Route path="/studentsadd" component={StudentsAdd} />
 
