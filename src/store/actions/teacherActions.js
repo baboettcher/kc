@@ -11,7 +11,6 @@ export const loadTeacherDashboard = fb_uid => {
       .catch(error => console.error("Error loading teacher dash", error));
   };
 };
-
 export const clearTeacherOnSignout = () => {
   return dispatch => {
     dispatch({

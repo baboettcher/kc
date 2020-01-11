@@ -37,7 +37,7 @@ class GroupThemesAll extends Component {
     if (!default_class_id) {
       return <h1>PLease select a default class from 'Students' tab</h1>;
     }
-    const listOfGroupThemes =
+    /*     const listOfGroupThemes =
       default_class_info &&
       default_class_info.group_themes.map(groupTheme => {
         return (
@@ -45,7 +45,25 @@ class GroupThemesAll extends Component {
             {groupTheme.name} {groupTheme.teacher_notes}
           </li>
         );
-      });
+      }); */
+
+    const listOfGroupThemes =
+      default_class_info && default_class_info.group_themes.length ? (
+        default_class_info.group_themes.map(groupTheme => {
+          return (
+            <li key={groupTheme.id}>
+              {groupTheme.name} {groupTheme.teacher_notes}
+            </li>
+          );
+        })
+      ) : (
+        <h2>Currently there are no group themes for this class</h2>
+      );
+    // --------------- NEXT NEXT NEXT!!!-----------
+    //  -- Why is the math group not showing up?
+    // We need to populated, yes?
+
+    console.log("hi hi hi");
 
     // show name, explanation, number of groups
 
