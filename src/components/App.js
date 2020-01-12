@@ -9,7 +9,7 @@ import TeamPage from "./TeamPage";
 import Articles from "./Articles";
 import TopLevelAdmin from "./TopLevelAdmin";
 
-import SignIn from "./auth/SignIn";
+import SignIn from "./auth/SignIn2";
 import SignUpSuper from "./auth/SignUpSuper";
 import SignUpTeacher from "./auth/SignUpTeacher";
 import SignUpStudent from "./auth/SignUpStudent";

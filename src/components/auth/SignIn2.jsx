@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
+import { signIn } from "../../store/actions/authActions";
+import Form from "../common/form"
 
-class SignIn extends Component {
+class SignIn extends Form {
   state = {
     email: "",
     password: ""
@@ -38,7 +39,7 @@ class SignIn extends Component {
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h3 className="grey-text text-darken-3">Sign In</h3>
+          <h3 className="grey-text text-darken-3">Sign In v2</h3>
           <div className="input-field">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" onChange={this.handleChange} />
