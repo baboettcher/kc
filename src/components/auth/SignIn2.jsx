@@ -16,7 +16,10 @@ class SignIn extends Form {
 
   schema = {
     email: Joi.string().required().label("Email"),
-    password: Joi.string().required().label("Password")
+    password: Joi.string().required().min(6).label("Password"),
+    season: Joi.string()
+      .required()
+      .label("Season")
   }
 
   doSubmit = () => {
@@ -59,6 +62,12 @@ class SignIn extends Form {
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
+          {this.renderSelect("season", "Season", [
+            { _id: "5b21ca3eeb7f6fbccd471818", name: "Summer" },
+            { _id: "5b21ca3eeb7f6fbccd471814", name: "Fall" },
+            { _id: "5b21ca3eeb7f6fbccd471820", name: "Winter" },
+            { _id: "5b41ca3eeb7f6fbccd471820", name: "Spring" }
+          ])}
           {this.renderButton("Submit")}
         </form>
       </div>)
@@ -84,26 +93,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SignIn);
-/*
 
-<div className="container">
-
-<form className="white" onSubmit={this.handleSubmit}>
-  <h3 className="grey-text text-darken-3">Sign In v2</h3>
-  <div className="input-field">
-    <label htmlFor="email">Email</label>
-    <input type="email" id="email" onChange={this.handleChange} />
-  </div>
-  <div className="input-field">
-    <label htmlFor="password">Password</label>
-    <input type="password" id="password" onChange={this.handleChange} />
-  </div>
-  <div className="input-field">
-    <button className="btn pink lighten-1 z-depth-0">Login</button>
-    <div className="red-text center">
-      {authError ? <p>{authError}</p> : null}
-    </div>
-  </div>
-</form>
-</div>
-); */
