@@ -12,7 +12,7 @@ import TopLevelAdmin from "./TopLevelAdmin";
 import SignIn from "./auth/SignIn2";
 import SignUpSuper from "./auth/SignUpSuper";
 import SignUpTeacher from "./auth/SignUpTeacher";
-import SignUpStudent from "./auth/SignUpStudent";
+import SignUpStudent from "./auth/SignUpStudent2";
 import SignUpAdmin from "./auth/SignUpAdmin";
 
 import SuperDashboard from "./app_super/SuperDashboard";

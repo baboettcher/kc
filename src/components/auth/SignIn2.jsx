@@ -57,8 +57,10 @@ class SignIn extends Form {
     }
 
     return (
+
+
       <div>
-        <h1>Login Form</h1>
+        <h1>Login Form 2</h1>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
@@ -71,6 +73,10 @@ class SignIn extends Form {
           {this.renderButton("Submit")}
         </form>
       </div>)
+
+
+
+
 
   }
 }
