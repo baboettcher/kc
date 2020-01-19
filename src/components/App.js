@@ -11,7 +11,7 @@ import TopLevelAdmin from "./TopLevelAdmin";
 
 import SignIn from "./auth/SignIn2";
 import SignUpSuper from "./auth/SignUpSuper";
-import SignUpTeacher from "./auth/SignUpTeacher";
+import SignUpTeacher from "./auth/SignUpTeacher2";
 import SignUpStudent from "./auth/SignUpStudent2";
 import SignUpAdmin from "./auth/SignUpAdmin";
 
