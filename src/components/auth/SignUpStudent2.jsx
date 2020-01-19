@@ -13,14 +13,14 @@ class SignUpStudent extends Form {
       lastName: "",
       email: "",
       password: "",
-      // classroomCode: "", // how to keep optional classroomCode and still pass validate?
+      classroomCode: "", // how to keep optional classroomCode and still pass validate?
       authLevel: "student"
     },
     errors: {}
   }
 
   schema = {
-    // classroomCode: Joi.string(), // issue with required and still being a string
+    classroomCode: Joi.string().allow(''), // issue with required and still being a string
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().required().email().label("Email"),
@@ -63,7 +63,7 @@ class SignUpStudent extends Form {
           {this.renderInput("lastName", "Last")}
           {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
-          {/*  {this.renderInput("classroomCode", "Classroom Code")} */}
+          {this.renderInput("classroomCode", "Classroom Code")}
           {this.renderButton("Submit")}
         </form>
       </div>)
