@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { teacherAddClass } from "../../store/actions/teacherActions";
 import generatePassword from "password-generator";
-//import Modal from "../common/modal";
+import Modal from "../common/modal";
 import Form from "../common/form"
 
 // import PropTypes from "prop-types";
 
 
-class ClassCreate extends Form {
+class ClassCreateForm extends Form {
   state = {
     data: {
       classDescription: "",
@@ -29,16 +29,13 @@ class ClassCreate extends Form {
   }
 
 
-  // >>>> submit is not sending the correct PUT call <<<<<<
-  handleSubmit = e => {
+  // >>>> submit is not sending the correct PUT call <<<<<< 
+  doSubmit = e => {
+    console.log("$$$$$$$$$$ DO SUBMIT.JSX =$$$$$$$$$$$$$")
     const teacher_name = this.props.mongoTeacherData.first_name + " " + this.props.mongoTeacherData.last_name
     const teacher_id = this.props.mongoTeacherData._id;
 
-    e.preventDefault();
-    // build object to send
-    // #1 get teachID from props
-    // #2 merge new class info from state.data
-
+    // build object to send: #1 get teachID from props #2 merge new class info from state.data
     const newClassInfo = {
       grade_level: this.state.data.gradeLevel,
       class_description: this.state.data.classDescription,
@@ -48,9 +45,14 @@ class ClassCreate extends Form {
       teacher_id
     };
 
-
     this.props.teacherAddClass([newClassInfo, teacher_id]);
-    console.log("newClassInfo-->", newClassInfo);
+
+    this.setState({
+      showModal: true
+    });
+  }
+
+  onModalClose() {
 
     this.setState(() => {
       return {
@@ -59,45 +61,28 @@ class ClassCreate extends Form {
           gradeLevel: "",
           specialNotes: ""
         },
-        errors: {},
         showModal: false
-        // sliced before push to class array - change this back. no slice needed
       }
     })
-
     this.props.history.push("/teacher");
-
-  }
-
-  onModalClose() {
-    this.setState({
-      showModal: false,
-      returnToDash: true,
-      classTitle: "",
-      gradeLevel: "",
-      specialNotes: ""
-    });
   }
 
   render() {
     const { auth, authCustomClaim, mongoTeacherData } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
-    if (this.state.returnToDash) return <Redirect to="/teacher" />;
 
     // TEMP
     // if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     return (
       <div className="container">
-        {/*         {this.state.showModal ? (
+        {this.state.showModal ? (
           <Modal
-            mainText={"ADDED:" + this.state.classDescription}
-            subtitle1={this.state.specialNotes}
+            mainText={"ADDED:" + this.state.data.classDescription}
+            subtitle1={this.state.data.specialNotes}
             onModalClose={this.onModalClose.bind(this)}
           />
-        ) : null} */}
-
-
+        ) : null}
 
         <form onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">
@@ -138,4 +123,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ClassCreate);
+)(ClassCreateForm);
