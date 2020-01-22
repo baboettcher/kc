@@ -38,6 +38,7 @@ class ClassCreate extends Form {
     // build object to send
     // #1 get teachID from props
     // #2 merge new class info from state.data
+
     const newClassInfo = {
       grade_level: this.state.data.gradeLevel,
       class_description: this.state.data.classDescription,
@@ -63,6 +64,9 @@ class ClassCreate extends Form {
         // sliced before push to class array - change this back. no slice needed
       }
     })
+
+    this.props.history.push("/teacher");
+
   }
 
   onModalClose() {
