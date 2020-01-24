@@ -31,7 +31,7 @@ class ClassCreateForm extends Form {
 
   // >>>> submit is not sending the correct PUT call <<<<<< 
   doSubmit = e => {
-    console.log("$$$$$$$$$$ DO SUBMIT.JSX =$$$$$$$$$$$$$")
+    console.log("--DO SUBMIT--")
     const teacher_name = this.props.mongoTeacherData.first_name + " " + this.props.mongoTeacherData.last_name
     const teacher_id = this.props.mongoTeacherData._id;
 

@@ -23,20 +23,8 @@ class SignIn extends Form {
   }
 
   doSubmit = () => {
-    // call server
-    console.log("submitted")
-  }
-
-  // handleChange = e => {
-  //   this.setState({
-  //     [e.target.id]: e.target.value
-  //   });
-  // };
-
-  handleSubmit = e => {
-    e.preventDefault();
     this.props.signIn(this.state.data);
-  };
+  }
 
   render() {
     const { authError, fb_auth, authCustomClaim } = this.props;
@@ -73,10 +61,6 @@ class SignIn extends Form {
           {this.renderButton("Submit")}
         </form>
       </div>)
-
-
-
-
 
   }
 }

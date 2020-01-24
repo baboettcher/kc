@@ -28,9 +28,7 @@ class SignUpStudent extends Form {
     authLevel: Joi.string().required().label("*** AuthLevel hard-coded ***")
   }
 
-
-  handleSubmit = e => {
-    e.preventDefault();
+  doSubmit() {
     this.props.signUpStudent(this.state.data);
     this.setState(() => {
       return {
@@ -44,7 +42,7 @@ class SignUpStudent extends Form {
         }
       }
     });
-  };
+  }
 
   render() {
     const { auth, authCustomClaim } = this.props;
