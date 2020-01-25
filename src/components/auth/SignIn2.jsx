@@ -43,7 +43,6 @@ class SignIn extends Form {
         console.log("NO CUSTOM CLAIM FOUND");
       }
     }
-
     return (
 
 
@@ -53,10 +52,10 @@ class SignIn extends Form {
           {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
           {this.renderSelect("season", "Season", [
-            { _id: "5b21ca3eeb7f6fbccd471818", name: "Summer" },
-            { _id: "5b21ca3eeb7f6fbccd471814", name: "Fall" },
-            { _id: "5b21ca3eeb7f6fbccd471820", name: "Winter" },
-            { _id: "5b41ca3eeb7f6fbccd471820", name: "Spring" }
+            { _id: "5b21d471818", name: "Summer" },
+            { _id: "5b21d471814", name: "Fall" },
+            { _id: "5b21d471820", name: "Winter" },
+            { _id: "5b41d471820", name: "Spring" }
           ])}
           {this.renderButton("Submit")}
         </form>

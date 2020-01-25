@@ -35,8 +35,7 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log("====== HANDLE SUBMIT IN FORM.JSX ========")
-    // clear error before each submit
+    // clear errors before each submit
     const errors = this.validate()
     this.setState({
       errors: errors || {}
@@ -45,7 +44,6 @@ class Form extends Component {
   }
 
   handleChange = ({ currentTarget: input }) => {
-    console.log("click")
     const errors = { ...this.state.errors }
     const errorMessage = this.validateProperty(input)
     if (errorMessage) errors[input.name] = errorMessage

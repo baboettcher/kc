@@ -1,6 +1,8 @@
 import React from "react";
 
 const Select = ({ name, label, options, error, ...rest }) => {
+  console.log("SELECT name", name)
+  console.log("SELECT label", label)
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
