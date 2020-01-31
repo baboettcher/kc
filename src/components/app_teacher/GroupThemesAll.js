@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-
 //import PropTypes from "prop-types";
 
 class GroupThemesAll extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  state = {
+    data: {},
+    errors: {}
   }
+
 
   render() {
     const { auth, authCustomClaim } = this.props;
@@ -32,7 +32,6 @@ class GroupThemesAll extends Component {
       default_class_students
     } = this.props.mongoTeacherData;
 
-    // CompDidMount --> retrieve list of groups based on default_class_info/id
 
     if (!default_class_id) {
       return <h1>PLease select a default class from 'Students' tab</h1>;
@@ -57,23 +56,20 @@ class GroupThemesAll extends Component {
           );
         })
       ) : (
-        <h2>Currently there are no group themes for this class</h2>
-      );
+          <h2>Currently there are no group themes for this class</h2>
+        );
+
     // --------------- NEXT NEXT NEXT!!!-----------
     //  -- Why is the math group not showing up?
     // We need to populated, yes?
-
-    console.log("hi hi hi");
-
-    // show name, explanation, number of groups
 
     console.log("default_class_info", default_class_info);
     console.log(".group_themes", default_class_info.group_themes);
 
     return (
       <div>
-        <h1 className="title">{default_class_info.class_description}</h1>
-        <h3>Current Group Themes</h3>
+        <h1 className="title">Current Group Themes for:{default_class_info.class_description}</h1>
+
 
         {/* // make this a table */}
         <h5>{listOfGroupThemes}</h5>

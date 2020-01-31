@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 //import PropTypes from "prop-types";
 
 export default class GroupThemesCreate extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  state = {
+    data: {},
+    errors: {}
   }
 
   render() {
