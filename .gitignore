@@ -24,11 +24,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+src/assets/
+
 #temp
 zzz_bin/
 src/index_ORIG.js
 src/dummy-data.js
 
 src/components/Team*
-
 
