@@ -1,0 +1,17 @@
+html {
+  min-height: 100%;
+  background-color: blue;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+/*  // background: url(/img/background1.jpeg) no-repeat; */
+/*   background-size: 100%;
+  background-position: bottom; */
+  background-color: white;
+  /* background-color: yellow; */
+  /* background-color: #95e8f3; */
+  min-height: 100%;
+}

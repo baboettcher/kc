@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-//import "./index.css";
 import App from "./components/App";
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./store/reducers/rootReducer";
@@ -14,6 +13,8 @@ import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import { functions } from "@firebase/functions";
 
 import fbConfig from "./config/fbConfig";
+
+import "./index.css";
 
 // logger not properly updating firebase auth
 const store = createStore(
