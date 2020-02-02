@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadTeacherDashboard } from "../../store/actions/teacherActions";
+import DropdownTest from "./TeacherDashFormTest"
+
+import './teacherStyles.css'
 
 class TeacherDashboard extends Component {
   state = {
@@ -41,14 +44,14 @@ class TeacherDashboard extends Component {
 
       const listOfClasses = current_classes
         ? current_classes.map(singleClass => (
-            <tr key={singleClass.join_code}>
-              <td>ICON</td>
-              <td>{singleClass.class_description}</td>
-              <td>{singleClass.grade_level}</td>
-              <td>{singleClass.join_code}</td>
-              <td>#</td>
-            </tr>
-          ))
+          <tr key={singleClass.join_code}>
+            <td>ICON</td>
+            <td>{singleClass.class_description}</td>
+            <td>{singleClass.grade_level}</td>
+            <td>{singleClass.join_code}</td>
+            <td>#</td>
+          </tr>
+        ))
         : null;
 
       return (
@@ -59,7 +62,7 @@ class TeacherDashboard extends Component {
             <h1 className="header text-center">
               {first_name} {last_name}
             </h1>
-            <h2>
+            <h2 className="primary">
               Current class:
               {default_class_info ? default_class_info.class_description : null}
             </h2>
@@ -84,6 +87,7 @@ class TeacherDashboard extends Component {
             {" "}
             <NavLink to="/classcreate">Create a Class</NavLink>
           </button>
+          <DropdownTest />
         </div>
       );
     } else {

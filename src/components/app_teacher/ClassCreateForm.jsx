@@ -6,8 +6,7 @@ import { teacherAddClass } from "../../store/actions/teacherActions";
 import generatePassword from "password-generator";
 import Modal from "../common/modal";
 import Form from "../common/form"
-
-// import PropTypes from "prop-types";
+import './teacherStyles.css'
 
 
 class ClassCreateForm extends Form {
@@ -90,7 +89,7 @@ class ClassCreateForm extends Form {
         ) : null}
 
         <form onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">
+          <h1 className="grey-text text-darken-3">
             Create a New Class for
             {mongoTeacherData && mongoTeacherData.first_name
               ? mongoTeacherData.first_name
@@ -98,11 +97,13 @@ class ClassCreateForm extends Form {
             {mongoTeacherData && mongoTeacherData.last_name
               ? mongoTeacherData.last_name
               : null}
-          </h5>
-          {this.renderInput("classDescription", "Class Description")}
-          {this.renderSelect("gradeLevel", "Grade Level", this.state.dropDownMenu)}
-          {this.renderInput("specialNotes", "Special Notes")}
-          {this.renderButton("Submit")}
+          </h1>
+          <h2>
+            {this.renderInput("classDescription", "Class Description")}
+            {this.renderSelect("gradeLevel", "Grade Level", this.state.dropDownMenu)}
+            {this.renderInput("specialNotes", "Special Notes")}
+            {this.renderButton("Submit")}
+          </h2>
         </form>
 
       </div >

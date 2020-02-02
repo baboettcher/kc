@@ -1,4 +1,5 @@
 import React from 'react';
+import '../app_teacher/teacherStyles.css'
 
 const Input = ({ name, label, error, ...rest }) => {
 
@@ -12,3 +13,7 @@ const Input = ({ name, label, error, ...rest }) => {
 }
 
 export default Input;
+
+
+
+
