@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadStudentDashboard } from "../../store/actions/studentActions";
+import SelectAvatar from './selectAvatar'
 
 class StudentDashboard extends Component {
   state = {
@@ -69,6 +70,7 @@ class StudentDashboard extends Component {
               Enrolled tentatively:
               {tentativeClasses}
             </h5>
+            <SelectAvatar />
             <div className="input-field">
               <button>
                 {" "}
@@ -86,6 +88,7 @@ class StudentDashboard extends Component {
           <h1>
             {first_name} {last_name}
           </h1>
+
           <h5>You are not currently enrolled in any classes</h5>
           <div className="input-field">
             <button>
