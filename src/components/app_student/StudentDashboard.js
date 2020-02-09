@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadStudentDashboard } from "../../store/actions/studentActions";
-import RenderAvatar from './renderAvatar'
+import RenderAvatar from './RenderAvatar'
 
 class StudentDashboard extends Component {
   state = {
@@ -37,8 +37,19 @@ class StudentDashboard extends Component {
       credits,
       school_name,
       tentative_classes,
-      current_classes
+      current_classes,
+      avatarId
     } = this.props.mongoStudentData;
+
+    console.log("avatarId==>", avatarId)
+
+    if (avatarId === "new" || avatarId === undefined) {
+      this.props.history.push('/welcomenewuser')
+      // push to new welcome new user
+      // register route and push!
+      // Build <SelectIcon/>
+      // --> props: setStyle={"superHeros"} alreadyTaken = [123, 340]
+    }
 
     // Data Loading Test #2
     // ISSUE: after state update in reducer, tentative_classes is an array UIDs. These are not populated until loadStudentDashboard finishes, which takes some time.
@@ -70,7 +81,7 @@ class StudentDashboard extends Component {
               Enrolled tentatively:
               {tentativeClasses}
             </h5>
-            <RenderAvatar size="150px" avatarId="sup2" />
+            <RenderAvatar size="150px" avatarId={avatarId} />
             <div className="input-field">
               <button>
                 {" "}
@@ -88,6 +99,7 @@ class StudentDashboard extends Component {
           <h1>
             {first_name} {last_name}
           </h1>
+          <RenderAvatar size="150px" avatarId={avatarId} />
 
           <h5>You are not currently enrolled in any classes</h5>
           <div className="input-field">
