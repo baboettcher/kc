@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
 import RenderAllAvatars from './RenderAllAvatars'
 import { Container } from 'semantic-ui-react'
+import { updateStudentAvatar } from "../../store/actions/studentActions";
+import { connect } from "react-redux";
+
 import RenderAvatar from './RenderAvatar'
 
 
 class WelcomeNewUser extends Component {
   state = {
     toDashboard: false,
-    selectedAvatar: ""
+    selectedAvatar: "",
+    userData: {}
   }
+
+  componentDidMount() {
+    this.setState({
+      userData: this.props.mongoStudentData
+    })
+  }
+
   handleAvatarSelection = (avatarId) => {
     this.setState({
       selectedAvatar: avatarId
     })
   }
+
+  // or update the whole student?
+  submitAvatar = () => {
+    console.log("ADD IN updated student avatar:", this.state.userData)
+    this.props.updateStudentAvatar("CARROTS")
+  }
+
 
   // MON:
   // finish CHOOSE selection and send back to dashboard
@@ -24,18 +42,35 @@ class WelcomeNewUser extends Component {
   render() {
     console.log(this.state.selectedAvatar)
     return (<Container>
-
       <h1>Wecome! FIRST and LAST </h1>
-      <h2>Please choose an icon.</h2>
-
+      <h2>Choose an avatar!</h2>
       <RenderAllAvatars avatarLibraryId="001" size="50px" handleAvatarSelection={(av) => this.handleAvatarSelection(av)} />
       {this.state.selectedAvatar.length > 0
         ? <Container><RenderAvatar size="300" avatarId={this.state.selectedAvatar} />
-          <button >CHOOSE</button></Container>
+          <button onClick={this.submitAvatar}>Make this ME!</button></Container>
         : null}
 
     </Container>)
   }
 }
 
-export default WelcomeNewUser;
+const mapStateToProps = state => {
+  return {
+    fb_auth: state.firebase.auth,
+    authCustomClaim: state.auth.authCustomClaim,
+    mongoStudentData: state.student.mongoData
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateStudentAvatar: studentObj => dispatch(updateStudentAvatar(studentObj))
+  };
+};
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WelcomeNewUser);
+

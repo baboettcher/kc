@@ -54,6 +54,29 @@ export const joinCodeCheck = joinCode => {
   // };
 };
 
+export const updateStudentAvatar = (avatarObject) => {
+  return dispatch => {
+
+    console.log("avatarObject==>", avatarObject)
+    // fetch(url1, {
+    //   method: "PUT",
+    //   body: JSON.stringify(avatarObject),
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   }
+    // }).then((student) => {
+    //   dispatch({
+    //     type: "UPDATE_STUDENT_AVATAR",
+    //     payload: student
+    //   })
+    // })
+
+
+
+  };
+};
+
+
 export const joinCodeClear = () => {
   return dispatch => {
     dispatch({
@@ -230,7 +253,7 @@ export const studentAddClassWithCode_orig_with_external_process = ({
     });
      */
     /* 
-
+ 
     // --------- NEW -------------
     Promise.all([f1_joinCodeResponse, f2_studentRecord])
       .then(function(responseArr) {
@@ -244,7 +267,7 @@ export const studentAddClassWithCode_orig_with_external_process = ({
           payload: promiseResults
         });
       });
-
+ 
  */
 
     // ORIG
