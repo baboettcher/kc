@@ -57,7 +57,7 @@ export const joinCodeCheck = joinCode => {
 export const updateStudentAvatar = (avatarObject) => {
   return dispatch => {
 
-    console.log("avatarObject==>", avatarObject)
+    console.log("avatarObject====>", avatarObject)
     // fetch(url1, {
     //   method: "PUT",
     //   body: JSON.stringify(avatarObject),
