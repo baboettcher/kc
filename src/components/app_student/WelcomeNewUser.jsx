@@ -21,45 +21,25 @@ class WelcomeNewUser extends Component {
   }
 
   handleAvatarSelection = (avatarId) => {
-    console.log("handleAvatar")
-    this.setState({ selectedAvatar: avatarId })
-
-    // const someProperty = {...this.state.someProperty}
-    // someProperty.flag = true;
-    // this.setState({someProperty})
-    //console.log("this.state.userData==>", this.state.userData)
     const updatedUserData = { ...this.state.userData }
     updatedUserData.avatarId = avatarId;
-
     this.setState({
       userData: { ...updatedUserData, },
       selectedAvatar: avatarId
     })
-
-    console.log("updatedUserData-->", updatedUserData)
-
   }
 
-  // or update the whole student?
+
   submitAvatar = () => {
-    console.log("submitAvatar")
-    // this.setState({
-    //   userData: {
-    //     avatarId: this.state.selectedAvatar
-    //   }
-    // })
     this.props.updateStudentAvatar(this.state.userData)
   }
 
-
-  // THURS
-  // add avatar modification props object
-  // Make groups! (Withing Reading Group Theme)
-
   render() {
-    console.log("STATE: ", this.state)
+    const { first_name, last_name } = this.state.userData
+
     return (<Container>
-      <h1>Wecome! FIRST and LAST </h1>
+
+      <h1>{`Wecome ${first_name}  ${last_name}!`}</h1>
       <h2>Choose an avatar!</h2>
       <RenderAllAvatars avatarLibraryId="001" size="50px" handleAvatarSelection={(av) => this.handleAvatarSelection(av)} />
 
@@ -85,7 +65,6 @@ const mapDispatchToProps = dispatch => {
     updateStudentAvatar: studentObj => dispatch(updateStudentAvatar(studentObj))
   };
 };
-
 
 export default connect(
   mapStateToProps,

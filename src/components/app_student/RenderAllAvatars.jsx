@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react'
-import { superHeros } from "./assets/avatars/svg/superHeros"
+//import { superHeros } from "./assets/avatars/svg/superHeros"
+import { superHeros } from "../../assets/avatars/svg/superHeros"
 
 class RenderAllAvatars extends Component {
 

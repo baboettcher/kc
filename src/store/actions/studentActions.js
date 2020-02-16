@@ -56,23 +56,21 @@ export const joinCodeCheck = joinCode => {
 
 export const updateStudentAvatar = (avatarObject) => {
   return dispatch => {
-
+    const url = "/student/updateavatar/" + avatarObject._id
     console.log("avatarObject====>", avatarObject)
-    // fetch(url1, {
-    //   method: "PUT",
-    //   body: JSON.stringify(avatarObject),
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // }).then((student) => {
-    //   dispatch({
-    //     type: "UPDATE_STUDENT_AVATAR",
-    //     payload: student
-    //   })
-    // })
 
-
-
+    fetch(url, {
+      method: "PUT",
+      body: JSON.stringify(avatarObject),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((student) => {
+      dispatch({
+        type: "UPDATE_STUDENT_AVATAR",
+        payload: student
+      })
+    })
   };
 };
 
