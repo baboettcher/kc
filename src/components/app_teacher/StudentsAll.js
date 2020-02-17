@@ -3,6 +3,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
 import SelectForm from "../common/selectForm";
+import RenderStudentAvatar from "./RenderStudentAvatar"
 import {
   setDefaultClass,
   increaseStudentCredit,
@@ -70,7 +71,7 @@ class StudentsAll extends Component {
       prevProps.mongoTeacherData &&
       this.props.mongoTeacherData &&
       prevProps.mongoTeacherData.default_class_id !==
-        this.props.mongoTeacherData.default_class_id
+      this.props.mongoTeacherData.default_class_id
     ) {
       console.log("UPDATED NOTICED!");
       this.setState({
@@ -129,10 +130,11 @@ class StudentsAll extends Component {
       //(v2- use local state rather than store/props state for quick UI update)
       if (this.state.currentClass && this.state.currentClass.length > 0) {
         allCurrentStudents = this.state.currentClass.map(student => {
+          console.log("---STUDENT ", student)
           return (
             <li>
               <span onClick={() => this.loadStudentRecord(student.first_name)}>
-                {student.first_name}{" "}
+                {student.avatarId ? < RenderStudentAvatar size="15px" avatarId={student.avatarId} /> : null}{student.first_name}{" "}
               </span>
               <span style={divStyle}> {student.credits}</span>
               <span onClick={() => this.awardCredit(student)}>💎</span>

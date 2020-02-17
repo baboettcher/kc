@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
+import { Icon, Table } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { loadStudentDashboard } from "../../store/actions/studentActions";
 import RenderAvatar from './RenderAvatar'

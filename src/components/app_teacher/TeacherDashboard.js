@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadTeacherDashboard } from "../../store/actions/teacherActions";
-import DropdownTest from "./TeacherDashFormTest"
-
+import DropdownTest from "../common/dropDownTest"
+import DashboardTable from "../common/dashboardTable"
 import './teacherStyles.css'
 
 class TeacherDashboard extends Component {
@@ -55,41 +55,45 @@ class TeacherDashboard extends Component {
         : null;
 
       return (
-        <div className="container">
-          <div>
-            <h5 className="header text-center">Teacher Dashboard</h5>
+        <div>
+          <DashboardTable headings={["Status", "Description", "Grade", "Join Code", "Class Size"]} dataFields={["status", "class_description", "grade_level", "join_code", "class_size"]} dataArray={current_classes} />
 
-            <h1 className="header text-center">
-              {first_name} {last_name}
-            </h1>
-            <h2 className="primary">
-              Current class:
-              {default_class_info ? default_class_info.class_description : null}
-            </h2>
+          <div className="container">
+            <div>
+              <h5 className="header text-center">Teacher Dashboard</h5>
 
-            {listOfClasses ? (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Class Description</th>
-                    <th>Grade Level</th>
-                    <th>Code</th>
-                    <th>Members</th>
-                  </tr>
-                </thead>
-                <tbody>{listOfClasses}</tbody>
-              </table>
-            ) : null}
+              <h1 className="header text-center">
+                {first_name} {last_name}
+              </h1>
+              <h2 className="primary">
+                Current class:
+                {default_class_info ? default_class_info.class_description : null}
+              </h2>
+
+              {listOfClasses ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Class Description</th>
+                      <th>Grade Level</th>
+                      <th>Code</th>
+                      <th>Members</th>
+                    </tr>
+                  </thead>
+                  <tbody>{listOfClasses}</tbody>
+                </table>
+              ) : null}
+            </div>
+
+            <button>
+              {" "}
+              <NavLink to="/classcreate">Create a Class</NavLink>
+            </button>
+            <DropdownTest />
           </div>
-
-          <button>
-            {" "}
-            <NavLink to="/classcreate">Create a Class</NavLink>
-          </button>
-          <DropdownTest />
-        </div>
-      );
+          );
+        </div>)
     } else {
       return <h1>Loading</h1>;
     }
