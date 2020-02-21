@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react'
 import { superHeros } from "../../assets/avatars/svg/superHeros"
 
-class RenderAvatar extends Component {
+class RenderStudentAvatar extends Component {
 
   render() {
     const { size } = this.props
@@ -22,7 +22,7 @@ class RenderAvatar extends Component {
   }
 }
 
-export default RenderAvatar;
+export default RenderStudentAvatar;
 
 
 /*

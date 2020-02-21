@@ -1,4 +1,5 @@
 export const loadTeacherDashboard = fb_uid => {
+  console.log("LOAD TEACHER FIRED!!")
   return (dispatch, getState) => {
     fetch("/teacher/" + fb_uid)
       .then(teacher1 => teacher1.json())

@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import "./App.css";
+import RenderStudentAvatar from "../RenderStudentAvatar"
+import { Container, Button } from 'semantic-ui-react'
 
 class CurrentStudentDetails extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { uid, first_name, last_name } = this.props.currentStudent;
+    const { uid, first_name, last_name, avatarId } = this.props.currentStudent;
 
     return (
       <React.Fragment>
+        <RenderStudentAvatar size="200px" avatarId={avatarId} />
         <h1 className="name-called">
           {this.props.currentStudent.uid !== "" ? first_name : null}
         </h1>

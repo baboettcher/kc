@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import CurrentStudentDetails from "./CurrentStudentDetails";
 import SelectNewStudent from "./SelectNewStudent";
+import RenderStudentAvatar from "../RenderStudentAvatar"
+import { Container, Button } from 'semantic-ui-react'
 import "./App.css";
 
 class CallOnMe2 extends Component {
@@ -45,7 +47,7 @@ class CallOnMe2 extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
-    if (!auth.uid) return <Redirect to="/signin" />;
+    if (!auth.uid || !this.props.mongoTeacherData) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     if (this.props.mongoTeacherData) {
@@ -62,7 +64,10 @@ class CallOnMe2 extends Component {
 
       if (default_class_students && default_class_students.length > 0) {
         allCurrentStudents = default_class_students.map(student => {
-          return <li>{student.first_name}</li>;
+          return (<Container>
+            <RenderStudentAvatar size="20px" avatarId={student.avatarId} />
+            {student.first_name}</Container>)
+          {/* <li>{student.first_name}</li>; */ }
         });
       }
 

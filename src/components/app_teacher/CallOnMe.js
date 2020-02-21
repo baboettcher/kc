@@ -3,8 +3,12 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Modal from "../common/modal";
+import RenderStudentAvatar from "./RenderStudentAvatar"
+import { Container, Button } from 'semantic-ui-react'
 // import { loadTeacherDashboard } from "../../store/actions/teacherActions";
 //import PropTypes from "prop-types";
+
+
 
 class CallOnMe extends Component {
   constructor(props) {
@@ -53,7 +57,7 @@ class CallOnMe extends Component {
   render() {
     const { auth, authCustomClaim } = this.props;
     // temp guard until local storage
-    if (!auth.uid) return <Redirect to="/signin" />;
+    if (!auth.uid || !this.props.mongoTeacherData) return <Redirect to="/signin" />;
     if (authCustomClaim !== "teacher") return <Redirect to="/signin" />;
 
     if (this.props.mongoTeacherData) {
@@ -70,7 +74,9 @@ class CallOnMe extends Component {
 
       if (default_class_students && default_class_students.length > 0) {
         allCurrentStudents = default_class_students.map(student => {
-          return <li>{student.first_name}</li>;
+          return <Container>
+            <RenderStudentAvatar size="60px" avatarId={student.avatarId} />
+            {student.first_name}</Container>;
         });
       }
 

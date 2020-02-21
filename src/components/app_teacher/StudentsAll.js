@@ -9,6 +9,8 @@ import {
   increaseStudentCredit,
   refreshDefaultClass
 } from "../../store/actions/teacherActions";
+import { Container, Button } from 'semantic-ui-react'
+
 // import PropTypes from "prop-types";
 
 class StudentsAll extends Component {
@@ -20,6 +22,11 @@ class StudentsAll extends Component {
     };
     this.selectDefaultClass = this.selectDefaultClass.bind(this);
     this.awardCredit = this.awardCredit.bind(this);
+  }
+
+  loadStudentRecord(id) {
+    alert("STUDENT RECORD", id)
+    console.log("ROUTE to studennt record here")
   }
 
   // this callback is passed to selectForm
@@ -62,7 +69,7 @@ class StudentsAll extends Component {
       currentClass: this.props.mongoTeacherData
         ? this.props.mongoTeacherData.default_class_students
         : "",
-      teacherId: this.props.mongoTeacherData._id
+      teacherId: this.props.mongoTeacherData._id ? this.props.mongoTeacherData._id : ""
     });
   }
 
@@ -73,7 +80,6 @@ class StudentsAll extends Component {
       prevProps.mongoTeacherData.default_class_id !==
       this.props.mongoTeacherData.default_class_id
     ) {
-      console.log("UPDATED NOTICED!");
       this.setState({
         currentClass: this.props.mongoTeacherData.default_class_students
       });
@@ -112,39 +118,26 @@ class StudentsAll extends Component {
         // backgroundImage: 'url(' + imgUrl + ')',
       };
 
-      /* (v1 - orig version from redux state)
-    if (default_class_students && default_class_students.length > 0) {
-        allCurrentStudents = default_class_students.map(student => {
-          return (
-            <li>
-              <span onClick={() => this.loadStudentRecord(student.first_name)}>
-                {student.first_name}{" "}
-              </span>
-              <span style={divStyle}> {student.credits}</span>
-              <span onClick={() => this.awardCredit(student)}>💎</span>
-            </li>
-          );
-        });
-      } */
-
       //(v2- use local state rather than store/props state for quick UI update)
       if (this.state.currentClass && this.state.currentClass.length > 0) {
         allCurrentStudents = this.state.currentClass.map(student => {
-          console.log("---STUDENT ", student)
           return (
-            <li>
+            <Container>
               <span onClick={() => this.loadStudentRecord(student.first_name)}>
-                {student.avatarId ? < RenderStudentAvatar size="15px" avatarId={student.avatarId} /> : null}{student.first_name}{" "}
+                {student.avatarId ? < RenderStudentAvatar size="50px" avatarId={student.avatarId} /> : null}{student.first_name}{" "}
               </span>
               <span style={divStyle}> {student.credits}</span>
               <span onClick={() => this.awardCredit(student)}>💎</span>
-            </li>
+
+            </Container>
+
+
           );
         });
       }
 
       return (
-        <div className="container">
+        <Container>
           <h3>
             {/* <span style="color:blue"> */}
             <div style={divStyle}>
@@ -163,7 +156,8 @@ class StudentsAll extends Component {
             instructions={"Choose your default class: "}
             selectDefaultClass={this.selectDefaultClass}
           />
-        </div>
+
+        </Container>
       );
     } else {
       return (
@@ -196,7 +190,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     refreshDefaultClass: fb_uid => dispatch(refreshDefaultClass(fb_uid)),
-    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass)), // FIX: second param is amount of credits
+    setDefaultClass: defaultClass => dispatch(setDefaultClass(defaultClass)),
+    // FIX: second param is amount of credits
     increaseStudentCredit: (uid, amount) =>
       dispatch(increaseStudentCredit(uid, amount))
   };

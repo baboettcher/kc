@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import spinner from "./img/spinning-donut.gif";
-import temporaryStudentData from "./db/tempStudentData";
+
 
 class SelectNewStudent extends Component {
   constructor(props) {
@@ -34,7 +34,8 @@ class SelectNewStudent extends Component {
     this.props.setCurrentStudent({
       first_name: "",
       last_name: "",
-      uid: ""
+      uid: "",
+      avatarId: ""
     });
 
     // add spinner (add on/off switch)
@@ -72,16 +73,17 @@ class SelectNewStudent extends Component {
   }
 
   render() {
+    console.log("🏳️‍🌈🏳️‍🌈🏳️‍🌈🏳️‍🌈🏳️‍🌈>>", this.state)
     return (
       <div>
         <div>
           {this.state.nameHasBeenCalled ? (
             <img src={spinner} width="400" height="300" />
           ) : (
-            <button onClick={this.getRandomStudent}>
-              {this.state.funnyTeacherStatement}
-            </button>
-          )}
+              <button onClick={this.getRandomStudent}>
+                {this.state.funnyTeacherStatement}
+              </button>
+            )}
         </div>
       </div>
     );

@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadTeacherDashboard } from "../../store/actions/teacherActions";
-import DropdownTest from "../common/dropDownTest"
-import DashboardTable from "../common/dashboardTable"
 import './teacherStyles.css'
 
 class TeacherDashboard extends Component {
   state = {
     createNewClass: false
   };
+
 
   componentDidMount() {
     const { fb_auth, authCustomClaim } = this.props;
@@ -19,6 +18,7 @@ class TeacherDashboard extends Component {
 
   render() {
     const { fb_auth, authCustomClaim } = this.props;
+
     // temp guard until local storage
     if (!fb_auth.uid) return <Redirect to="/signin" />;
 
@@ -29,7 +29,7 @@ class TeacherDashboard extends Component {
       return <Redirect to="/classcreate" />;
     }
 
-    // Ready to render dashboard
+
     if (this.props.mongoTeacherData) {
       const {
         first_name,
@@ -56,8 +56,6 @@ class TeacherDashboard extends Component {
 
       return (
         <div>
-          <DashboardTable headings={["Status", "Description", "Grade", "Join Code", "Class Size"]} dataFields={["status", "class_description", "grade_level", "join_code", "class_size"]} dataArray={current_classes} />
-
           <div className="container">
             <div>
               <h5 className="header text-center">Teacher Dashboard</h5>
@@ -90,7 +88,7 @@ class TeacherDashboard extends Component {
               {" "}
               <NavLink to="/classcreate">Create a Class</NavLink>
             </button>
-            <DropdownTest />
+
           </div>
           );
         </div>)
