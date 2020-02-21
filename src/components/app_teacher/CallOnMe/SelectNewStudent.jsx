@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import spinner from "./img/spinning-donut.gif";
+import { Container, Button } from 'semantic-ui-react'
 
 
 class SelectNewStudent extends Component {
@@ -73,16 +74,23 @@ class SelectNewStudent extends Component {
   }
 
   render() {
-    console.log("🏳️‍🌈🏳️‍🌈🏳️‍🌈🏳️‍🌈🏳️‍🌈>>", this.state)
     return (
       <div>
         <div>
           {this.state.nameHasBeenCalled ? (
             <img src={spinner} width="400" height="300" />
           ) : (
-              <button onClick={this.getRandomStudent}>
-                {this.state.funnyTeacherStatement}
-              </button>
+
+              <Button animated='fade' onClick={this.getRandomStudent}>
+                <Button.Content visible> {this.state.funnyTeacherStatement}</Button.Content>
+                <Button.Content hidden>Call a new student!</Button.Content>
+              </Button>
+
+              /*             <button onClick={this.getRandomStudent}>
+                            {this.state.funnyTeacherStatement}
+                          </button>
+             */
+
             )}
         </div>
       </div>

@@ -5,8 +5,6 @@ import { Redirect } from "react-router-dom";
 import Modal from "../common/modal";
 import RenderStudentAvatar from "./RenderStudentAvatar"
 import { Container, Button } from 'semantic-ui-react'
-// import { loadTeacherDashboard } from "../../store/actions/teacherActions";
-//import PropTypes from "prop-types";
 
 
 
@@ -23,16 +21,16 @@ class CallOnMe extends Component {
     this.onModalClose = this.onModalClose.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      currentStudents: this.props.mongoTeacherData.default_class_students
+    });
+  }
+
   handleModalClick() {
     this.setState({
       showModal: true,
       pickedStudent: this.pickRandomStudent()
-    });
-  }
-
-  componentDidMount() {
-    this.setState({
-      currentStudents: this.props.mongoTeacherData.default_class_students
     });
   }
 
@@ -50,7 +48,7 @@ class CallOnMe extends Component {
   }
 
   addStudentPoint() {
-    // create an action/reducder for this
+    // create an action/reducer for this
     // update student model ---> POINTS and GROUPS
   }
 
@@ -68,8 +66,7 @@ class CallOnMe extends Component {
         current_students
       } = this.props.mongoTeacherData;
 
-      // console.log(default_class_info);
-      // console.log(default_class_students);
+
       let allCurrentStudents = "\nNo students to list.";
 
       if (default_class_students && default_class_students.length > 0) {

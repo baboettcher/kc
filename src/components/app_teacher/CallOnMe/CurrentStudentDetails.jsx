@@ -11,13 +11,13 @@ class CurrentStudentDetails extends Component {
     const { uid, first_name, last_name, avatarId } = this.props.currentStudent;
 
     return (
-      <React.Fragment>
+      <Container>
         <RenderStudentAvatar size="200px" avatarId={avatarId} />
         <h1 className="name-called">
           {this.props.currentStudent.uid !== "" ? first_name : null}
         </h1>
         <h3>{this.props.currentStudent.uid !== "" ? last_name : null}</h3>
-      </React.Fragment>
+      </Container>
     );
   }
 }

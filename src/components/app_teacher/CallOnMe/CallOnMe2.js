@@ -19,7 +19,7 @@ class CallOnMe2 extends Component {
 
   componentDidMount() {
     this.setState({
-      currentStudents: this.props.mongoTeacherData.default_class_students
+      currentStudents: this.props.mongoTeacherData ? this.props.mongoTeacherData.default_class_students : ""
     });
   }
 
@@ -67,7 +67,6 @@ class CallOnMe2 extends Component {
           return (<Container>
             <RenderStudentAvatar size="20px" avatarId={student.avatarId} />
             {student.first_name}</Container>)
-          {/* <li>{student.first_name}</li>; */ }
         });
       }
 
@@ -78,11 +77,14 @@ class CallOnMe2 extends Component {
             allCurrentStudents={default_class_students}
             setCurrentStudent={this.setCurrentStudent.bind(this)}
           />
-          <button onClick={this.repeatToggle.bind(this)}>
-            {this.state.allowRepeats ? "repeats okay" : "no repeats"}
-          </button>
+
+
+          {/*             {this.state.allowRepeats ? "repeats okay" : "no repeats"}
+ */}
+
+
           {this.state.allowRepeats ? null : (
-            <button onClick={this.clearCounter}>clear</button>
+            <Button onClick={this.clearCounter}>Clear "Already Been Called"</Button>
           )}
         </div>
       );
