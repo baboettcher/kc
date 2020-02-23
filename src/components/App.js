@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import Navbar from "./Navbar_temp";
 import Navbar_new from "./layout/Navbar";
+import Navbar2 from "./layout/Navbar2";
 import Players from "./Players";
 import Teams from "./Teams";
 import TeamPage from "./TeamPage";
@@ -49,8 +50,9 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {/*       <Navbar /> */}
-          <Navbar_new />
+          {/*  <Navbar /> */}
+          {/*  <Navbar_new /> */}
+          <Navbar2 />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/players" component={Players} />

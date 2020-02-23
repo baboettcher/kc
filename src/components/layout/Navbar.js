@@ -4,7 +4,7 @@ import SignedInLinksStudent from "./SignedInLinks_Student";
 import SignedInLinksTeacher from "./SignedInLinks_Teacher";
 import SignedInLinksSuper from "./SignedInLinks_Super";
 import SignedInLinksAdmin from "./SignedInLinks_Admin";
-import SignedOutLinks from "./SignedOutLinks";
+import SignedOutLinks from "./SignedOutLinks2";
 import { connect } from "react-redux";
 //import { signOut } from "../../store/actions/authActions";
 
@@ -43,6 +43,7 @@ class Navbar extends Component {
     return (
       <nav className="nav-wrapper grey darken-3">
         <div className="container">
+
           {/*         <Link to="/" className="brand-logo left">
            */}{" "}
           <Link
