@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Menu } from 'semantic-ui-react'
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 /* import SignedInLinksStudent from "./SignedInLinks_Student"; */
 import SignedInLinksStudent2 from "./SignedInLinks_Student2";
 import SignedInLinksTeacher from "./SignedInLinks_Teacher";
@@ -52,8 +52,11 @@ class Navbar2 extends Component {
 
 
     return (<div>
-      {links1}
-      {links2}
+      <Router>
+        {/* {links1} */}
+        {links2}
+      </Router>
+
     </div>
     );
   }

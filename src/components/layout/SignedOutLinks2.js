@@ -20,6 +20,7 @@ class SignedOutLinks2 extends Component {
   }
 
   render() {
+    console.log("PROPS===>", this.props)
     const { activeItem } = this.state
     console.log("STUDENT LINK NEEDS TO MOVE TO ==>", this.state.page)
 
