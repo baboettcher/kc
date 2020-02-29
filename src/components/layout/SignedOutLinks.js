@@ -1,31 +1,60 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { Component } from "react";
+import { Menu } from 'semantic-ui-react'
+import { Link } from "react-router-dom";
 
-const SignedOutLinks = () => {
-  return (
-    <ul className="right">
-      <li>
-        <NavLink to="/signupstudent">Student</NavLink>{" "}
-      </li>
+/* const items = [
+  { key: 'editorials', active: true, name: 'Editorials' },
+  { key: 'review', name: 'Reviews' },
+  { key: 'events', name: 'Upcoming Events' },
+]
+ */
 
-      <li>
-        <NavLink to="/signupteacher">Teacher</NavLink>{" "}
-      </li>
+class SignedOutLinks extends Component {
+  state = { activeItem: 'home' }
 
-      <li>
-        <NavLink to="/signupadmin">Administrator</NavLink>{" "}
-      </li>
+  handleItemClick = (e, { name }) => {
+    this.setState({
+      activeItem: name
+    })
+  }
 
-      <li>
-        <NavLink to="/signupsuper">Super</NavLink>{" "}
-      </li>
+  render() {
+    const { activeItem } = this.state
 
-      <li>
-        {" "}
-        <NavLink to="/signin">Log In</NavLink>
-      </li>
-    </ul>
-  );
+    return (
+      <Menu secondary>
+        <Menu.Item
+          name='login'
+          active={activeItem === 'login'}
+          as={Link}
+          to={"/signin"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name='student'
+          active={activeItem === 'student'}
+          to="/signupstudent"
+          as={Link}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name='teacher'
+          active={activeItem === 'teacher'}
+          to="/signupteacher"
+          as={Link}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name='administrator'
+          active={activeItem === 'administrator'}
+          to="/signupadmin"
+          as={Link}
+          onClick={this.handleItemClick}
+        />
+      </Menu>
+    )
+  }
+
 };
 
 export default SignedOutLinks;

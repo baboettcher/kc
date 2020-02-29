@@ -55,7 +55,7 @@ class SignUpStudent extends Form {
 
     return (
       <div>
-        <h1>Student Signup Form 2</h1>
+        <h1>Student Signup Form</h1>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("firstName", "First")}
           {this.renderInput("lastName", "Last")}

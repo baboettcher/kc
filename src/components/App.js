@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import Navbar_new from "./layout/Navbar";
-import Navbar2 from "./layout/Navbar2";
-import Navbar3 from "./layout/Navbar3";
-import Players from "./Players";
-import Teams from "./Teams";
-import TeamPage from "./TeamPage";
-import Articles from "./Articles";
-import TopLevelAdmin from "./TopLevelAdmin";
+import Navbar from "./layout/Navbar";
 
 import SignIn from "./auth/SignIn2";
 import SignUpSuper from "./auth/SignUpSuper";
@@ -16,12 +9,6 @@ import SignUpTeacher from "./auth/SignUpTeacher2";
 import SignUpStudent from "./auth/SignUpStudent2";
 import SignUpAdmin from "./auth/SignUpAdmin";
 
-import SuperDashboard from "./app_super/SuperDashboard";
-import SuperAddDistrict from "./app_super/DistrictAdd";
-import DistrictMasterList from "./app_super/DistrictMasterList";
-import SchoolMasterList from "./app_super/SchoolMasterList";
-import StudentMasterList from "./app_super/StudentMasterList";
-import TeacherMasterList from "./app_super/TeacherMasterList";
 
 import AdminDashboard from "./app_admin/AdminDashboard";
 
@@ -50,28 +37,15 @@ class App extends Component {
     return (
       <Router>
         <div>
-
-          {/* <Navbar_new /> */}
-          <Navbar2 />
-          <Navbar3 />
+          <Navbar />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/players" component={Players} />
-            <Route path="/teams" component={Teams} />
-            <Route path="/adminProtectedRoute" component={TopLevelAdmin} />
 
             <Route path="/signin" component={SignIn} />
             <Route path="/signupsuper" component={SignUpSuper} />
             <Route path="/signupteacher" component={SignUpTeacher} />
             <Route path="/signupstudent" component={SignUpStudent} />
             <Route path="/signupadmin" component={SignUpAdmin} />
-
-            <Route path="/super" component={SuperDashboard} />
-            <Route path="/super_add_district" component={SuperAddDistrict} />
-            <Route path="/districtmasterlist" component={DistrictMasterList} />
-            <Route path="/schoolmasterlist" component={SchoolMasterList} />
-            <Route path="/teachermasterlist" component={TeacherMasterList} />
-            <Route path="/studentmasterlist" component={StudentMasterList} />
 
             <Route path="/admin" component={AdminDashboard} />
 
@@ -93,8 +67,6 @@ class App extends Component {
             <Route path="/addclasswithcode" component={AddClass} />
             <Route path="/welcomenewuser" component={WelcomeNewUser} />
 
-            <Route path="/:teamId" exact component={TeamPage} />
-            <Route path="/:teamId/articles" component={Articles} />
             <Route
               render={() => <h1 className="text-center">Four oh Four.</h1>}
             />

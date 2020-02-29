@@ -4,6 +4,7 @@ import { Icon, Table } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { loadStudentDashboard } from "../../store/actions/studentActions";
 import RenderAvatar from './RenderAvatar'
+//import Counter from "./hooks_demo/demo1"
 
 class StudentDashboard extends Component {
   state = {
@@ -74,6 +75,7 @@ class StudentDashboard extends Component {
         <div className="container">
           <h5 className="header text-center">Student Dashboard</h5>
           <div>
+            {/* <Counter /> */}
             <h1>
               {first_name} {last_name}
             </h1>
@@ -97,6 +99,7 @@ class StudentDashboard extends Component {
     if (tentative_classes.length === 0) {
       return (
         <React.Fragment>
+
           <h1>
             {first_name} {last_name}
           </h1>

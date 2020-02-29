@@ -16,10 +16,10 @@ class SignIn extends Form {
 
   schema = {
     email: Joi.string().required().label("Email"),
-    password: Joi.string().required().min(6).label("Password"),
-    season: Joi.string()
-      .required()
-      .label("Season")
+    password: Joi.string().required().min(6).label("Password")
+    // season: Joi.string()
+    //   .required()
+    //   .label("Season")
   }
 
   doSubmit = () => {
@@ -47,16 +47,16 @@ class SignIn extends Form {
 
 
       <div>
-        <h1>Login Form 2</h1>
+        <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           {this.renderInput("email", "Email")}
           {this.renderInput("password", "Password", "password")}
-          {this.renderSelect("season", "Season", [
+          {/* {this.renderSelect("season", "Season", [
             { _id: "5b21d471818", name: "Summer" },
             { _id: "5b21d471814", name: "Fall" },
             { _id: "5b21d471820", name: "Winter" },
             { _id: "5b41d471820", name: "Spring" }
-          ])}
+          ])} */}
           {this.renderButton("Submit")}
         </form>
       </div>)

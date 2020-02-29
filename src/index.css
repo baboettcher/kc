@@ -10,7 +10,7 @@ body {
 /*  // background: url(/img/background1.jpeg) no-repeat; */
 /*   background-size: 100%;
   background-position: bottom; */
-  background-color: green;
+  background-color: white; 
   /* background-color: yellow; */
   /* background-color: #95e8f3; */
   min-height: 100%;
@@ -20,8 +20,8 @@ a {
 }
 
 form {
-  padding: 20px;
-  margin-top: 60px;
+  padding: 5px;
+  margin-top: 5px;
 }
 
 form button,

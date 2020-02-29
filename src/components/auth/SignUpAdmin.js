@@ -49,9 +49,9 @@ class SignUpAdmin extends Component {
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">
+          <h1 className="grey-text text-darken-3">
             Sign Up School Administrator
-          </h5>
+          </h1>
           <div className="input-field">
             <label htmlFor="firstName">First Name</label>
             <input
