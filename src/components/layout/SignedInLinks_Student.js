@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Menu } from 'semantic-ui-react'
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
 import { clearStudentOnSignout } from "../../store/actions/studentActions";
@@ -12,10 +13,8 @@ class SignedInLinks_Student2 extends Component {
     this.props.clearStudentOnSignout();
   }
 
-  handleItemClick = (e, { name, callback }) => {
+  handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name })
-    console.log("e.target--->", e.target)
-    callback()
   }
 
   render() {
@@ -26,31 +25,36 @@ class SignedInLinks_Student2 extends Component {
       <Menu secondary>
         <Menu.Item
           name='home'
-        >{initials}</Menu.Item>
-
-        <Menu.Item
-          name='kidcoins'
           active={activeItem === 'kidcoins'}
           onClick={this.handleItemClick}
-          callback={() => console.log("kidcoins!")}
-        />
+          as={Link}
+          to={"/student"}
+        >{initials}</Menu.Item>
+
         <Menu.Item
           name='myroom'
           active={activeItem === 'myroom'}
           onClick={this.handleItemClick}
-          callback={() => console.log("myRoom!")}
+          as={Link}
+          to={"/myroom"}
+
         />
         <Menu.Item
-          name='trade'
+          name='trade zone'
           active={activeItem === 'trade'}
           onClick={this.handleItemClick}
-          callback={() => console.log("trade!")}
+          as={Link}
+          to={"/tradezone"}
         />
         <Menu.Item
           name='logout'
           active={activeItem === 'logout'}
           onClick={this.fullSignOut.bind(this)}
-          callback={() => true}
+        />
+
+        <Menu.Item
+          name='kidcoins'
+          active={activeItem === 'kidcoins'}
         />
       </Menu>
     )
