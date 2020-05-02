@@ -18,36 +18,9 @@ export const signIn = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
 
-
-
-
-
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
-      .then(function () {
-        // Existing and future Auth states are now persisted in the current
-        // session only. Closing the window would clear any existing state even
-        // if a user forgets to sign out.
-        // ...
-        // New sign-in will be persisted with session persistence.
-
-        /*         f
-        firebase.auth.Auth.Persistence.LOCAL	'local'	Indicates that the state will be persisted even when the browser window is closed or the activity is destroyed in React Native. An explicit sign out is needed to clear that state. Note that Firebase Auth web sessions are single host origin and will be persisted for a single domain only.
-        
-        firebase.auth.Auth.Persistence.SESSION	'session'	Indicates that the state will only persist in the current session or tab, and will be cleared when the tab or window in which the user authenticated is closed. Applies only to web apps.
-        
-        firebase.auth.Auth.Persistence.NONE	'none'	Indicates that the state will only be stored in memory and will be cleared when the window or activity is refreshe
-         */
-        return firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
-
-
-      })
-
-
-
-
-      // firebase
-      //   .auth()
-      //   .signInWithEmailAndPassword(credentials.email, credentials.password)
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(credentials.email, credentials.password)
 
       // ------- CHECK CUSTOM CLAIM ------ //
       .then(() => {
@@ -294,7 +267,7 @@ export const signUpAdmin = credentials => {
 
         return firebaseResp;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.log("Error", err.message, err.code);
       })
 
